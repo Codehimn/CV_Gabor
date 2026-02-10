@@ -140,15 +140,19 @@
     const commands = [
         {
             input: "whoami",
-            output: "Gabor Flandorffer\nSenior Automation Architect\n11+ years of experience in Medellín/Berlin",
+            output: "Gabor Flandorffer\nSenior Automation Architect\n11+ years of experience | Berlin & Medellín",
         },
         {
-            input: "skills --list",
-            output: "• Python (Django, FastAPI)\n• TypeScript (Astro, React)\n• DevOps (Docker, AWS)\n• Automation (Puppeteer, Selenium)",
+            input: "docker compose up -d production",
+            output: "Creating network 'prod-net'...\nCreating container 'api-v2' (Django)...\nCreating container 'bot-farm' (Puppeteer)...\n[SUCCESS] Production systems online.",
         },
         {
-            input: "python automation.py",
-            output: "[INFO] Saving $10M+ via smart pipelines...\n[SUCCESS] Systems optimized.",
+            input: "python analyze_roi.py --project scale-up",
+            output: "[INFO] Analyzing ROI for smart pipelines...\n[CALCULATED] Total savings: $12.4M/year via automated workflows.\n[REPORT] High business impact confirmed.",
+        },
+        {
+            input: "ls certifications/",
+            output: "Google_IT_Automation.pdf\nReact_Advanced.cert\nSQL_Expert.cert\nPython_Specialist.cert",
         },
     ];
 

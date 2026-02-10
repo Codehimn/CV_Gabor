@@ -49,8 +49,8 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
-  --shadow-glow-blue: 0 0 30px rgba(56, 189, 248, 0.15);
-  --shadow-glow-indigo: 0 0 30px rgba(129, 140, 248, 0.15);
+  --shadow-glow-blue: 0 0 30px rgba(56, 189, 248, 0.25);
+  --shadow-glow-indigo: 0 0 30px rgba(129, 140, 248, 0.25);
 
   /* Transitions */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -146,11 +146,12 @@ h6 {
   display: inline-block;
 }
 
-.section-title .gradient-text {
+.gradient-text {
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.3));
 }
 
 .section-subtitle {

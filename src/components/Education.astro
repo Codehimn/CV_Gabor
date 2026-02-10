@@ -7,21 +7,29 @@ const certifications = [
         link: "https://www.coursera.org/professional-certificates/google-it-automation",
     },
     {
-        title: "Python Expert / Full Stack",
-        issuer: "SoloLearn",
-        icon: "🧠",
-        link: "https://www.sololearn.com/certificates/CT-SPHGWWW4",
+        title: "Python Sub-Specializations",
+        issuer: "Google IT Automation",
+        icon: "⚡",
+        description:
+            "Operating Systems, Troubleshooting & Debugging, Configuration Management, Cloud.",
     },
     {
-        title: "SQL & Data Management",
+        title: "Full Stack & Web Architecture",
+        issuer: "SoloLearn / Various",
+        icon: "🌐",
+        description: "React, JavaScript, PHP, jQuery, CSS/HTML Fundamentals.",
+    },
+    {
+        title: "SQL & Data Management Expert",
         issuer: "SoloLearn",
         icon: "🗄️",
         link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z",
+        description: "SQL Intermediate certified.",
     },
     {
-        title: "Web Dev & Frameworks",
+        title: "Language Mastery (C++, Ruby)",
         issuer: "SoloLearn / Various",
-        icon: "🌐",
+        icon: "💎",
     },
 ];
 
@@ -87,6 +95,11 @@ const softSkills = [
                                 <div class="edu-card-content">
                                     <strong>{cert.title}</strong>
                                     <p class="edu-issuer">{cert.issuer}</p>
+                                    {cert.description && (
+                                        <p class="edu-description">
+                                            {cert.description}
+                                        </p>
+                                    )}
                                 </div>
                                 {cert.link && (
                                     <a
@@ -295,9 +308,17 @@ const softSkills = [
     }
 
     .edu-issuer {
-        color: var(--text-muted);
-        font-size: 0.8rem;
+        color: var(--accent-blue);
+        font-size: 0.75rem;
         font-family: var(--font-mono);
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .edu-description {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        line-height: 1.4;
     }
 
     .cert-link {
