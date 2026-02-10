@@ -1,46 +1,6 @@
 ---
-const projects = [
-    {
-        title: "Conectsen — IoT Platform",
-        role: "IoT Developer",
-        period: "Aug — Oct 2019",
-        description:
-            "Built real-time asset monitoring platform processing OBD2, cameras, and helmet data. Designed low-latency communication algorithms for continuous sensor streaming.",
-        tags: ["Python", "IoT", "Real-time", "WebSockets", "OBD2"],
-        icon: "📡",
-        gradient: "gradient-cyan",
-    },
-    {
-        title: "Automation Infrastructure",
-        role: "Freelance — Automation Developer",
-        period: "2016 — Present",
-        description:
-            "Designed and maintained automation infrastructure for diverse clients on Freelancer.com. Built systems integrating APIs, automated testing, image analysis with OpenCV, and web scraping at scale.",
-        tags: ["Puppeteer", "AutoIt", "OpenCV", "APIs", "Web Scraping"],
-        icon: "🤖",
-        gradient: "gradient-indigo",
-    },
-    {
-        title: "Internal Mocking Tool",
-        role: "Backend Developer @ Zattoo",
-        period: "2019 — 2023",
-        description:
-            "Designed a custom API mocking tool used by the entire engineering team to test against production-like responses without hitting real services. Reduced test flakiness by 60%+.",
-        tags: ["Django", "Python", "REST", "Testing", "Docker"],
-        icon: "🧪",
-        gradient: "gradient-blue",
-    },
-    {
-        title: "CI/CD Pipeline Automation",
-        role: "Backend Developer @ Zattoo",
-        period: "2020 — 2023",
-        description:
-            "Implemented end-to-end CI/CD with GitHub Actions and pytest. Automated deployment, testing, and code quality checks, reducing deployment time from hours to minutes.",
-        tags: ["GitHub Actions", "pytest", "Docker", "CI/CD", "Bash"],
-        icon: "🚀",
-        gradient: "gradient-emerald",
-    },
-];
+import { translations } from "../i18n";
+const projects = translations.en.projects.items;
 ---
 
 <section class="projects zoom-section" id="projects">
@@ -64,23 +24,43 @@ const projects = [
                         class={`project-card glass-card reveal-scale interactive`}
                         style={`transition-delay: ${i * 0.1}s`}
                     >
-                        <div class={`project-icon-wrapper ${project.gradient}`}>
-                            <span class="project-icon">{project.icon}</span>
+                        <div class={`project-icon-wrapper gradient-blue`}>
+                            {/* Gradients can be randomized or mapped if needed, keeping simple for now */}
+                            <span class="project-icon">
+                                {i === 0
+                                    ? "📡"
+                                    : i === 1
+                                      ? "🤖"
+                                      : i === 2
+                                        ? "🧪"
+                                        : "🚀"}
+                            </span>
                         </div>
 
                         <div class="project-content">
-                            <h3 class="project-title">{project.title}</h3>
-                            <p class="project-role">{project.role}</p>
-                            <span class="project-period">{project.period}</span>
+                            <h3
+                                class="project-title"
+                                data-i18n={`projects.items.${i}.title`}
+                            />
+                            <p
+                                class="project-role"
+                                data-i18n={`projects.items.${i}.role`}
+                            />
+                            <span
+                                class="project-period"
+                                data-i18n={`projects.items.${i}.period`}
+                            />
 
-                            <p class="project-description">
-                                {project.description}
-                            </p>
+                            <p
+                                class="project-description"
+                                data-i18n={`projects.items.${i}.description`}
+                            ></p>
 
-                            <div class="project-tags">
-                                {project.tags.map((tag) => (
-                                    <span class="tag">{tag}</span>
-                                ))}
+                            <div
+                                class="project-tags"
+                                data-i18n-tags={`projects.items.${i}.tags`}
+                            >
+                                {/* Tags populated via JS */}
                             </div>
                         </div>
                     </div>

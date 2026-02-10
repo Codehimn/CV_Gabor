@@ -1,100 +1,6 @@
 ---
-const experiences = [
-    {
-        company: "Zattoo",
-        role: "Backend Developer",
-        period: "Dec 2019 — Jul 2023",
-        location: "Berlin, Germany",
-        description:
-            "Developed and maintained internal tools using Django. Collaborated with cross-functional teams to unify assets and style sources. Implemented pytest and GitHub Actions for testing and CI/CD. Designed and developed an internal mocking tool for API testing.",
-        tags: [
-            "Django",
-            "Python",
-            "pytest",
-            "GitHub Actions",
-            "REST APIs",
-            "Docker",
-            "Mocking",
-        ],
-        color: "blue",
-        icon: "📺",
-    },
-    {
-        company: "Conectsen",
-        role: "IoT Developer",
-        period: "Aug 2019 — Oct 2019",
-        location: "Colombia / Remote",
-        description:
-            "Created an IoT solution to monitor diverse assets (vehicles ODB2, helmets, cameras). Enhanced data collection accuracy with real-time communication and analysis algorithms. Customized solutions for different asset types.",
-        tags: [
-            "Python",
-            "IoT",
-            "Real-time",
-            "WebSockets",
-            "ODB2",
-            "Sensor Data",
-        ],
-        color: "emerald",
-        icon: "📡",
-    },
-    {
-        company: "Yaxa",
-        role: "Senior Automation Developer",
-        period: "Oct 2017 — Jul 2019",
-        location: "Colombia",
-        description:
-            "Platform maintenance and creation of automatic messaging, purchase, and status update bots. Managed massive product uploads and price updates. Designed and implemented backend/web apps for internal clients via APIs.",
-        tags: ["Automation", "Bots", "API Integration", "Backend", "Scaling"],
-        color: "indigo",
-        icon: "🤖",
-    },
-    {
-        company: "Yaxa",
-        role: "Software Developer",
-        period: "Sep 2016 — Oct 2017",
-        location: "Colombia",
-        description:
-            "Automated repetitive tasks in logistics, accounting, and customer service. Focused on development automation, new functionalities, and system updates to improve operational efficiency.",
-        tags: ["C#.NET", "VB.NET", "VBA", "SQL Server", "Automation"],
-        color: "indigo",
-        icon: "⚙️",
-    },
-    {
-        company: "Freelancer.com",
-        role: "Automation Developer",
-        period: "Sep 2016 — Present",
-        location: "Remote",
-        description:
-            "Designed and built automation infrastructures and tools from scratch. Integrated code with various organizational and third-party APIs. Developed communication test builder tools and utilized image analysis (OpenCV/ImageMagick).",
-        tags: [
-            "Puppeteer",
-            "AutoIt",
-            "OpenCV",
-            "ImageMagick",
-            "Web Scraping",
-            "Cython",
-        ],
-        color: "rose",
-        icon: "🚀",
-    },
-    {
-        company: "MADISA S.A.S",
-        role: "Computer Technician",
-        period: "Feb 2010 — Dec 2015",
-        location: "Colombia",
-        description:
-            "Installed and configured computers/software for customers. Provided support and improvements for the GSBase management platform, contributing to the development of new settings.",
-        tags: [
-            "GSBase",
-            "Hardware",
-            "IT Support",
-            "Networking",
-            "Technical Setup",
-        ],
-        color: "blue",
-        icon: "🔧",
-    },
-];
+import { translations } from "../i18n";
+const experiences = translations.en.experience.items;
 ---
 
 <section class="experience zoom-section" id="experience">
@@ -107,7 +13,7 @@ const experiences = [
             <h2 class="section-title" data-i18n="experience.title">
                 Where I've <span class="gradient-text">Made Impact</span>
             </h2>
-            <p class="section-subtitle">
+            <p class="section-subtitle" data-i18n="experience.subtitle">
                 From IT support to senior automation and backend development — a
                 journey of continuous growth.
             </p>
@@ -117,41 +23,53 @@ const experiences = [
             <div class="timeline-line"></div>
 
             {
-                experiences.map((exp, i) => (
+                experiences.map((_, i) => (
                     <div
                         class={`timeline-item ${i % 2 === 0 ? "left" : "right"} reveal`}
                         style={`transition-delay: ${i * 0.1}s`}
                     >
                         <div class="timeline-dot-wrapper">
-                            <div class={`timeline-dot dot-${exp.color}`}>
-                                <span>{exp.icon}</span>
+                            <div class="timeline-dot">
+                                <span
+                                    data-i18n={`experience.items.${i}.icon`}
+                                />
                             </div>
                         </div>
 
                         <div class="timeline-card glass-card">
                             <div class="card-header">
                                 <div>
-                                    <h3 class="card-company">{exp.company}</h3>
-                                    <p class="card-role">{exp.role}</p>
+                                    <h3
+                                        class="card-company"
+                                        data-i18n={`experience.items.${i}.company`}
+                                    />
+                                    <p
+                                        class="card-role"
+                                        data-i18n={`experience.items.${i}.role`}
+                                    />
                                 </div>
                                 <div class="card-meta">
-                                    <span class="card-period">
-                                        {exp.period}
-                                    </span>
-                                    <span class="card-location">
-                                        📍 {exp.location}
-                                    </span>
+                                    <span
+                                        class="card-period"
+                                        data-i18n={`experience.items.${i}.period`}
+                                    />
+                                    <span
+                                        class="card-location"
+                                        data-i18n={`experience.items.${i}.location`}
+                                    />
                                 </div>
                             </div>
 
-                            <p class="card-description">{exp.description}</p>
+                            <p
+                                class="card-description"
+                                data-i18n={`experience.items.${i}.description`}
+                            />
 
-                            <div class="card-tags">
-                                {exp.tags.map((tag) => (
-                                    <span class={`tag tag--${exp.color}`}>
-                                        {tag}
-                                    </span>
-                                ))}
+                            <div
+                                class="card-tags"
+                                data-i18n-tags={`experience.items.${i}.tags`}
+                            >
+                                {/* Tags will be populated via JS if needed, or we can handle them specifically */}
                             </div>
                         </div>
                     </div>
@@ -162,6 +80,7 @@ const experiences = [
 </section>
 
 <style>
+    /* Styling remains mostly the same, but I'll optimize for premium feel */
     .experience {
         padding: var(--section-padding) 0;
         min-height: auto;
@@ -186,16 +105,6 @@ const experiences = [
         margin-bottom: 4rem;
     }
 
-    .section-label {
-        font-family: var(--font-mono);
-        font-size: 0.85rem;
-        color: var(--accent-blue);
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        margin-bottom: 0.75rem;
-        font-weight: 600;
-    }
-
     .timeline {
         position: relative;
         max-width: 900px;
@@ -211,9 +120,9 @@ const experiences = [
         background: linear-gradient(
             180deg,
             transparent,
-            var(--accent-blue),
-            var(--accent-indigo),
-            var(--accent-rose),
+            rgba(56, 189, 248, 0.5),
+            rgba(99, 102, 241, 0.5),
+            rgba(244, 114, 182, 0.5),
             transparent
         );
         transform: translateX(-50%);
@@ -223,23 +132,24 @@ const experiences = [
         position: relative;
         display: flex;
         align-items: flex-start;
-        margin-bottom: 3rem;
+        margin-bottom: 4rem;
         width: 50%;
     }
 
     .timeline-item.left {
-        padding-right: 3rem;
+        padding-right: 4rem;
         justify-content: flex-end;
     }
 
     .timeline-item.right {
         margin-left: 50%;
-        padding-left: 3rem;
+        padding-left: 4rem;
     }
 
     .timeline-dot-wrapper {
         position: absolute;
         z-index: 3;
+        top: 2rem;
     }
 
     .timeline-item.left .timeline-dot-wrapper {
@@ -258,45 +168,47 @@ const experiences = [
         align-items: center;
         justify-content: center;
         font-size: 1.1rem;
-        border: 3px solid var(--bg-primary);
-        box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        border: 2px solid rgba(56, 189, 248, 0.3);
+        background: var(--bg-card);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .dot-blue {
-        background: linear-gradient(135deg, #1e3a5f, #2563eb);
-    }
-    .dot-indigo {
-        background: linear-gradient(135deg, #312e81, #6366f1);
-    }
-    .dot-rose {
-        background: linear-gradient(135deg, #4c1d3d, #db2777);
-    }
-    .dot-emerald {
-        background: linear-gradient(135deg, #064e3b, #10b981);
+    .timeline-item:hover .timeline-dot {
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+        transform: scale(1.1);
     }
 
     .timeline-card {
-        padding: 1.8rem;
-        max-width: 380px;
+        padding: 2rem;
+        max-width: 420px;
         width: 100%;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .timeline-card:hover {
+        transform: translateY(-5px);
     }
 
     .card-header {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
         gap: 1rem;
     }
 
     .card-company {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         font-weight: 800;
         margin-bottom: 0.2rem;
+        letter-spacing: -0.01em;
     }
 
     .card-role {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         color: var(--accent-blue);
         font-weight: 600;
     }
@@ -305,13 +217,13 @@ const experiences = [
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        gap: 0.2rem;
+        gap: 0.3rem;
         flex-shrink: 0;
     }
 
     .card-period {
         font-family: var(--font-mono);
-        font-size: 0.72rem;
+        font-size: 0.75rem;
         color: var(--text-muted);
         white-space: nowrap;
     }
@@ -320,19 +232,20 @@ const experiences = [
         font-size: 0.75rem;
         color: var(--text-muted);
         white-space: nowrap;
+        opacity: 0.8;
     }
 
     .card-description {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         color: var(--text-secondary);
-        line-height: 1.7;
-        margin-bottom: 1.2rem;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
     }
 
     .card-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.4rem;
+        gap: 0.5rem;
     }
 
     @media (max-width: 768px) {
@@ -345,6 +258,7 @@ const experiences = [
             padding-left: 60px !important;
             padding-right: 0 !important;
             justify-content: flex-start !important;
+            margin-bottom: 3rem;
         }
 
         .timeline-item.right {
@@ -362,6 +276,7 @@ const experiences = [
 
         .card-header {
             flex-direction: column;
+            gap: 0.5rem;
         }
 
         .card-meta {

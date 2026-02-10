@@ -1,66 +1,49 @@
 ---
-const certifications = [
+import { translations } from "../i18n";
+
+const educationData = translations.en.education;
+
+const certMetadata = [
     {
-        title: "Google IT Automation with Python Professional Certificate",
-        issuer: "Google / Coursera",
         icon: "🐍",
         link: "https://www.coursera.org/professional-certificates/google-it-automation",
     },
     {
-        title: "Python Sub-Specializations",
-        issuer: "Google IT Automation",
         icon: "⚡",
-        description:
-            "Operating Systems, Troubleshooting & Debugging, Configuration Management, Cloud.",
     },
     {
-        title: "Full Stack & Web Architecture",
-        issuer: "SoloLearn / Various",
         icon: "🌐",
-        description: "React, JavaScript, PHP, jQuery, CSS/HTML Fundamentals.",
     },
     {
-        title: "SQL & Data Management Expert",
-        issuer: "SoloLearn",
         icon: "🗄️",
         link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z",
-        description: "SQL Intermediate certified.",
     },
     {
-        title: "Language Mastery (C++, Ruby)",
-        issuer: "SoloLearn / Various",
         icon: "💎",
     },
 ];
 
-const talks = [
+const talkMetadata = [
     {
-        title: "Asynchronism: Possible Errors and How to Solve Them",
-        venue: "Meetup Talk — Guest Speaker",
         icon: "🎤",
         link: "https://bit.ly/asincronismo-python",
         color: "indigo",
     },
 ];
 
-const languages = [
-    { name: "Spanish", level: "Mother Tongue", percent: 100, flag: "🇪🇸" },
-    {
-        name: "English",
-        level: "B2 — Upper Intermediate",
-        percent: 80,
-        flag: "🇬🇧",
-    },
-    { name: "German", level: "A2 — Elementary", percent: 40, flag: "🇩🇪" },
+const langMetadata = [
+    { percent: 100, flag: "🇪🇸" },
+    { percent: 80, flag: "🇬🇧" },
+    { percent: 40, flag: "🇩🇪" },
 ];
 
-const softSkills = [
-    { name: "Team Collaboration", icon: "🤝" },
-    { name: "Problem Solving", icon: "🧩" },
-    { name: "Adaptability", icon: "🔄" },
-    { name: "Creative Thinking", icon: "💡" },
-    { name: "Self-taught Learner", icon: "📚" },
-    { name: "Cross-functional Collab", icon: "🏢" },
+const skillMetadata = [
+    { icon: "🤝" },
+    { icon: "🧩" },
+    { icon: "🔄" },
+    { icon: "💡" },
+    { icon: "📚" },
+    { icon: "🏢" },
 ];
 ---
 
@@ -89,21 +72,27 @@ const softSkills = [
                 </h3>
                 <div class="certifications-list stagger-children">
                     {
-                        certifications.map((cert) => (
+                        educationData.certs.map((_, i) => (
                             <div class="edu-card glass-card">
-                                <span class="edu-card-icon">{cert.icon}</span>
+                                <span class="edu-card-icon">
+                                    {certMetadata[i]?.icon}
+                                </span>
                                 <div class="edu-card-content">
-                                    <strong>{cert.title}</strong>
-                                    <p class="edu-issuer">{cert.issuer}</p>
-                                    {cert.description && (
-                                        <p class="edu-description">
-                                            {cert.description}
-                                        </p>
-                                    )}
+                                    <strong
+                                        data-i18n={`education.certs.${i}.title`}
+                                    />
+                                    <p
+                                        class="edu-issuer"
+                                        data-i18n={`education.certs.${i}.issuer`}
+                                    />
+                                    <p
+                                        class="edu-description"
+                                        data-i18n={`education.certs.${i}.description`}
+                                    />
                                 </div>
-                                {cert.link && (
+                                {certMetadata[i]?.link && (
                                     <a
-                                        href={cert.link}
+                                        href={certMetadata[i].link}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="cert-link"
@@ -145,16 +134,26 @@ const softSkills = [
                     >
                 </h3>
                 {
-                    talks.map((talk) => (
-                        <div class="edu-card glass-card talk-card">
-                            <span class="edu-card-icon">{talk.icon}</span>
+                    educationData.talks.map((_, i) => (
+                        <div
+                            class="edu-card glass-card talk-card"
+                            style={`border-left-color: var(--accent-${talkMetadata[i]?.color || "indigo"})`}
+                        >
+                            <span class="edu-card-icon">
+                                {talkMetadata[i]?.icon}
+                            </span>
                             <div class="edu-card-content">
-                                <strong>{talk.title}</strong>
-                                <p class="edu-issuer">{talk.venue}</p>
+                                <strong
+                                    data-i18n={`education.talks.${i}.title`}
+                                />
+                                <p
+                                    class="edu-issuer"
+                                    data-i18n={`education.talks.${i}.venue`}
+                                />
                             </div>
-                            {talk.link && (
+                            {talkMetadata[i]?.link && (
                                 <a
-                                    href={talk.link}
+                                    href={talkMetadata[i].link}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="btn btn-outline talk-btn"
@@ -173,17 +172,25 @@ const softSkills = [
                 </h3>
                 <div class="languages-list">
                     {
-                        languages.map((lang) => (
+                        educationData.languages.map((_, i) => (
                             <div class="lang-item">
                                 <div class="lang-info">
-                                    <span class="lang-flag">{lang.flag}</span>
-                                    <span class="lang-name">{lang.name}</span>
-                                    <span class="lang-level">{lang.level}</span>
+                                    <span class="lang-flag">
+                                        {langMetadata[i]?.flag}
+                                    </span>
+                                    <span
+                                        class="lang-name"
+                                        data-i18n={`education.languages.${i}.name`}
+                                    />
+                                    <span
+                                        class="lang-level"
+                                        data-i18n={`education.languages.${i}.level`}
+                                    />
                                 </div>
                                 <div class="lang-bar">
                                     <div
                                         class="lang-progress"
-                                        style={`--progress: ${lang.percent}%`}
+                                        style={`--progress: ${langMetadata[i]?.percent}%`}
                                     />
                                 </div>
                             </div>
@@ -199,9 +206,12 @@ const softSkills = [
                 </h3>
                 <div class="soft-skills">
                     {
-                        softSkills.map((skill) => (
+                        educationData.softSkills.map((_, i) => (
                             <span class="soft-tag">
-                                {skill.icon} {skill.name}
+                                {skillMetadata[i]?.icon}{" "}
+                                <span
+                                    data-i18n={`education.softSkills.${i}.name`}
+                                />
                             </span>
                         ))
                     }

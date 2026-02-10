@@ -24,7 +24,10 @@ import Terminal from "./Terminal.astro";
                 </div>
             </div>
 
-            <h1 class="hero-title reveal" style="transition-delay: 0.2s">
+            <h1
+                class="hero-title reveal-cinematic"
+                style="animation-delay: 0.2s"
+            >
                 <span class="hero-greeting" data-i18n="hero.greeting"
                     >Hi, I'm</span
                 >
@@ -475,9 +478,10 @@ import Terminal from "./Terminal.astro";
     .orb {
         position: absolute;
         border-radius: 50%;
-        filter: blur(80px);
-        opacity: 0.3;
+        filter: blur(100px);
+        opacity: 0.4;
         animation: float 20s ease-in-out infinite;
+        mix-blend-mode: screen;
     }
 
     .orb-1 {
