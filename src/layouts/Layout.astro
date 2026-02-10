@@ -31,6 +31,22 @@ const {
     <!-- Scroll Progress Bar -->
     <div id="scroll-progress" class="scroll-progress"></div>
 
+    <!-- Side Dot Navigation -->
+    <div class="side-nav">
+      <a href="#about" class="dot active" data-id="about"><span>About</span></a>
+      <a href="#experience" class="dot" data-id="experience"
+        ><span>Experience</span></a
+      >
+      <a href="#skills" class="dot" data-id="skills"><span>Skills</span></a>
+      <a href="#projects" class="dot" data-id="projects"
+        ><span>Projects</span></a
+      >
+      <a href="#education" class="dot" data-id="education"
+        ><span>Education</span></a
+      >
+      <a href="#contact" class="dot" data-id="contact"><span>Contact</span></a>
+    </div>
+
     <slot />
 
     <!-- WhatsApp Floating Button -->
@@ -121,13 +137,30 @@ const {
           }
 
           if (translation) {
+            const currentYear = new Date().getFullYear();
+            const expYears = currentYear - 2014;
+
+            let finalHtml = translation
+              .replace("{year}", currentYear.toString())
+              .replace("{years}", expYears.toString());
+
             if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
               (el as HTMLInputElement | HTMLTextAreaElement).placeholder =
-                translation;
+                finalHtml;
             } else {
-              el.innerHTML = translation;
+              el.innerHTML = finalHtml;
             }
           }
+        });
+
+        // Update WhatsApp links
+        const whatsappMsg =
+          (translations[lang] as any).contact.whatsapp_msg ||
+          (translations[lang] as any).nav.whatsapp_msg;
+        const whatsappUrl = `https://wa.me/491789752993?text=${encodeURIComponent(whatsappMsg)}`;
+
+        document.querySelectorAll('a[href*="wa.me"]').forEach((link: any) => {
+          link.href = whatsappUrl;
         });
 
         // Update active state of language buttons
@@ -272,10 +305,38 @@ const {
         });
       }
 
+      // --- SIDE DOT NAV ---
+      function initSideNav() {
+        const dots = document.querySelectorAll(".side-nav .dot");
+        const sections = document.querySelectorAll("section[id]");
+
+        const observerOptions = {
+          threshold: 0.3,
+          rootMargin: "-10% 0px -40% 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute("id");
+              dots.forEach((dot) => {
+                dot.classList.toggle(
+                  "active",
+                  dot.getAttribute("data-id") === id,
+                );
+              });
+            }
+          });
+        }, observerOptions);
+
+        sections.forEach((section) => observer.observe(section));
+      }
+
       // Initial Setup
       function setup() {
         initLenis();
         initSpotlight();
+        initSideNav();
         initI18n();
         initAnimations();
         initCursor();

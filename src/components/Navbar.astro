@@ -19,34 +19,39 @@ const navItems = [
 
         <ul class="nav-links">
             <li>
-                <a href="#about" class="nav-link" data-i18n="nav.about"
-                    >About</a>
+                <a href="#about" class="nav-link" data-i18n="nav.about">About</a
+                >
             </li>
             <li>
                 <a
                     href="#experience"
                     class="nav-link"
-                    data-i18n="nav.experience">Experience</a>
+                    data-i18n="nav.experience">Experience</a
+                >
             </li>
             <li>
                 <a href="#skills" class="nav-link" data-i18n="nav.skills"
-                    >Skills</a>
+                    >Skills</a
+                >
             </li>
             <li>
                 <a href="#projects" class="nav-link" data-i18n="nav.projects"
-                    >Projects</a>
+                    >Projects</a
+                >
             </li>
             <li>
                 <a href="#education" class="nav-link" data-i18n="nav.education"
-                    >Education</a>
+                    >Education</a
+                >
             </li>
             <li>
                 <a href="#contact" class="nav-link" data-i18n="nav.contact"
-                    >Contact</a>
+                    >Contact</a
+                >
             </li>
             <li>
                 <a
-                    href="https://wa.me/491789752993?text=Hi%20Gabor!"
+                    href="#"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="btn btn-primary nav-cta"
@@ -205,18 +210,18 @@ const navItems = [
             position: fixed;
             top: 0;
             right: -100%;
-            width: 75vw;
-            max-width: 320px;
+            width: 100vw;
             height: 100vh;
-            background: rgba(10, 14, 26, 0.97);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            background: rgba(10, 14, 26, 0.98);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             flex-direction: column;
             justify-content: center;
-            gap: 1rem;
+            align-items: center;
+            gap: 2rem;
             padding: 2rem;
-            transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            border-left: 1px solid rgba(56, 189, 248, 0.1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border-left: none;
         }
 
         .nav-links.open {
@@ -224,8 +229,10 @@ const navItems = [
         }
 
         .nav-link {
-            font-size: 1.1rem;
-            padding: 0.8rem 1rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            padding: 1rem;
+            letter-spacing: -0.02em;
         }
 
         .nav-cta {

@@ -8,13 +8,14 @@ export const translations = {
             projects: "Projects",
             education: "Education",
             contact: "Contact",
-            cta: "Let's Talk"
+            cta: "Let's Talk",
+            whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat."
         },
         hero: {
             greeting: "Hi, I'm",
             badge: "Available for new opportunities",
             roles: "Senior Full-Stack Developer,Automation Architect,Backend Specialist,Problem Solver",
-            description: "11+ years architecting zero-latency backend systems, mission-critical automation pipelines, and high-impact full-stack solutions.",
+            description: "{years}+ years architecting zero-latency backend systems, mission-critical automation pipelines, and high-impact full-stack solutions.",
             years: "Years Experience",
             projects: "Projects",
             cta_primary: "Explore My Work",
@@ -23,7 +24,7 @@ export const translations = {
         about: {
             label: "About Me",
             title: "Building the future, one line of code at a time.",
-            p1: "I'm a Senior Full-Stack Developer & Automation Specialist with over 11 years of professional experience. I've worked across startups and established companies in Germany, Colombia, and remotely worldwide.",
+            p1: "I'm a Senior Full-Stack Developer & Automation Specialist with over {years} years of professional experience. I've worked across startups and established companies in Germany, Colombia, and remotely worldwide.",
             p2: "My expertise spans from building robust Django/Python backends and designing automation pipelines with Puppeteer and AutoIt, to deploying scalable infrastructure with Docker, AWS, and CI/CD. I'm passionate about writing clean, efficient code that solves real-world problems.",
             highlights: {
                 backend: "Backend Expert",
@@ -66,7 +67,7 @@ export const translations = {
             whatsapp_label: "WhatsApp",
             email_label: "Email",
             web_label: "Website",
-            footer: "Designed & built by <strong>Gabor Flandorffer</strong> — 2025"
+            footer: "Designed & built by <strong>Gabor Flandorffer</strong> — {year}"
         }
     },
     es: {
@@ -77,13 +78,14 @@ export const translations = {
             projects: "Proyectos",
             education: "Educación",
             contact: "Contacto",
-            cta: "Hablemos"
+            cta: "Hablemos",
+            whatsapp_msg: "¡Hola Gabor! Vi tu portafolio y me gustaría contactarte."
         },
         hero: {
             greeting: "Hola, soy",
             badge: "Disponible para nuevas oportunidades",
             roles: "Desarrollador Full-Stack Senior,Arquitecto de Automatización,Especialista en Backend,Solucionador de Problemas",
-            description: "11+ años arquitectando sistemas backend de latencia cero, pipelines de automatización de misión crítica y soluciones full-stack de alto impacto.",
+            description: "{years}+ años arquitectando sistemas backend de latencia cero, pipelines de automatización de misión crítica y soluciones full-stack de alto impacto.",
             years: "Años de Experiencia",
             projects: "Proyectos",
             cta_primary: "Ver Mi Trabajo",
@@ -93,7 +95,7 @@ export const translations = {
         about: {
             label: "Sobre Mí",
             title: "Construyendo el futuro,<br />una línea de código a la vez.",
-            p1: "Soy un <strong>Desarrollador Full-Stack Senior y Especialista en Automatización</strong> con más de <strong>11 años</strong> de experiencia profesional. He trabajado en startups y empresas establecidas en <strong>Alemania, Colombia y de forma remota para todo el mundo</strong>.",
+            p1: "Soy un <strong>Desarrollador Full-Stack Senior y Especialista en Automatización</strong> con más de <strong>{years} años</strong> de experiencia profesional. He trabajado en startups y empresas establecidas en <strong>Alemania, Colombia y de forma remota para todo el mundo</strong>.",
             p2: "Mi experiencia abarca desde la creación de backends robustos con <strong>Django/Python</strong> y el diseño de <strong>pipelines de automatización</strong> con Puppeteer y AutoIt, hasta el despliegue de infraestructura escalable con <strong>Docker, AWS y CI/CD</strong>. Me apasiona escribir código limpio y eficiente que resuelva problemas del mundo real.",
             highlights: {
                 backend: "Experto en Backend",
@@ -136,7 +138,7 @@ export const translations = {
             whatsapp_label: "WhatsApp",
             email_label: "Correo",
             web_label: "Sitio Web",
-            footer: "Diseñado y construido por <strong>Gabor Flandorffer</strong> — 2025"
+            footer: "Diseñado y construido por <strong>Gabor Flandorffer</strong> — {year}"
         }
     }
 };
