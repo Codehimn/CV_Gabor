@@ -24,14 +24,14 @@ import Terminal from "./Terminal.astro";
                 </div>
             </div>
 
-            <h1 class="hero-title reveal">
+            <h1 class="hero-title reveal" style="transition-delay: 0.2s">
                 <span class="hero-greeting" data-i18n="hero.greeting"
                     >Hi, I'm</span
                 >
                 <span class="hero-name gradient-text">Gabor Flandorffer</span>
             </h1>
 
-            <div class="hero-role reveal">
+            <div class="hero-role reveal" style="transition-delay: 0.4s">
                 <span class="typing-text" id="typing-text"></span>
                 <span class="cursor">|</span>
                 <!-- Hidden element for i18n data sourcing -->
@@ -41,7 +41,11 @@ import Terminal from "./Terminal.astro";
                     style="display:none;"></span>
             </div>
 
-            <p class="hero-description reveal" data-i18n="hero.description">
+            <p
+                class="hero-description reveal"
+                style="transition-delay: 0.6s"
+                data-i18n="hero.description"
+            >
                 <strong>11+ years</strong> crafting scalable backend systems, automation
                 pipelines, and full-stack solutions.
             </p>

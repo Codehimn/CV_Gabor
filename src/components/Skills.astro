@@ -70,8 +70,11 @@ const skillCategories = [
 
         <div class="bento-grid stagger-children">
             {
-                skillCategories.map((category) => (
-                    <div class={`bento-item glass-card ${category.span || ""}`}>
+                skillCategories.map((category, i) => (
+                    <div
+                        class={`bento-item glass-card interactive ${category.span || ""}`}
+                        style={`transition-delay: ${i * 0.1}s`}
+                    >
                         <div class="category-header">
                             <span class="category-icon">{category.icon}</span>
                             <h3 class="category-title">{category.title}</h3>

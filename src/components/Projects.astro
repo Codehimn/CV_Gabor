@@ -59,8 +59,11 @@ const projects = [
 
         <div class="projects-grid stagger-children">
             {
-                projects.map((project) => (
-                    <div class={`project-card glass-card`}>
+                projects.map((project, i) => (
+                    <div
+                        class={`project-card glass-card reveal-scale interactive`}
+                        style={`transition-delay: ${i * 0.1}s`}
+                    >
                         <div class={`project-icon-wrapper ${project.gradient}`}>
                             <span class="project-icon">{project.icon}</span>
                         </div>
