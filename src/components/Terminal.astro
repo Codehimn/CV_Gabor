@@ -1,0 +1,209 @@
+---
+
+---
+
+<div class="terminal-container reveal">
+    <div class="terminal-header">
+        <div class="terminal-controls">
+            <span class="control close"></span>
+            <span class="control minimize"></span>
+            <span class="control expand"></span>
+        </div>
+        <div class="terminal-title">bash — automation_vault</div>
+    </div>
+    <div class="terminal-body" id="terminal-body">
+        <div class="terminal-line">
+            <span class="prompt">user@gabor:~$</span>
+            <span class="typed-command" id="initial-command"></span>
+        </div>
+        <div id="terminal-output"></div>
+    </div>
+</div>
+
+<style>
+    .terminal-container {
+        width: 100%;
+        max-width: 500px;
+        background: rgba(13, 17, 23, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.5),
+            0 0 20px rgba(56, 189, 248, 0.1);
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+        font-family: var(--font-mono);
+        margin: 0 auto;
+        transform: perspective(1000px) rotateY(-5deg);
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .terminal-container:hover {
+        transform: perspective(1000px) rotateY(0deg) translateY(-5px);
+        border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    .terminal-header {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .terminal-controls {
+        position: absolute;
+        left: 1rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .control {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+    .close {
+        background: #ff5f56;
+    }
+    .minimize {
+        background: #ffbd2e;
+    }
+    .expand {
+        background: #27c93f;
+    }
+
+    .terminal-title {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+    }
+
+    .terminal-body {
+        padding: 1.5rem;
+        min-height: 250px;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: #e6edf3;
+    }
+
+    .prompt {
+        color: var(--accent-emerald);
+        margin-right: 0.75rem;
+        font-weight: 600;
+    }
+
+    .command {
+        color: var(--accent-blue);
+    }
+
+    .output {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        display: block;
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .keyword {
+        color: #ff7b72;
+    }
+    .string {
+        color: #a5d6ff;
+    }
+    .function {
+        color: #d2a8ff;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .terminal-container {
+            transform: none;
+            max-width: 100%;
+        }
+    }
+</style>
+
+<script>
+    const commands = [
+        {
+            input: "whoami",
+            output: "Gabor Flandorffer\nSenior Automation Architect\n11+ years of experience in Medellín/Berlin",
+        },
+        {
+            input: "skills --list",
+            output: "• Python (Django, FastAPI)\n• TypeScript (Astro, React)\n• DevOps (Docker, AWS)\n• Automation (Puppeteer, Selenium)",
+        },
+        {
+            input: "python automation.py",
+            output: "[INFO] Saving $10M+ via smart pipelines...\n[SUCCESS] Systems optimized.",
+        },
+    ];
+
+    let currentCmd = 0;
+    const initialCmdEl = document.getElementById("initial-command");
+    const outputEl = document.getElementById("terminal-output");
+
+    async function typeEffect(text, element) {
+        for (let i = 0; i <= text.length; i++) {
+            element.textContent = text.substring(0, i);
+            await new Promise((r) => setTimeout(r, 50));
+        }
+    }
+
+    async function runTerminal() {
+        if (!initialCmdEl || !outputEl) return;
+
+        while (true) {
+            const cmd = commands[currentCmd];
+
+            // Type command
+            await typeEffect(cmd.input, initialCmdEl);
+            await new Promise((r) => setTimeout(r, 600));
+
+            // Show output
+            const outDiv = document.createElement("div");
+            outDiv.className = "output";
+            outDiv.innerText = cmd.output;
+            outputEl.appendChild(outDiv);
+
+            await new Promise((r) => setTimeout(r, 3000));
+
+            // Clear output for next cycle if it gets too full
+            if (outputEl.children.length > 2) {
+                outputEl.innerHTML = "";
+            }
+
+            initialCmdEl.textContent = "";
+            currentCmd = (currentCmd + 1) % commands.length;
+        }
+    }
+
+    // Run when visible
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    runTerminal();
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.5 },
+    );
+
+    const terminal = document.querySelector(".terminal-container");
+    if (terminal) observer.observe(terminal);
+</script>
