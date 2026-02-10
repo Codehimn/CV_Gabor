@@ -14,9 +14,8 @@ export const translations = {
             greeting: "Hi, I'm",
             badge: "Available for new opportunities",
             roles: "Senior Full-Stack Developer,Automation Architect,Backend Specialist,Problem Solver",
-            description: "9+ years crafting scalable backend systems, automation pipelines, and full-stack solutions. From Berlin to the world.",
+            description: "11+ years crafting scalable backend systems, automation pipelines, and full-stack solutions. From Berlin to the world.",
             years: "Years Experience",
-            languages: "Languages",
             projects: "Projects",
             cta_primary: "Explore My Work",
             cta_secondary: "Get In Touch"
@@ -24,7 +23,7 @@ export const translations = {
         about: {
             label: "About Me",
             title: "Building the future, one line of code at a time.",
-            p1: "I'm a Senior Full-Stack Developer & Automation Specialist with over 9 years of professional experience. I've worked across startups and established companies in Germany, Colombia, and remotely worldwide.",
+            p1: "I'm a Senior Full-Stack Developer & Automation Specialist with over 11 years of professional experience. I've worked across startups and established companies in Germany, Colombia, and remotely worldwide.",
             p2: "My expertise spans from building robust Django/Python backends and designing automation pipelines with Puppeteer and AutoIt, to deploying scalable infrastructure with Docker, AWS, and CI/CD. I'm passionate about writing clean, efficient code that solves real-world problems.",
             highlights: {
                 backend: "Backend Expert",
@@ -32,7 +31,7 @@ export const translations = {
                 devops: "DevOps & Cloud",
                 problem: "Problem Solver"
             },
-            location: "Based in Berlin",
+            location: "Based in Medellín, Colombia",
             remote: "Open to remote worldwide"
         },
         experience: {
@@ -84,9 +83,8 @@ export const translations = {
             greeting: "Hola, soy",
             badge: "Disponible para nuevas oportunidades",
             roles: "Desarrollador Full-Stack Senior,Arquitecto de Automatización,Especialista en Backend,Solucionador de Problemas",
-            description: "9+ años creando sistemas backend escalables, pipelines de automatización y soluciones full-stack. Desde Berlín para el mundo.",
+            description: "11+ años creando sistemas backend escalables, pipelines de automatización y soluciones full-stack. Desde Berlín para el mundo.",
             years: "Años de Experiencia",
-            languages: "Idiomas",
             projects: "Proyectos",
             cta_primary: "Ver Mi Trabajo",
             cta_secondary: "Contáctame",
@@ -95,7 +93,7 @@ export const translations = {
         about: {
             label: "Sobre Mí",
             title: "Construyendo el futuro,<br />una línea de código a la vez.",
-            p1: "Soy un <strong>Desarrollador Full-Stack Senior y Especialista en Automatización</strong> con más de <strong>9 años</strong> de experiencia profesional. He trabajado en startups y empresas establecidas en <strong>Alemania, Colombia y de forma remota para todo el mundo</strong>.",
+            p1: "Soy un <strong>Desarrollador Full-Stack Senior y Especialista en Automatización</strong> con más de <strong>11 años</strong> de experiencia profesional. He trabajado en startups y empresas establecidas en <strong>Alemania, Colombia y de forma remota para todo el mundo</strong>.",
             p2: "Mi experiencia abarca desde la creación de backends robustos con <strong>Django/Python</strong> y el diseño de <strong>pipelines de automatización</strong> con Puppeteer y AutoIt, hasta el despliegue de infraestructura escalable con <strong>Docker, AWS y CI/CD</strong>. Me apasiona escribir código limpio y eficiente que resuelva problemas del mundo real.",
             highlights: {
                 backend: "Experto en Backend",
@@ -103,7 +101,7 @@ export const translations = {
                 devops: "DevOps y Cloud",
                 problem: "Solucionador de Problemas"
             },
-            location: "En Berlín",
+            location: "Basado en Medellín, Colombia",
             remote: "Abierto a remoto mundial"
         },
         experience: {

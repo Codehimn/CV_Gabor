@@ -3,68 +3,58 @@ const skillCategories = [
     {
         title: "Development Core",
         icon: "💻",
+        span: "row-2",
         skills: [
-            { name: "Python (Expert)", level: 100, years: "9+" },
-            { name: "Asyncio / Aiohttp", level: 95, years: "5+" },
-            { name: "JavaScript / TS", level: 85, years: "6+" },
-            { name: "C# .NET / VB.NET", level: 80, years: "7+" },
-            { name: "Cython / Micropython", level: 75, years: "3+" },
-            { name: "C++ / Assembly", level: 60, years: "2+" },
+            { name: "Python (Expert)", level: 100, years: "11+" },
+            { name: "Asyncio / Aiohttp", level: 95, years: "7+" },
+            { name: "JavaScript / TS", level: 85, years: "8+" },
+            { name: "C# .NET / VB.NET", level: 80, years: "9+" },
+            { name: "Cython / Micropython", level: 75, years: "5+" },
         ],
     },
     {
         title: "Automation & Testing",
         icon: "🤖",
+        span: "col-2",
         skills: [
-            { name: "Puppeteer / Pyppeteer", level: 95, years: "5+" },
-            { name: "AutoIt / Selenium", level: 90, years: "7+" },
-            { name: "pytest / Mocking", level: 90, years: "5+" },
-            { name: "OpenCV / ImageMagick", level: 80, years: "4+" },
-            { name: "Web Scraping / Crawling", level: 95, years: "8+" },
-            { name: "OllyDbg / Wireshark", level: 70, years: "4+" },
+            { name: "Puppeteer / Pyppeteer", level: 95, years: "7+" },
+            { name: "AutoIt / Selenium", level: 90, years: "11+" },
+            { name: "pytest / Mocking", level: 90, years: "7+" },
+            { name: "Web Scraping / Crawling", level: 95, years: "11+" },
         ],
     },
     {
         title: "Web & Architecture",
         icon: "🏗️",
         skills: [
-            { name: "Django / FastAPI", level: 95, years: "8+" },
-            { name: "REST / GraphQL", level: 90, years: "6+" },
-            { name: "WebSockets", level: 85, years: "5+" },
-            { name: "Nginx / Apache", level: 80, years: "7+" },
-            { name: "Messaging (RabbitMQ)", level: 75, years: "3+" },
-            { name: "Microservices", level: 85, years: "4+" },
+            { name: "Django / FastAPI", level: 95, years: "10+" },
+            { name: "REST / GraphQL", level: 90, years: "8+" },
+            { name: "Microservices", level: 85, years: "6+" },
         ],
     },
     {
         title: "Databases",
         icon: "🗄️",
         skills: [
-            { name: "PostgreSQL / MySQL", level: 90, years: "8+" },
-            { name: "Oracle (AM/CW/FM)", level: 75, years: "3+" },
-            { name: "SQL Server", level: 85, years: "6+" },
-            { name: "MongoDB / Redis", level: 80, years: "4+" },
-            { name: "SQLAlchemy / ORMs", level: 90, years: "7+" },
+            { name: "PostgreSQL / MySQL", level: 90, years: "11+" },
+            { name: "MongoDB / Redis", level: 80, years: "6+" },
+            { name: "SQLAlchemy / ORMs", level: 90, years: "9+" },
         ],
     },
     {
         title: "DevOps & Systems",
         icon: "☁️",
         skills: [
-            { name: "Docker / Portainer", level: 90, years: "6+" },
-            { name: "GitHub Actions / CI/CD", level: 90, years: "4+" },
-            { name: "AWS / GCP / Cloud", level: 80, years: "4+" },
-            { name: "Linux / Bash Scripting", level: 90, years: "8+" },
-            { name: "Puppet / Ansible", level: 70, years: "3+" },
-            { name: "Windows Server", level: 80, years: "9+" },
+            { name: "Docker / Portainer", level: 90, years: "8+" },
+            { name: "GitHub Actions / CI/CD", level: 90, years: "6+" },
+            { name: "Linux / Bash Scripting", level: 90, years: "11+" },
         ],
     },
 ];
 ---
 
-<section class="skills zoom-section" id="skills">
-    <div class="zoom-bg skills-bg"></div>
-    <div class="container zoom-content">
+<section class="skills" id="skills">
+    <div class="container">
         <div class="skills-header reveal">
             <p class="section-label" data-i18n="skills.label">
                 Technical Arsenal
@@ -78,10 +68,10 @@ const skillCategories = [
             </p>
         </div>
 
-        <div class="skills-grid stagger-children">
+        <div class="bento-grid stagger-children">
             {
                 skillCategories.map((category) => (
-                    <div class="skill-category glass-card">
+                    <div class={`bento-item glass-card ${category.span || ""}`}>
                         <div class="category-header">
                             <span class="category-icon">{category.icon}</span>
                             <h3 class="category-title">{category.title}</h3>
@@ -101,6 +91,7 @@ const skillCategories = [
                                     <div class="skill-bar">
                                         <div
                                             class="skill-progress"
+                                            data-progress={skill.level}
                                             style={`--progress: ${skill.level}%`}
                                         >
                                             <div class="skill-glow" />
@@ -146,25 +137,6 @@ const skillCategories = [
     .skills {
         padding: var(--section-padding) 0;
         position: relative;
-        overflow: hidden;
-    }
-
-    .skills::before {
-        content: "";
-        position: absolute;
-        inset: -20%;
-        background:
-            radial-gradient(
-                circle at 70% 30%,
-                rgba(56, 189, 248, 0.05) 0%,
-                transparent 50%
-            ),
-            radial-gradient(
-                circle at 30% 70%,
-                rgba(129, 140, 248, 0.05) 0%,
-                transparent 50%
-            );
-        pointer-events: none;
     }
 
     .skills-header {
@@ -172,18 +144,29 @@ const skillCategories = [
         margin-bottom: 4rem;
     }
 
-    .skills-grid {
+    .bento-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: minmax(280px, auto);
         gap: 1.5rem;
     }
 
-    .skill-category {
+    .bento-item {
         padding: 2rem;
+        display: flex;
+        flex-direction: column;
         transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .skill-category:hover {
+    .bento-item.row-2 {
+        grid-row: span 2;
+    }
+
+    .bento-item.col-2 {
+        grid-column: span 2;
+    }
+
+    .bento-item:hover {
         transform: translateY(-8px) scale(1.02);
         box-shadow:
             0 20px 40px rgba(0, 0, 0, 0.4),
@@ -213,7 +196,9 @@ const skillCategories = [
     .skill-list {
         display: flex;
         flex-direction: column;
-        gap: 1.25rem;
+        gap: 1.5rem;
+        flex: 1;
+        justify-content: center;
     }
 
     .skill-item {
@@ -242,11 +227,10 @@ const skillCategories = [
     }
 
     .skill-bar {
-        height: 6px;
+        height: 4px;
         background: rgba(255, 255, 255, 0.03);
         border-radius: 10px;
         position: relative;
-        overflow: visible;
     }
 
     .skill-progress {
@@ -263,17 +247,56 @@ const skillCategories = [
         right: -4px;
         top: 50%;
         transform: translateY(-50%);
-        width: 12px;
-        height: 12px;
+        width: 10px;
+        height: 10px;
         background: var(--accent-blue);
         border-radius: 50%;
         box-shadow: 0 0 15px var(--accent-blue);
         opacity: 0.8;
     }
 
+    @media (max-width: 1024px) {
+        .bento-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .bento-item.col-2 {
+            grid-column: span 1;
+        }
+    }
+
     @media (max-width: 768px) {
-        .skills-grid {
+        .bento-grid {
             grid-template-columns: 1fr;
+            grid-auto-rows: auto;
+        }
+        .bento-item.row-2 {
+            grid-row: span 1;
         }
     }
 </style>
+
+<script>
+    const skillObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const bars =
+                        entry.target.querySelectorAll(".skill-progress");
+                    bars.forEach((bar, i) => {
+                        const htmlBar = bar as HTMLElement;
+                        setTimeout(() => {
+                            htmlBar.style.width =
+                                htmlBar.getAttribute("data-progress") + "%";
+                        }, i * 100);
+                    });
+                    skillObserver.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.2 },
+    );
+
+    document.querySelectorAll(".bento-item").forEach((item) => {
+        skillObserver.observe(item);
+    });
+</script>
