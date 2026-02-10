@@ -7,44 +7,21 @@ const certifications = [
         link: "https://www.coursera.org/professional-certificates/google-it-automation",
     },
     {
-        title: "Automating Real-World Tasks with Python",
-        issuer: "Google",
-        icon: "🤖",
-    },
-    {
-        title: "Using Python to Interact with the Operating System",
-        issuer: "Google",
-        icon: "💻",
-    },
-    {
-        title: "Crash Course on Python",
-        issuer: "Google",
-        icon: "🚀",
-    },
-    {
-        title: "Troubleshooting and Debugging Techniques",
-        issuer: "Google",
-        icon: "🛠️",
-    },
-    {
-        title: "Configuration Management and the Cloud",
-        issuer: "Google",
-        icon: "☁️",
-    },
-    {
-        title: "Python Core & Intermediate Python",
+        title: "Python Expert / Full Stack",
         issuer: "SoloLearn",
         icon: "🧠",
+        link: "https://www.sololearn.com/certificates/CT-SPHGWWW4",
     },
     {
-        title: "Web Dev & Frameworks (JS, React, PHP, jQuery, CSS, HTML)",
-        issuer: "SoloLearn / Various",
-        icon: "🌐",
-    },
-    {
-        title: "SQL Intermediate",
+        title: "SQL & Data Management",
         issuer: "SoloLearn",
         icon: "🗄️",
+        link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z",
+    },
+    {
+        title: "Web Dev & Frameworks",
+        issuer: "SoloLearn / Various",
+        icon: "🌐",
     },
 ];
 
@@ -67,7 +44,6 @@ const languages = [
         flag: "🇬🇧",
     },
     { name: "German", level: "A2 — Elementary", percent: 40, flag: "🇩🇪" },
-    { name: "Hungarian", level: "A2 — Elementary", percent: 30, flag: "🇭🇺" },
 ];
 
 const softSkills = [
@@ -84,11 +60,11 @@ const softSkills = [
     <div class="zoom-bg education-bg"></div>
     <div class="container zoom-content">
         <div class="education-header reveal">
-            <p class="section-label">Credentials</p>
-            <h2 class="section-title">
+            <p class="section-label" data-i18n="education.label">Credentials</p>
+            <h2 class="section-title" data-i18n="education.title">
                 Education & <span class="gradient-text">Recognition</span>
             </h2>
-            <p class="section-subtitle">
+            <p class="section-subtitle" data-i18n="education.subtitle">
                 A lifetime of learning, from professional certificates to
                 international speaking.
             </p>
@@ -98,7 +74,10 @@ const softSkills = [
             <!-- Certifications -->
             <div class="edu-column reveal-left">
                 <h3 class="edu-column-title">
-                    <span class="edu-icon">📜</span> Professional Certifications
+                    <span class="edu-icon">📜</span>
+                    <span data-i18n="education.cert_title"
+                        >Professional Certifications</span
+                    >
                 </h3>
                 <div class="certifications-list stagger-children">
                     {
@@ -147,7 +126,10 @@ const softSkills = [
             <!-- Languages & Public Speaking -->
             <div class="edu-column reveal-right">
                 <h3 class="edu-column-title">
-                    <span class="edu-icon">🎙️</span> Speaking & Community
+                    <span class="edu-icon">🎙️</span>
+                    <span data-i18n="education.speaking_title"
+                        >Speaking & Community</span
+                    >
                 </h3>
                 {
                     talks.map((talk) => (
@@ -163,6 +145,7 @@ const softSkills = [
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="btn btn-outline talk-btn"
+                                    data-i18n="education.view_talk"
                                 >
                                     View Talk
                                 </a>
@@ -172,7 +155,8 @@ const softSkills = [
                 }
 
                 <h3 class="edu-column-title" style="margin-top: 3rem;">
-                    <span class="edu-icon">🌍</span> Languages
+                    <span class="edu-icon">🌍</span>
+                    <span data-i18n="education.languages_title">Languages</span>
                 </h3>
                 <div class="languages-list">
                     {
@@ -195,7 +179,10 @@ const softSkills = [
                 </div>
 
                 <h3 class="edu-column-title" style="margin-top: 3rem;">
-                    <span class="edu-icon">✨</span> Core Competencies
+                    <span class="edu-icon">✨</span>
+                    <span data-i18n="education.competencies_title"
+                        >Core Competencies</span
+                    >
                 </h3>
                 <div class="soft-skills">
                     {

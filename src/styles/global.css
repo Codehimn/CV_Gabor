@@ -60,7 +60,9 @@
 }
 
 /* ---------- Reset & Base ---------- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -111,7 +113,12 @@ a:hover {
 }
 
 /* ---------- Typography ---------- */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.2;
   font-weight: 700;
 }
@@ -239,8 +246,15 @@ section {
 }
 
 @keyframes pulse-green {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-  50% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+  }
 }
 
 /* ---------- Scroll Reveal Animations ---------- */
@@ -289,24 +303,53 @@ section {
 }
 
 /* Stagger children */
-.stagger-children > * {
+.stagger-children>* {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
 }
 
-.stagger-children.visible > *:nth-child(1) { transition-delay: 0.05s; }
-.stagger-children.visible > *:nth-child(2) { transition-delay: 0.1s; }
-.stagger-children.visible > *:nth-child(3) { transition-delay: 0.15s; }
-.stagger-children.visible > *:nth-child(4) { transition-delay: 0.2s; }
-.stagger-children.visible > *:nth-child(5) { transition-delay: 0.25s; }
-.stagger-children.visible > *:nth-child(6) { transition-delay: 0.3s; }
-.stagger-children.visible > *:nth-child(7) { transition-delay: 0.35s; }
-.stagger-children.visible > *:nth-child(8) { transition-delay: 0.4s; }
-.stagger-children.visible > *:nth-child(9) { transition-delay: 0.45s; }
-.stagger-children.visible > *:nth-child(10) { transition-delay: 0.5s; }
+.stagger-children.visible>*:nth-child(1) {
+  transition-delay: 0.05s;
+}
 
-.stagger-children.visible > * {
+.stagger-children.visible>*:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.stagger-children.visible>*:nth-child(3) {
+  transition-delay: 0.15s;
+}
+
+.stagger-children.visible>*:nth-child(4) {
+  transition-delay: 0.2s;
+}
+
+.stagger-children.visible>*:nth-child(5) {
+  transition-delay: 0.25s;
+}
+
+.stagger-children.visible>*:nth-child(6) {
+  transition-delay: 0.3s;
+}
+
+.stagger-children.visible>*:nth-child(7) {
+  transition-delay: 0.35s;
+}
+
+.stagger-children.visible>*:nth-child(8) {
+  transition-delay: 0.4s;
+}
+
+.stagger-children.visible>*:nth-child(9) {
+  transition-delay: 0.45s;
+}
+
+.stagger-children.visible>*:nth-child(10) {
+  transition-delay: 0.5s;
+}
+
+.stagger-children.visible>* {
   opacity: 1;
   transform: translateY(0);
 }
@@ -377,19 +420,111 @@ section {
   margin: 0;
 }
 
-/* ---------- Responsive ---------- */
+/* ---------- Custom Cursor ---------- */
+.custom-cursor {
+  width: 12px;
+  height: 12px;
+  background: var(--accent-blue);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background 0.3s, opacity 0.3s;
+  mix-blend-mode: difference;
+}
+
 @media (max-width: 768px) {
-  .btn-whatsapp {
-    width: 50px;
-    height: 50px;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    font-size: 1.2rem;
+  .custom-cursor {
+    display: none;
   }
 }
 
-@media (max-width: 480px) {
-  :root {
-    --section-padding: clamp(3rem, 8vh, 5rem);
+.custom-cursor.hover {
+  width: 40px;
+  height: 40px;
+  background: rgba(56, 189, 248, 0.3);
+  border: 2px solid var(--accent-blue);
+}
+
+.custom-cursor.active {
+  transform: translate(-50%, -50%) scale(0.7);
+  background: var(--accent-rose);
+}
+
+/* ---------- Scroll Progress ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  width: 0;
+  z-index: 1001;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  transition: width 0.1s linear;
+}
+
+/* ---------- Language Toggle ---------- */
+.lang-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1.5rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+}
+
+.lang-btn:hover {
+  border-color: var(--accent-blue);
+  color: var(--text-primary);
+}
+
+.lang-btn.active {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+/* ---------- Performance Optimizations ---------- */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+#hero {
+  content-visibility: visible;
+}
+
+/* ---------- Component Refinements ---------- */
+.glass-card {
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.gradient-text {
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
+}
+
+/* Fixes for mobile */
+@media (max-width: 768px) {
+  .lang-toggle {
+    margin: 1rem 0 0 0;
+    padding: 1rem 0 0 0;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    justify-content: center;
   }
 }
