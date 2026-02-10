@@ -1,0 +1,29 @@
+---
+import About from "../components/About.astro";
+import Contact from "../components/Contact.astro";
+import Education from "../components/Education.astro";
+import Experience from "../components/Experience.astro";
+import Hero from "../components/Hero.astro";
+import Navbar from "../components/Navbar.astro";
+import Projects from "../components/Projects.astro";
+import Skills from "../components/Skills.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+	<Navbar />
+	<main>
+		<Hero />
+		<div class="section-divider"></div>
+		<About />
+		<div class="section-divider"></div>
+		<Experience />
+		<div class="section-divider"></div>
+		<Skills />
+		<Projects />
+		<div class="section-divider"></div>
+		<Education />
+		<div class="section-divider"></div>
+		<Contact />
+	</main>
+</Layout>

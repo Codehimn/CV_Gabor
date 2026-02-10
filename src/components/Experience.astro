@@ -1,0 +1,369 @@
+---
+const experiences = [
+    {
+        company: "Zattoo",
+        role: "Backend Developer",
+        period: "Dec 2019 — Jul 2023",
+        location: "Berlin, Germany",
+        description:
+            "Developed and maintained internal tools using Django. Collaborated with cross-functional teams to unify assets and style sources. Implemented pytest and GitHub Actions for testing and CI/CD. Designed and developed an internal mocking tool for API testing.",
+        tags: [
+            "Django",
+            "Python",
+            "pytest",
+            "GitHub Actions",
+            "REST APIs",
+            "Docker",
+            "Mocking",
+        ],
+        color: "blue",
+        icon: "📺",
+    },
+    {
+        company: "Conectsen",
+        role: "IoT Developer",
+        period: "Aug 2019 — Oct 2019",
+        location: "Colombia / Remote",
+        description:
+            "Created an IoT solution to monitor diverse assets (vehicles ODB2, helmets, cameras). Enhanced data collection accuracy with real-time communication and analysis algorithms. Customized solutions for different asset types.",
+        tags: [
+            "Python",
+            "IoT",
+            "Real-time",
+            "WebSockets",
+            "ODB2",
+            "Sensor Data",
+        ],
+        color: "emerald",
+        icon: "📡",
+    },
+    {
+        company: "Yaxa",
+        role: "Senior Automation Developer",
+        period: "Oct 2017 — Jul 2019",
+        location: "Colombia",
+        description:
+            "Platform maintenance and creation of automatic messaging, purchase, and status update bots. Managed massive product uploads and price updates. Designed and implemented backend/web apps for internal clients via APIs.",
+        tags: ["Automation", "Bots", "API Integration", "Backend", "Scaling"],
+        color: "indigo",
+        icon: "🤖",
+    },
+    {
+        company: "Yaxa",
+        role: "Software Developer",
+        period: "Sep 2016 — Oct 2017",
+        location: "Colombia",
+        description:
+            "Automated repetitive tasks in logistics, accounting, and customer service. Focused on development automation, new functionalities, and system updates to improve operational efficiency.",
+        tags: ["C#.NET", "VB.NET", "VBA", "SQL Server", "Automation"],
+        color: "indigo",
+        icon: "⚙️",
+    },
+    {
+        company: "Freelancer.com",
+        role: "Automation Developer",
+        period: "Sep 2016 — Present",
+        location: "Remote",
+        description:
+            "Designed and built automation infrastructures and tools from scratch. Integrated code with various organizational and third-party APIs. Developed communication test builder tools and utilized image analysis (OpenCV/ImageMagick).",
+        tags: [
+            "Puppeteer",
+            "AutoIt",
+            "OpenCV",
+            "ImageMagick",
+            "Web Scraping",
+            "Cython",
+        ],
+        color: "rose",
+        icon: "🚀",
+    },
+    {
+        company: "MADISA S.A.S",
+        role: "Computer Technician",
+        period: "Feb 2010 — Dec 2015",
+        location: "Colombia",
+        description:
+            "Installed and configured computers/software for customers. Provided support and improvements for the GSBase management platform, contributing to the development of new settings.",
+        tags: [
+            "GSBase",
+            "Hardware",
+            "IT Support",
+            "Networking",
+            "Technical Setup",
+        ],
+        color: "blue",
+        icon: "🔧",
+    },
+];
+---
+
+<section class="experience zoom-section" id="experience">
+    <div class="zoom-bg experience-bg"></div>
+    <div class="container experience-container">
+        <div class="experience-header reveal">
+            <p class="section-label">Career Path</p>
+            <h2 class="section-title">
+                Where I've <span class="gradient-text">Made Impact</span>
+            </h2>
+            <p class="section-subtitle">
+                From IT support to senior automation and backend development — a
+                journey of continuous growth.
+            </p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-line"></div>
+
+            {
+                experiences.map((exp, i) => (
+                    <div
+                        class={`timeline-item ${i % 2 === 0 ? "left" : "right"} reveal`}
+                        style={`transition-delay: ${i * 0.1}s`}
+                    >
+                        <div class="timeline-dot-wrapper">
+                            <div class={`timeline-dot dot-${exp.color}`}>
+                                <span>{exp.icon}</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-card glass-card">
+                            <div class="card-header">
+                                <div>
+                                    <h3 class="card-company">{exp.company}</h3>
+                                    <p class="card-role">{exp.role}</p>
+                                </div>
+                                <div class="card-meta">
+                                    <span class="card-period">
+                                        {exp.period}
+                                    </span>
+                                    <span class="card-location">
+                                        📍 {exp.location}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <p class="card-description">{exp.description}</p>
+
+                            <div class="card-tags">
+                                {exp.tags.map((tag) => (
+                                    <span class={`tag tag--${exp.color}`}>
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .experience {
+        padding: var(--section-padding) 0;
+        min-height: auto;
+        display: block;
+    }
+
+    .experience-bg {
+        background: radial-gradient(
+            ellipse 50% 40% at 70% 30%,
+            rgba(56, 189, 248, 0.04) 0%,
+            transparent 60%
+        );
+    }
+
+    .experience-container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .experience-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .section-label {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--accent-blue);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+    }
+
+    .timeline {
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .timeline-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(
+            180deg,
+            transparent,
+            var(--accent-blue),
+            var(--accent-indigo),
+            var(--accent-rose),
+            transparent
+        );
+        transform: translateX(-50%);
+    }
+
+    .timeline-item {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 3rem;
+        width: 50%;
+    }
+
+    .timeline-item.left {
+        padding-right: 3rem;
+        justify-content: flex-end;
+    }
+
+    .timeline-item.right {
+        margin-left: 50%;
+        padding-left: 3rem;
+    }
+
+    .timeline-dot-wrapper {
+        position: absolute;
+        z-index: 3;
+    }
+
+    .timeline-item.left .timeline-dot-wrapper {
+        right: -20px;
+    }
+
+    .timeline-item.right .timeline-dot-wrapper {
+        left: -20px;
+    }
+
+    .timeline-dot {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        border: 3px solid var(--bg-primary);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+    }
+
+    .dot-blue {
+        background: linear-gradient(135deg, #1e3a5f, #2563eb);
+    }
+    .dot-indigo {
+        background: linear-gradient(135deg, #312e81, #6366f1);
+    }
+    .dot-rose {
+        background: linear-gradient(135deg, #4c1d3d, #db2777);
+    }
+    .dot-emerald {
+        background: linear-gradient(135deg, #064e3b, #10b981);
+    }
+
+    .timeline-card {
+        padding: 1.8rem;
+        max-width: 380px;
+        width: 100%;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        gap: 1rem;
+    }
+
+    .card-company {
+        font-size: 1.3rem;
+        font-weight: 800;
+        margin-bottom: 0.2rem;
+    }
+
+    .card-role {
+        font-size: 0.9rem;
+        color: var(--accent-blue);
+        font-weight: 600;
+    }
+
+    .card-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.2rem;
+        flex-shrink: 0;
+    }
+
+    .card-period {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    .card-location {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    .card-description {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin-bottom: 1.2rem;
+    }
+
+    .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+    }
+
+    @media (max-width: 768px) {
+        .timeline-line {
+            left: 20px;
+        }
+
+        .timeline-item {
+            width: 100%;
+            padding-left: 60px !important;
+            padding-right: 0 !important;
+            justify-content: flex-start !important;
+        }
+
+        .timeline-item.right {
+            margin-left: 0;
+        }
+
+        .timeline-dot-wrapper {
+            left: 0 !important;
+            right: auto !important;
+        }
+
+        .timeline-card {
+            max-width: 100%;
+        }
+
+        .card-header {
+            flex-direction: column;
+        }
+
+        .card-meta {
+            align-items: flex-start;
+        }
+    }
+</style>

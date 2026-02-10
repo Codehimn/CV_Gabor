@@ -1,0 +1,433 @@
+---
+const certifications = [
+    {
+        title: "Google IT Automation with Python Professional Certificate",
+        issuer: "Google / Coursera",
+        icon: "🐍",
+        link: "https://www.coursera.org/professional-certificates/google-it-automation",
+    },
+    {
+        title: "Automating Real-World Tasks with Python",
+        issuer: "Google",
+        icon: "🤖",
+    },
+    {
+        title: "Using Python to Interact with the Operating System",
+        issuer: "Google",
+        icon: "💻",
+    },
+    {
+        title: "Crash Course on Python",
+        issuer: "Google",
+        icon: "🚀",
+    },
+    {
+        title: "Troubleshooting and Debugging Techniques",
+        issuer: "Google",
+        icon: "🛠️",
+    },
+    {
+        title: "Configuration Management and the Cloud",
+        issuer: "Google",
+        icon: "☁️",
+    },
+    {
+        title: "Python Core & Intermediate Python",
+        issuer: "SoloLearn",
+        icon: "🧠",
+    },
+    {
+        title: "Web Dev & Frameworks (JS, React, PHP, jQuery, CSS, HTML)",
+        issuer: "SoloLearn / Various",
+        icon: "🌐",
+    },
+    {
+        title: "SQL Intermediate",
+        issuer: "SoloLearn",
+        icon: "🗄️",
+    },
+];
+
+const talks = [
+    {
+        title: "Asynchronism: Possible Errors and How to Solve Them",
+        venue: "Meetup Talk — Guest Speaker",
+        icon: "🎤",
+        link: "https://bit.ly/asincronismo-python",
+        color: "indigo",
+    },
+];
+
+const languages = [
+    { name: "Spanish", level: "Mother Tongue", percent: 100, flag: "🇪🇸" },
+    {
+        name: "English",
+        level: "B2 — Upper Intermediate",
+        percent: 80,
+        flag: "🇬🇧",
+    },
+    { name: "German", level: "A2 — Elementary", percent: 40, flag: "🇩🇪" },
+    { name: "Hungarian", level: "A2 — Elementary", percent: 30, flag: "🇭🇺" },
+];
+
+const softSkills = [
+    { name: "Team Collaboration", icon: "🤝" },
+    { name: "Problem Solving", icon: "🧩" },
+    { name: "Adaptability", icon: "🔄" },
+    { name: "Creative Thinking", icon: "💡" },
+    { name: "Self-taught Learner", icon: "📚" },
+    { name: "Cross-functional Collab", icon: "🏢" },
+];
+---
+
+<section class="education zoom-section" id="education">
+    <div class="zoom-bg education-bg"></div>
+    <div class="container zoom-content">
+        <div class="education-header reveal">
+            <p class="section-label">Credentials</p>
+            <h2 class="section-title">
+                Education & <span class="gradient-text">Recognition</span>
+            </h2>
+            <p class="section-subtitle">
+                A lifetime of learning, from professional certificates to
+                international speaking.
+            </p>
+        </div>
+
+        <div class="education-grid">
+            <!-- Certifications -->
+            <div class="edu-column reveal-left">
+                <h3 class="edu-column-title">
+                    <span class="edu-icon">📜</span> Professional Certifications
+                </h3>
+                <div class="certifications-list stagger-children">
+                    {
+                        certifications.map((cert) => (
+                            <div class="edu-card glass-card">
+                                <span class="edu-card-icon">{cert.icon}</span>
+                                <div class="edu-card-content">
+                                    <strong>{cert.title}</strong>
+                                    <p class="edu-issuer">{cert.issuer}</p>
+                                </div>
+                                {cert.link && (
+                                    <a
+                                        href={cert.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="cert-link"
+                                        aria-label="View Certification"
+                                    >
+                                        <svg
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                            <polyline points="15 3 21 3 21 9" />
+                                            <line
+                                                x1="10"
+                                                y1="14"
+                                                x2="21"
+                                                y2="3"
+                                            />
+                                        </svg>
+                                    </a>
+                                )}
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <!-- Languages & Public Speaking -->
+            <div class="edu-column reveal-right">
+                <h3 class="edu-column-title">
+                    <span class="edu-icon">🎙️</span> Speaking & Community
+                </h3>
+                {
+                    talks.map((talk) => (
+                        <div class="edu-card glass-card talk-card">
+                            <span class="edu-card-icon">{talk.icon}</span>
+                            <div class="edu-card-content">
+                                <strong>{talk.title}</strong>
+                                <p class="edu-issuer">{talk.venue}</p>
+                            </div>
+                            {talk.link && (
+                                <a
+                                    href={talk.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="btn btn-outline talk-btn"
+                                >
+                                    View Talk
+                                </a>
+                            )}
+                        </div>
+                    ))
+                }
+
+                <h3 class="edu-column-title" style="margin-top: 3rem;">
+                    <span class="edu-icon">🌍</span> Languages
+                </h3>
+                <div class="languages-list">
+                    {
+                        languages.map((lang) => (
+                            <div class="lang-item">
+                                <div class="lang-info">
+                                    <span class="lang-flag">{lang.flag}</span>
+                                    <span class="lang-name">{lang.name}</span>
+                                    <span class="lang-level">{lang.level}</span>
+                                </div>
+                                <div class="lang-bar">
+                                    <div
+                                        class="lang-progress"
+                                        style={`--progress: ${lang.percent}%`}
+                                    />
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+
+                <h3 class="edu-column-title" style="margin-top: 3rem;">
+                    <span class="edu-icon">✨</span> Core Competencies
+                </h3>
+                <div class="soft-skills">
+                    {
+                        softSkills.map((skill) => (
+                            <span class="soft-tag">
+                                {skill.icon} {skill.name}
+                            </span>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const langObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const bars =
+                        entry.target.querySelectorAll(".lang-progress");
+                    bars.forEach((bar, i) => {
+                        const htmlBar = bar as HTMLElement;
+                        setTimeout(() => {
+                            htmlBar.style.width =
+                                htmlBar.style.getPropertyValue("--progress");
+                        }, i * 150);
+                    });
+                    langObserver.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.3 },
+    );
+
+    document
+        .querySelectorAll(".languages-list")
+        .forEach((el) => langObserver.observe(el));
+</script>
+
+<style>
+    .education {
+        padding: var(--section-padding) 0;
+        position: relative;
+    }
+
+    .education-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .section-label {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--accent-blue);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+    }
+
+    .education-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 4rem;
+    }
+
+    .edu-column-title {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.25rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+    }
+
+    .edu-icon {
+        font-size: 1.5rem;
+    }
+
+    .edu-card {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        padding: 1.25rem;
+        margin-bottom: 0.75rem;
+        position: relative;
+    }
+
+    .talk-card {
+        border-left: 4px solid var(--accent-indigo);
+    }
+
+    .edu-card-icon {
+        font-size: 1.75rem;
+        flex-shrink: 0;
+    }
+
+    .edu-card-content {
+        flex: 1;
+    }
+
+    .edu-card strong {
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .edu-issuer {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        font-family: var(--font-mono);
+    }
+
+    .cert-link {
+        color: var(--text-muted);
+        transition: all 0.3s;
+        opacity: 0.4;
+    }
+
+    .cert-link:hover {
+        color: var(--accent-blue);
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    .talk-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
+    }
+
+    .lang-item {
+        margin-bottom: 1.25rem;
+    }
+
+    .lang-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .lang-flag {
+        font-size: 1.4rem;
+    }
+
+    .lang-name {
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    .lang-level {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-left: auto;
+    }
+
+    .lang-bar {
+        height: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .lang-progress {
+        height: 100%;
+        width: 0;
+        border-radius: 5px;
+        background: var(--gradient-primary);
+        transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+    }
+
+    .lang-progress::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 20px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2)
+        );
+    }
+
+    .soft-skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+
+    .soft-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 50px;
+        background: rgba(129, 140, 248, 0.06);
+        border: 1px solid rgba(129, 140, 248, 0.1);
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .soft-tag:hover {
+        background: rgba(129, 140, 248, 0.12);
+        border-color: rgba(129, 140, 248, 0.3);
+        color: var(--text-primary);
+        transform: translateY(-3px);
+    }
+
+    @media (max-width: 1024px) {
+        .education-grid {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .edu-card {
+            padding: 1rem;
+        }
+        .talk-btn {
+            display: none;
+        }
+    }
+</style>

@@ -1,0 +1,249 @@
+---
+const navItems = [
+    { href: "#about", label: "About" },
+    { href: "#experience", label: "Experience" },
+    { href: "#skills", label: "Skills" },
+    { href: "#projects", label: "Projects" },
+    { href: "#education", label: "Education" },
+    { href: "#contact", label: "Contact" },
+];
+---
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="nav-logo">
+            <span class="logo-bracket">&lt;</span>
+            <span class="logo-name">GF</span>
+            <span class="logo-bracket">/&gt;</span>
+        </a>
+
+        <ul class="nav-links">
+            {
+                navItems.map((item) => (
+                    <li>
+                        <a href={item.href} class="nav-link">
+                            {item.label}
+                        </a>
+                    </li>
+                ))
+            }
+            <li>
+                <a
+                    href="https://wa.me/491789752993?text=Hi%20Gabor!"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-primary nav-cta"
+                >
+                    Let's Talk
+                </a>
+            </li>
+        </ul>
+
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
+
+<style>
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        padding: 1rem 0;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .navbar.scrolled {
+        background: rgba(10, 14, 26, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(56, 189, 248, 0.08);
+        padding: 0.6rem 0;
+    }
+
+    .nav-container {
+        width: min(1200px, 90vw);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .nav-logo {
+        font-family: var(--font-mono);
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--text-primary);
+        transition: all 0.3s;
+    }
+
+    .logo-bracket {
+        color: var(--accent-blue);
+    }
+
+    .logo-name {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .nav-logo:hover {
+        transform: scale(1.05);
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        gap: 0.25rem;
+    }
+
+    .nav-link {
+        padding: 0.5rem 0.9rem;
+        color: var(--text-secondary);
+        font-size: 0.88rem;
+        font-weight: 500;
+        text-decoration: none;
+        border-radius: var(--radius-sm);
+        transition: all 0.3s;
+        position: relative;
+    }
+
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0.2rem;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        width: 60%;
+        height: 2px;
+        background: var(--gradient-primary);
+        border-radius: 2px;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-link:hover {
+        color: var(--text-primary);
+    }
+
+    .nav-link:hover::after {
+        transform: translateX(-50%) scaleX(1);
+    }
+
+    .nav-cta {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.85rem;
+        margin-left: 0.5rem;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 110;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--text-primary);
+        border-radius: 2px;
+        transition: all 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+        .hamburger {
+            display: flex;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 75vw;
+            max-width: 320px;
+            height: 100vh;
+            background: rgba(10, 14, 26, 0.97);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+            transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border-left: 1px solid rgba(56, 189, 248, 0.1);
+        }
+
+        .nav-links.open {
+            right: 0;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            padding: 0.8rem 1rem;
+        }
+
+        .nav-cta {
+            margin-left: 0;
+            margin-top: 1rem;
+            text-align: center;
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+    const navbar = document.querySelector(".navbar") as HTMLElement | null;
+    const hamburger = document.querySelector(
+        ".hamburger",
+    ) as HTMLElement | null;
+    const navLinks = document.querySelector(".nav-links") as HTMLElement | null;
+
+    if (navbar) {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
+            }
+        });
+    }
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navLinks.classList.toggle("open");
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll(".nav-link").forEach((link) => {
+            link.addEventListener("click", () => {
+                hamburger.classList.remove("active");
+                navLinks.classList.remove("open");
+            });
+        });
+    }
+</script>
