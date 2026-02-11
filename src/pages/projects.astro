@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import ProjectsComponent from "../components/Projects.astro";
+import SkillsComponent from "../components/Skills.astro";
+---
+
+<Layout title="Projects & Skills | Gabor Flandorffer">
+    <Navbar />
+    <main class="pt-24">
+        <SkillsComponent />
+        <div class="section-divider"></div>
+        <ProjectsComponent />
+    </main>
+</Layout>

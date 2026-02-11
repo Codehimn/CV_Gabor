@@ -19,33 +19,27 @@ const navItems = [
 
         <ul class="nav-links">
             <li>
-                <a href="#about" class="nav-link" data-i18n="nav.about">About</a
-                >
+                <a href="/" class="nav-link" data-i18n="nav.about">Home</a>
             </li>
             <li>
                 <a
-                    href="#experience"
+                    href="/experience"
                     class="nav-link"
                     data-i18n="nav.experience">Experience</a
                 >
             </li>
             <li>
-                <a href="#skills" class="nav-link" data-i18n="nav.skills"
-                    >Skills</a
-                >
-            </li>
-            <li>
-                <a href="#projects" class="nav-link" data-i18n="nav.projects"
+                <a href="/projects" class="nav-link" data-i18n="nav.projects"
                     >Projects</a
                 >
             </li>
             <li>
-                <a href="#education" class="nav-link" data-i18n="nav.education"
-                    >Education</a
+                <a href="/ai" class="nav-link nav-link-ai" data-i18n="nav.ai"
+                    >Ask AI ✨</a
                 >
             </li>
             <li>
-                <a href="#contact" class="nav-link" data-i18n="nav.contact"
+                <a href="/contact" class="nav-link" data-i18n="nav.contact"
                     >Contact</a
                 >
             </li>
@@ -165,8 +159,20 @@ const navItems = [
         color: var(--text-primary);
     }
 
-    .nav-link:hover::after {
+    .nav-link:hover::after,
+    .nav-link.active::after {
         transform: translateX(-50%) scaleX(1);
+    }
+
+    .nav-link.active {
+        color: var(--text-primary);
+    }
+
+    .nav-link-ai {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 700;
     }
 
     .nav-cta {
@@ -368,6 +374,18 @@ const navItems = [
                 hamburger.classList.remove("active");
                 navLinks.classList.remove("open");
             });
+        });
+
+        // Current Path Highlighting
+        const currentPath = window.location.pathname;
+        navLinks.querySelectorAll(".nav-link").forEach((link) => {
+            const href = link.getAttribute("href");
+            if (
+                href === currentPath ||
+                (href !== "/" && currentPath.startsWith(href || ""))
+            ) {
+                link.classList.add("active");
+            }
         });
     }
 </script>

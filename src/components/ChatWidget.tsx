@@ -5,8 +5,19 @@ import { Bot, MessageSquare, Send, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { agentKnowledge } from '../data/agent-knowledge';
 
-export default function ChatWidget() {
-    const [isOpen, setIsOpen] = useState(false);
+interface Props {
+    mode?: 'widget' | 'page';
+}
+
+export default function ChatWidget({ mode = 'widget' }: Props) {
+    const isPageMode = mode === 'page';
+    const [isOpen, setIsOpen] = useState(isPageMode);
+
+    // Ensure it stays open in page mode
+    useEffect(() => {
+        if (isPageMode) setIsOpen(true);
+    }, [isPageMode]);
+
     const [messages, setMessages] = useState<{ type: 'user' | 'agent'; text: string; actions?: any[] }[]>([
         { type: 'agent', text: "¡Hola! Soy GaborGPT 🤖. Pregúntame sobre mi experiencia, stack tecnológico o tarifas." }
     ]);
@@ -59,7 +70,7 @@ export default function ChatWidget() {
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div className={isPageMode ? "w-full h-full flex items-center justify-center p-4" : "fixed bottom-6 right-6 z-50 flex flex-col items-end"}>
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
@@ -67,8 +78,11 @@ export default function ChatWidget() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.9 }}
                         transition={{ duration: 0.2 }}
-                        className="mb-4 w-80 sm:w-96 bg-gray-900/90 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
-                        style={{ maxHeight: '600px', height: '500px' }}
+                        className={`
+                            ${isPageMode ? "w-full max-w-4xl h-[80vh] border border-gray-700/50 bg-gray-900/50 backdrop-blur-xl" : "mb-4 w-80 sm:w-96 bg-gray-900/90 backdrop-blur-md border border-gray-700/50"} 
+                            rounded-2xl shadow-2xl overflow-hidden flex flex-col
+                        `}
+                        style={{ maxHeight: isPageMode ? 'none' : '600px', height: isPageMode ? '100%' : '500px' }}
                     >
                         {/* Header */}
                         <div className="p-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-b border-gray-700/50 flex justify-between items-center backdrop-blur-md">
@@ -83,8 +97,8 @@ export default function ChatWidget() {
                                 </div>
                             </div>
                             <button
-                                onClick={() => setIsOpen(false)}
-                                className="text-gray-400 hover:text-white transition-colors p-1 rounded-full hover:bg-white/10"
+                                onClick={() => !isPageMode && setIsOpen(false)}
+                                className={`text-gray-400 hover:text-white transition-colors p-1 rounded-full hover:bg-white/10 ${isPageMode ? 'hidden' : ''}`}
                             >
                                 <X size={18} />
                             </button>
@@ -161,23 +175,25 @@ export default function ChatWidget() {
                 )}
             </AnimatePresence>
 
-            {/* Floating Trigger Button */}
-            <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setIsOpen(!isOpen)}
-                className={`p-4 rounded-full shadow-lg transition-all duration-300 relative group ${isOpen ? 'bg-gray-800 text-white' : 'bg-gradient-to-br from-blue-600 to-purple-600 text-white'
-                    }`}
-            >
-                <span className="absolute inset-0 rounded-full bg-white/20 animate-ping group-hover:animate-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            {/* Floating Trigger Button (Only in widget mode) */}
+            {!isPageMode && (
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsOpen(!isOpen)}
+                    className={`p-4 rounded-full shadow-lg transition-all duration-300 relative group ${isOpen ? 'bg-gray-800 text-white' : 'bg-gradient-to-br from-blue-600 to-purple-600 text-white'
+                        }`}
+                >
+                    <span className="absolute inset-0 rounded-full bg-white/20 animate-ping group-hover:animate-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
 
-                {isOpen ? <X size={24} /> : <MessageSquare size={24} className="fill-current" />}
+                    {isOpen ? <X size={24} /> : <MessageSquare size={24} className="fill-current" />}
 
-                {/* Notification Badge if closed */}
-                {!isOpen && (
-                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-gray-900"></span>
-                )}
-            </motion.button>
+                    {/* Notification Badge if closed */}
+                    {!isOpen && (
+                        <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-gray-900"></span>
+                    )}
+                </motion.button>
+            )}
         </div>
     );
 }
