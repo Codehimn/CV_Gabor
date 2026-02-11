@@ -21,15 +21,15 @@ export default function ParticlesBackground() {
                     value: "transparent",
                 },
             },
-            fpsLimit: 60,
+            fpsLimit: 30, // Reduced to 30 for better performance
             interactivity: {
                 events: {
                     onClick: {
-                        enable: true,
+                        enable: false, // Disabled for performance
                         mode: "push",
                     },
                     onHover: {
-                        enable: true,
+                        enable: false, // Disabled for performance
                         mode: "repulse",
                     },
                 },
@@ -50,7 +50,7 @@ export default function ParticlesBackground() {
                 links: {
                     color: "#818cf8", // Indigo
                     distance: 150,
-                    enable: true,
+                    enable: false, // Disabled for performance - reduce calculations
                     opacity: 0.3,
                     width: 1,
                 },
@@ -61,7 +61,7 @@ export default function ParticlesBackground() {
                         default: "bounce" as const,
                     },
                     random: false,
-                    speed: 0.6,
+                    speed: 0.3, // Reduced speed for smoother performance
                     straight: false,
                 },
                 number: {
@@ -69,10 +69,10 @@ export default function ParticlesBackground() {
                         enable: true,
                         area: 1000,
                     },
-                    value: 30,
+                    value: 20, // Reduced from 30 to 20 for better performance
                 },
                 opacity: {
-                    value: 0.3,
+                    value: 0.2, // Reduced opacity for subtler effect
                 },
                 shape: {
                     type: "circle",

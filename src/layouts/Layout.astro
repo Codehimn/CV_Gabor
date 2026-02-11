@@ -36,6 +36,25 @@ const {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="/images/og_image_premium.png" />
 
+    <!-- Performance: Preconnect to font providers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Performance: Preload critical fonts -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600&display=swap"
+      /></noscript
+    >
+
     <link rel="icon" type="image/x-icon" href="/images/profile/favicon.ico" />
     <link rel="apple-touch-icon" href="/images/profile/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
@@ -58,6 +77,7 @@ const {
       href="https://wa.me/491789752993?text=Hi%20Gabor!%20I%20saw%20your%20portfolio%20and%20I'd%20like%20to%20chat."
       target="_blank"
       rel="noopener noreferrer"
+      id="floating-whatsapp"
       class="btn btn-whatsapp"
       aria-label="Contact via WhatsApp"
     >

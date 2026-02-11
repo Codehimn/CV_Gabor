@@ -8,7 +8,8 @@ export const translations = {
             ai: "Ask AI ✨",
             contact: "Contact",
             cta: "Let's Talk",
-            freelancer: "Freelancer"
+            freelancer: "Freelancer",
+            whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat."
         },
         hero: {
             greeting: "Hi, I'm",
@@ -178,27 +179,27 @@ export const translations = {
             activities_title: "Activities & Community",
             view_talk: "View Talk",
             certs_google: [
-                { title: "Google IT Automation with Python Professional Certificate", issuer: "Google / Coursera", link: "https://www.coursera.org/professional-certificates/google-it-automation" },
-                { title: "Automating Real-World Tasks with Python", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/26H3VDUEB9N9" },
-                { title: "Using Python to Interact with the Operating System", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/8WRBNTJ98T4F" },
-                { title: "Crash Course on Python", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/M7W7V3Z9N8WF" },
-                { title: "Troubleshooting and Debugging Techniques", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/938HT2G6C877" },
-                { title: "Configuration Management and the Cloud", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/R9T9UZZ9W7WF" }
+                { title: "Google IT Automation with Python Professional Certificate", issuer: "Google / Coursera", link: "https://www.credly.com/badges/afa01904-ac4f-4d9c-a7d5-d3a91b315669" },
+                { title: "Automating Real-World Tasks with Python", issuer: "Google / Coursera", link: "https://coursera.org/verify/26H3VDUEB9N9" },
+                { title: "Using Python to Interact with the Operating System", issuer: "Google / Coursera", link: "https://coursera.org/verify/8WRBNTJ98T4F" },
+                { title: "Crash Course on Python", issuer: "Google / Coursera", link: "https://coursera.org/verify/SKLYKDYFV2DN" },
+                { title: "Troubleshooting and Debugging Techniques", issuer: "Google / Coursera", link: "https://coursera.org/verify/NU96DZRZVKCQ" },
+                { title: "Configuration Management and the Cloud", issuer: "Google / Coursera", link: "https://coursera.org/verify/YJ7NXUEBR62R" }
             ],
             certs_web: [
-                { title: "React", issuer: "SoloLearn", link: "" },
-                { title: "JavaScript Tutorial", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-V59HTXRM" },
-                { title: "PHP Tutorial Course", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-KPS7H39V" },
-                { title: "jQuery Tutorial", issuer: "SoloLearn", link: "" },
-                { title: "CSS Fundamentals", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-B6U9J1K6" },
-                { title: "HTML Fundamentals", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" }
+                { title: "React", issuer: "SoloLearn", link: "https://cursa.app/es/mi-certificado/certd08087387ac087d2e908db969cef05e3" },
+                { title: "JavaScript Tutorial", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-IX42IKV1" },
+                { title: "PHP Tutorial Course", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-RTEEJNZ7" },
+                { title: "jQuery Tutorial", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-6J3L5AUR" },
+                { title: "CSS Fundamentals", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-SPHGWWW4" },
+                { title: "HTML Fundamentals", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z/pdf" }
             ],
             certs_data: [
-                { title: "SQL Intermediate", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-S9CHVDRP" },
-                { title: "Python Core", issuer: "SoloLearn", link: "" },
-                { title: "Intermediate Python", issuer: "SoloLearn", link: "" },
-                { title: "C++", issuer: "SoloLearn", link: "" },
-                { title: "Ruby", issuer: "SoloLearn", link: "" }
+                { title: "SQL Intermediate", issuer: "SoloLearn", link: "https://www.sololearn.com/Certificate/CC-2NZAM2NQ/pdf" },
+                { title: "Python Core", issuer: "SoloLearn", link: "https://www.sololearn.com/Certificate/CT-YTU4RTSM/pdf" },
+                { title: "Intermediate Python", issuer: "SoloLearn", link: "https://www.sololearn.com/Certificate/CT-AJ2PLG5B/pdf" },
+                { title: "C++", issuer: "SoloLearn", link: "https://www.sololearn.com/Certificate/CC-UAAKQS4X/pdf" },
+                { title: "Ruby", issuer: "SoloLearn", link: "https://www.sololearn.com/Certificate/CC-2NZAM2NQ/pdf" }
             ],
             talks: [
                 {
@@ -249,6 +250,7 @@ export const translations = {
             title: "Ready to <span class=\"gradient-text\">Build Something Great?</span>",
             text: "I'm currently <strong>open to new opportunities</strong> — whether it's a full-time role, freelance project, or an exciting collaboration. Let's talk!",
             whatsapp_label: "WhatsApp",
+            whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat.",
             email_label: "Email",
             web_label: "Website",
             footer: "Designed & built by <strong>Gabor Flandorffer</strong> — {year}"
@@ -263,7 +265,8 @@ export const translations = {
             ai: "Preguntar a IA ✨",
             contact: "Contacto",
             cta: "Hablemos",
-            freelancer: "Freelancer"
+            freelancer: "Freelancer",
+            whatsapp_msg: "Hola Gabor! Vi tu portafolio y me gustaria conversar."
         },
         hero: {
             greeting: "Hola, soy",
@@ -504,6 +507,7 @@ export const translations = {
             title: "¿Listo para <span class=\"gradient-text\">Construir Algo Grande?</span>",
             text: "Actualmente estoy <strong>abierto a nuevas oportunidades</strong> — ya sea un rol de tiempo completo, un proyecto freelance o una colaboración emocionante. ¡Hablemos!",
             whatsapp_label: "WhatsApp",
+            whatsapp_msg: "Hola Gabor! Vi tu portafolio y me gustaria conversar.",
             email_label: "Correo",
             web_label: "Sitio Web",
             footer: "Diseñado y construido por <strong>Gabor Flandorffer</strong> — {year}"

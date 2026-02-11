@@ -135,6 +135,23 @@ const biasMetadata = [
                                             {cert.issuer}
                                         </p>
                                     </div>
+                                    {i === 0 && (
+                                        <a
+                                            href={cert.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="cert-badge-link"
+                                            aria-label="View Google IT Automation badge"
+                                        >
+                                            <img
+                                                src="/images/certificate/GCC_badge_python.png"
+                                                alt="Google IT Automation with Python Professional Certificate badge"
+                                                class="cert-badge"
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
+                                        </a>
+                                    )}
                                     {cert.link && (
                                         <a
                                             href={cert.link}
@@ -621,6 +638,40 @@ const biasMetadata = [
         color: var(--text-muted);
         transition: all 0.3s;
         opacity: 0.4;
+    }
+
+    .cert-badge-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        border: 1px solid rgba(56, 189, 248, 0.35);
+        box-shadow: 0 6px 14px rgba(56, 189, 248, 0.12);
+        overflow: visible;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .cert-badge-link:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 26px rgba(56, 189, 248, 0.28);
+        z-index: 20;
+    }
+
+    .cert-badge {
+        width: 46px;
+        height: 46px;
+        object-fit: cover;
+        display: block;
+        border-radius: 999px;
+        transition: transform 0.25s ease;
+        transform-origin: center;
+    }
+
+    .cert-badge-link:hover .cert-badge {
+        transform: scale(1.9);
     }
 
     .cert-link:hover {
