@@ -21,7 +21,7 @@ export default function ParticlesBackground() {
                     value: "transparent",
                 },
             },
-            fpsLimit: 120,
+            fpsLimit: 60,
             interactivity: {
                 events: {
                     onClick: {
@@ -35,7 +35,7 @@ export default function ParticlesBackground() {
                 },
                 modes: {
                     push: {
-                        quantity: 4,
+                        quantity: 2,
                     },
                     repulse: {
                         distance: 100,
@@ -61,15 +61,15 @@ export default function ParticlesBackground() {
                         default: "bounce" as const,
                     },
                     random: false,
-                    speed: 1,
+                    speed: 0.6,
                     straight: false,
                 },
                 number: {
                     density: {
                         enable: true,
-                        area: 800,
+                        area: 1000,
                     },
-                    value: 60,
+                    value: 30,
                 },
                 opacity: {
                     value: 0.3,
@@ -78,10 +78,10 @@ export default function ParticlesBackground() {
                     type: "circle",
                 },
                 size: {
-                    value: { min: 1, max: 3 },
+                    value: { min: 1, max: 2 },
                 },
             },
-            detectRetina: true,
+            detectRetina: false,
         }),
         [],
     );
