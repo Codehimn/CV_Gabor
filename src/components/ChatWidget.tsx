@@ -138,7 +138,7 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                                 <div style={widgetHeaderStyle}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                         <div style={avatarStyle}>
-                                            <img src="/images/profile/perfil.jpeg" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} alt="Gabor Profile" />
+                                            <img src="/images/profile/Gabor-Flandorffer-Profile.jpg" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} alt="Gabor Profile" />
                                         </div>
                                         <div>
                                             <div style={{ color: '#fff', fontWeight: 600, fontSize: '14px' }}>GaborGPT</div>
@@ -293,7 +293,7 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                         <div style={sidebarFooterStyle}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <div style={{ ...avatarStyle, width: '28px', height: '28px' }}>
-                                    <img src="/images/profile/perfil.jpeg" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} alt="Gabor Profile" />
+                                    <img src="/images/profile/Gabor-Flandorffer-Profile.jpg" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} alt="Gabor Profile" />
                                 </div>
                                 <span style={{ fontSize: '13px', color: '#d1d5db' }}>GaborGPT v2.0</span>
                             </div>
@@ -469,7 +469,7 @@ function MessageBubble({ msg, isPageMode }: { msg: Message; isPageMode: boolean 
             <div style={pageBubbleInnerStyle}>
                 {/* Avatar */}
                 <div style={isUser ? pageUserAvatarStyle : pageAgentAvatarStyle}>
-                    {isUser ? <User size={16} color="#fff" /> : <img src="/images/profile/perfil.jpeg" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} alt="Gabor Profile" />}
+                    {isUser ? <User size={16} color="#fff" /> : <img src="/images/profile/Gabor-Flandorffer-Profile.jpg" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} alt="Gabor Profile" />}
                 </div>
                 {/* Content */}
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -521,7 +521,7 @@ function TypingIndicator({ isPage }: { isPage?: boolean }) {
             }}>
                 {isPage && (
                     <div style={pageAgentAvatarStyle}>
-                        <img src="/images/profile/perfil.jpeg" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} alt="Gabor Profile" />
+                        <img src="/images/profile/Gabor-Flandorffer-Profile.jpg" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} alt="Gabor Profile" />
                     </div>
                 )}
                 <div style={{

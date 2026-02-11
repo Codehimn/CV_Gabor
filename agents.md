@@ -10,7 +10,7 @@
 
 ## Asset Locations
 
-- **Profile image**: `/public/images/profile/perfil.jpeg`
+- **Profile image**: `/public/images/profile/Gabor-Flandorffer-Profile.jpg`
 - **Company logos**: `/public/images/logos/` — `zattoo.svg`, `yaxa.svg`, `conectsen.svg`, `freelancer.svg`, `madisa.svg`
 - **All public assets** live under `/public/images/`
 

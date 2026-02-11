@@ -68,7 +68,8 @@ export const translations = {
         },
         experience: {
             label: "Professional Journey",
-            title: "Where I've <span class=\"gradient-text\">Made Impact</span>",
+            title: "Where I've",
+            title_accent: "Made Impact",
             subtitle: "From IT support to senior automation and backend development — a journey of continuous growth.",
             present: "Present",
             items: [
@@ -177,27 +178,27 @@ export const translations = {
             activities_title: "Activities & Community",
             view_talk: "View Talk",
             certs_google: [
-                { title: "Google IT Automation with Python Professional Certificate", issuer: "Google / Coursera" },
-                { title: "Automating Real-World Tasks with Python", issuer: "Google / Coursera" },
-                { title: "Using Python to Interact with the Operating System", issuer: "Google / Coursera" },
-                { title: "Crash Course on Python", issuer: "Google / Coursera" },
-                { title: "Troubleshooting and Debugging Techniques", issuer: "Google / Coursera" },
-                { title: "Configuration Management and the Cloud", issuer: "Google / Coursera" }
+                { title: "Google IT Automation with Python Professional Certificate", issuer: "Google / Coursera", link: "https://www.coursera.org/professional-certificates/google-it-automation" },
+                { title: "Automating Real-World Tasks with Python", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/26H3VDUEB9N9" },
+                { title: "Using Python to Interact with the Operating System", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/8WRBNTJ98T4F" },
+                { title: "Crash Course on Python", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/M7W7V3Z9N8WF" },
+                { title: "Troubleshooting and Debugging Techniques", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/938HT2G6C877" },
+                { title: "Configuration Management and the Cloud", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/R9T9UZZ9W7WF" }
             ],
             certs_web: [
-                { title: "React", issuer: "SoloLearn" },
-                { title: "JavaScript Tutorial", issuer: "SoloLearn" },
-                { title: "PHP Tutorial Course", issuer: "SoloLearn" },
-                { title: "jQuery Tutorial", issuer: "SoloLearn" },
-                { title: "CSS Fundamentals", issuer: "SoloLearn" },
-                { title: "HTML Fundamentals", issuer: "SoloLearn" }
+                { title: "React", issuer: "SoloLearn", link: "" },
+                { title: "JavaScript Tutorial", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-V59HTXRM" },
+                { title: "PHP Tutorial Course", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-KPS7H39V" },
+                { title: "jQuery Tutorial", issuer: "SoloLearn", link: "" },
+                { title: "CSS Fundamentals", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-B6U9J1K6" },
+                { title: "HTML Fundamentals", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" }
             ],
             certs_data: [
-                { title: "SQL Intermediate", issuer: "SoloLearn" },
-                { title: "Python Core", issuer: "SoloLearn" },
-                { title: "Intermediate Python", issuer: "SoloLearn" },
-                { title: "C++", issuer: "SoloLearn" },
-                { title: "Ruby", issuer: "SoloLearn" }
+                { title: "SQL Intermediate", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-S9CHVDRP" },
+                { title: "Python Core", issuer: "SoloLearn", link: "" },
+                { title: "Intermediate Python", issuer: "SoloLearn", link: "" },
+                { title: "C++", issuer: "SoloLearn", link: "" },
+                { title: "Ruby", issuer: "SoloLearn", link: "" }
             ],
             talks: [
                 {
@@ -322,7 +323,8 @@ export const translations = {
         },
         experience: {
             label: "Trayectoria Profesional",
-            title: "Donde He Hecho <span class=\"gradient-text\">Impacto</span>",
+            title: "Donde He Hecho",
+            title_accent: "Impacto",
             subtitle: "De soporte técnico a automatización senior y desarrollo backend — un viaje de crecimiento continuo.",
             present: "Presente",
             items: [
@@ -431,27 +433,27 @@ export const translations = {
             activities_title: "Actividades y Comunidad",
             view_talk: "Ver Charla",
             certs_google: [
-                { title: "Certificado Profesional de Automatización de TI con Python", issuer: "Google / Coursera" },
-                { title: "Automatización de Tareas del Mundo Real con Python", issuer: "Google / Coursera" },
-                { title: "Usar Python para Interactuar con el SO", issuer: "Google / Coursera" },
-                { title: "Curso Intensivo de Python", issuer: "Google / Coursera" },
-                { title: "Técnicas de Depuración y Solución de Problemas", issuer: "Google / Coursera" },
-                { title: "Gestión de Configuración y la Nube", issuer: "Google / Coursera" }
+                { title: "Certificado Profesional de Automatización de TI con Python", issuer: "Google / Coursera", link: "https://www.coursera.org/professional-certificates/google-it-automation" },
+                { title: "Automatización de Tareas del Mundo Real con Python", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/26H3VDUEB9N9" },
+                { title: "Usar Python para Interactuar con el SO", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/8WRBNTJ98T4F" },
+                { title: "Curso Intensivo de Python", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/M7W7V3Z9N8WF" },
+                { title: "Técnicas de Depuración y Solución de Problemas", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/938HT2G6C877" },
+                { title: "Gestión de Configuración y la Nube", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/R9T9UZZ9W7WF" }
             ],
             certs_web: [
-                { title: "React", issuer: "SoloLearn" },
-                { title: "Tutorial de JavaScript", issuer: "SoloLearn" },
-                { title: "Curso Tutorial de PHP", issuer: "SoloLearn" },
-                { title: "Tutorial de jQuery", issuer: "SoloLearn" },
-                { title: "Fundamentos de CSS", issuer: "SoloLearn" },
-                { title: "Fundamentos de HTML", issuer: "SoloLearn" }
+                { title: "React", issuer: "SoloLearn", link: "" },
+                { title: "Tutorial de JavaScript", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-V59HTXRM" },
+                { title: "Curso Tutorial de PHP", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-KPS7H39V" },
+                { title: "Tutorial de jQuery", issuer: "SoloLearn", link: "" },
+                { title: "Fundamentos de CSS", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-B6U9J1K6" },
+                { title: "Fundamentos de HTML", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" }
             ],
             certs_data: [
-                { title: "SQL Intermedio", issuer: "SoloLearn" },
-                { title: "Python Core", issuer: "SoloLearn" },
-                { title: "Python Intermedio", issuer: "SoloLearn" },
-                { title: "C++", issuer: "SoloLearn" },
-                { title: "Ruby", issuer: "SoloLearn" }
+                { title: "SQL Intermedio", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-S9CHVDRP" },
+                { title: "Python Core", issuer: "SoloLearn", link: "" },
+                { title: "Python Intermedio", issuer: "SoloLearn", link: "" },
+                { title: "C++", issuer: "SoloLearn", link: "" },
+                { title: "Ruby", issuer: "SoloLearn", link: "" }
             ],
             talks: [
                 {
