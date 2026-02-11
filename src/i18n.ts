@@ -136,40 +136,56 @@ export const translations = {
             title: "Education & <span class=\"gradient-text\">Recognition</span>",
             subtitle: "A lifetime of learning, from professional certificates to international speaking.",
             cert_title: "Professional Certifications",
+            google_title: "Google IT Automation",
+            web_title: "Web Development",
+            data_title: "Data & Languages",
             speaking_title: "Speaking & Community",
             languages_title: "Languages",
             competencies_title: "Core Competencies",
+            toolset_title: "Everyday Toolset",
+            activities_title: "Activities & Community",
             view_talk: "View Talk",
-            certs: [
-                {
-                    title: "Google IT Automation with Python Professional Certificate",
-                    issuer: "Google / Coursera"
-                },
-                {
-                    title: "Python Sub-Specializations",
-                    issuer: "Google IT Automation",
-                    description: "Operating Systems, Troubleshooting & Debugging, Configuration Management, Cloud."
-                },
-                {
-                    title: "Full Stack & Web Architecture",
-                    issuer: "SoloLearn / Various",
-                    description: "React, JavaScript, PHP, jQuery, CSS/HTML Fundamentals."
-                },
-                {
-                    title: "SQL & Data Management Expert",
-                    issuer: "SoloLearn",
-                    description: "SQL Intermediate certified."
-                },
-                {
-                    title: "Language Mastery (C++, Ruby)",
-                    issuer: "SoloLearn / Various"
-                }
+            certs_google: [
+                { title: "Google IT Automation with Python Professional Certificate", issuer: "Google / Coursera" },
+                { title: "Automating Real-World Tasks with Python", issuer: "Google / Coursera" },
+                { title: "Using Python to Interact with the Operating System", issuer: "Google / Coursera" },
+                { title: "Crash Course on Python", issuer: "Google / Coursera" },
+                { title: "Troubleshooting and Debugging Techniques", issuer: "Google / Coursera" },
+                { title: "Configuration Management and the Cloud", issuer: "Google / Coursera" }
+            ],
+            certs_web: [
+                { title: "React", issuer: "SoloLearn" },
+                { title: "JavaScript Tutorial", issuer: "SoloLearn" },
+                { title: "PHP Tutorial Course", issuer: "SoloLearn" },
+                { title: "jQuery Tutorial", issuer: "SoloLearn" },
+                { title: "CSS Fundamentals", issuer: "SoloLearn" },
+                { title: "HTML Fundamentals", issuer: "SoloLearn" }
+            ],
+            certs_data: [
+                { title: "SQL Intermediate", issuer: "SoloLearn" },
+                { title: "Python Core", issuer: "SoloLearn" },
+                { title: "Intermediate Python", issuer: "SoloLearn" },
+                { title: "C++", issuer: "SoloLearn" },
+                { title: "Ruby", issuer: "SoloLearn" }
             ],
             talks: [
                 {
                     title: "Asynchronism: Possible Errors and How to Solve Them",
-                    venue: "Meetup Talk — Guest Speaker"
+                    venue: "Meeting Cali — Guest Speaker"
                 }
+            ],
+            activities: [
+                { name: "Open Source Contributor", icon: "🌐" },
+                { name: "Tech Blogging", icon: "✍️" },
+                { name: "Speaker at Meetups", icon: "🎤" }
+            ],
+            toolset: [
+                { name: "VS Code", icon: "💻" },
+                { name: "Git", icon: "🔀" },
+                { name: "Docker", icon: "🐳" },
+                { name: "Postman", icon: "📮" },
+                { name: "Obsidian", icon: "📝" },
+                { name: "ChatGPT / Claude / DeepSeek", icon: "🤖" }
             ],
             languages: [
                 { name: "Spanish", level: "Mother Tongue" },
@@ -181,8 +197,19 @@ export const translations = {
                 { name: "Problem Solving" },
                 { name: "Adaptability" },
                 { name: "Creative Thinking" },
+                { name: "Leadership" },
+                { name: "Time Management" },
+                { name: "Conflict Resolution" },
+                { name: "Critical Thinking" },
                 { name: "Self-taught Learner" },
                 { name: "Cross-functional Collab" }
+            ],
+            dominantBias: [
+                { name: "Practical Solutions" },
+                { name: "Objectivity" },
+                { name: "Direct Communication" },
+                { name: "Efficiency" },
+                { name: "Results-Driven" }
             ]
         },
         contact: {
@@ -332,40 +359,56 @@ export const translations = {
             title: "Educación y <span class=\"gradient-text\">Reconocimiento</span>",
             subtitle: "Toda una vida de aprendizaje, desde certificados profesionales hasta conferencias internacionales.",
             cert_title: "Certificaciones Profesionales",
+            google_title: "Google IT Automation",
+            web_title: "Desarrollo Web",
+            data_title: "Datos y Lenguajes",
             speaking_title: "Charlas y Comunidad",
             languages_title: "Idiomas",
             competencies_title: "Competencias Clave",
+            toolset_title: "Herramientas del Día a Día",
+            activities_title: "Actividades y Comunidad",
             view_talk: "Ver Charla",
-            certs: [
-                {
-                    title: "Certificado Profesional de Automatización de TI de Google con Python",
-                    issuer: "Google / Coursera"
-                },
-                {
-                    title: "Subespecializaciones en Python",
-                    issuer: "Google IT Automation",
-                    description: "Sistemas Operativos, Solución de Problemas y Depuración, Gestión de Configuración, Cloud."
-                },
-                {
-                    title: "Arquitectura Web y Full Stack",
-                    issuer: "SoloLearn / Varios",
-                    description: "React, JavaScript, PHP, jQuery, Fundamentos de CSS/HTML."
-                },
-                {
-                    title: "Experto en Gestión de Datos y SQL",
-                    issuer: "SoloLearn",
-                    description: "Certificado en SQL Intermedio."
-                },
-                {
-                    title: "Dominio de Lenguajes (C++, Ruby)",
-                    issuer: "SoloLearn / Varios"
-                }
+            certs_google: [
+                { title: "Certificado Profesional de Automatización de TI con Python", issuer: "Google / Coursera" },
+                { title: "Automatización de Tareas del Mundo Real con Python", issuer: "Google / Coursera" },
+                { title: "Usar Python para Interactuar con el SO", issuer: "Google / Coursera" },
+                { title: "Curso Intensivo de Python", issuer: "Google / Coursera" },
+                { title: "Técnicas de Depuración y Solución de Problemas", issuer: "Google / Coursera" },
+                { title: "Gestión de Configuración y la Nube", issuer: "Google / Coursera" }
+            ],
+            certs_web: [
+                { title: "React", issuer: "SoloLearn" },
+                { title: "Tutorial de JavaScript", issuer: "SoloLearn" },
+                { title: "Curso Tutorial de PHP", issuer: "SoloLearn" },
+                { title: "Tutorial de jQuery", issuer: "SoloLearn" },
+                { title: "Fundamentos de CSS", issuer: "SoloLearn" },
+                { title: "Fundamentos de HTML", issuer: "SoloLearn" }
+            ],
+            certs_data: [
+                { title: "SQL Intermedio", issuer: "SoloLearn" },
+                { title: "Python Core", issuer: "SoloLearn" },
+                { title: "Python Intermedio", issuer: "SoloLearn" },
+                { title: "C++", issuer: "SoloLearn" },
+                { title: "Ruby", issuer: "SoloLearn" }
             ],
             talks: [
                 {
                     title: "Asincronismo: Posibles Errores y Cómo Solucionarlos",
-                    venue: "Charla Meetup — Conferencista Invitado"
+                    venue: "Meeting Cali — Conferencista Invitado"
                 }
+            ],
+            activities: [
+                { name: "Contribuidor Open Source", icon: "🌐" },
+                { name: "Blogging Técnico", icon: "✍️" },
+                { name: "Conferencista en Meetups", icon: "🎤" }
+            ],
+            toolset: [
+                { name: "VS Code", icon: "💻" },
+                { name: "Git", icon: "🔀" },
+                { name: "Docker", icon: "🐳" },
+                { name: "Postman", icon: "📮" },
+                { name: "Obsidian", icon: "📝" },
+                { name: "ChatGPT / Claude / DeepSeek", icon: "🤖" }
             ],
             languages: [
                 { name: "Español", level: "Lengua Materna" },
@@ -377,8 +420,19 @@ export const translations = {
                 { name: "Solución de Problemas" },
                 { name: "Adaptabilidad" },
                 { name: "Pensamiento Creativo" },
+                { name: "Liderazgo" },
+                { name: "Gestión del Tiempo" },
+                { name: "Resolución de Conflictos" },
+                { name: "Pensamiento Crítico" },
                 { name: "Aprendizaje Autónomo" },
                 { name: "Colaboración Interfuncional" }
+            ],
+            dominantBias: [
+                { name: "Soluciones Prácticas" },
+                { name: "Objetividad" },
+                { name: "Comunicación Directa" },
+                { name: "Eficiencia" },
+                { name: "Orientado a Resultados" }
             ]
         },
         contact: {
