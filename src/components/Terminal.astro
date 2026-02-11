@@ -84,10 +84,16 @@
 
     .terminal-body {
         padding: 1.5rem;
-        min-height: 250px;
+        height: 320px; /* Fixed height to prevent layout shifts */
+        overflow-y: auto; /* Allow content to grow internally */
         font-size: 0.9rem;
         line-height: 1.6;
         color: #e6edf3;
+        scrollbar-width: none; /* Hide scrollbar for a cleaner simulation */
+    }
+
+    .terminal-body::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome/Safari */
     }
 
     .prompt {
@@ -182,6 +188,12 @@
             outDiv.className = "output";
             outDiv.innerText = cmd.output;
             outputEl.appendChild(outDiv);
+
+            // Auto-scroll to bottom of terminal
+            const terminalBody = document.getElementById("terminal-body");
+            if (terminalBody) {
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            }
 
             await new Promise((r) => setTimeout(r, 3000));
 

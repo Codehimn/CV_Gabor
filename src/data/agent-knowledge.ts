@@ -19,7 +19,7 @@ export const agentKnowledge: AgentResponse[] = [
         id: 'experience',
         keywords: ['experiencia', 'experience', 'trabajo', 'work', 'trayectoria', 'career'],
         response: "Tengo más de 11 años de experiencia en tecnología. He trabajado en empresas como Zattoo y liderado proyectos de automatización de alto impacto.",
-        actions: [{ label: "Ver Timeline", url: "#experience" }],
+        actions: [{ label: "Ver Timeline", url: "/experience" }],
         category: 'professional'
     },
     {
@@ -32,7 +32,7 @@ export const agentKnowledge: AgentResponse[] = [
         id: 'stack',
         keywords: ['stack', 'tecnologias', 'tech', 'lenguajes', 'skills', 'habilidades'],
         response: "Mi stack principal incluye React, Astro, Python, y Node.js. También tengo experiencia profunda en bases de datos SQL/NoSQL y cloud services.",
-        actions: [{ label: "Ver Skills", url: "#skills" }],
+        actions: [{ label: "Ver Skills", url: "/skills" }],
         category: 'technical'
     },
 
@@ -41,7 +41,7 @@ export const agentKnowledge: AgentResponse[] = [
         id: 'pricing',
         keywords: ['precio', 'price', 'costo', 'cost', 'rates', 'cuanto cobras', 'tarifas'],
         response: "Cada proyecto es único. Mis tarifas para consultoría comienzan en $80/hr, pero prefiero valorar proyectos por entregables. ¿Hablamos de tu idea?",
-        actions: [{ label: "Contactar", url: "#contact" }],
+        actions: [{ label: "Contactar", url: "/contact" }],
         category: 'professional'
     },
     {

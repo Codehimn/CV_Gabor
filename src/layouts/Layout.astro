@@ -13,7 +13,7 @@ interface Props {
 const {
   title = "Gabor Flandorffer — Senior Full-Stack Developer & Automation Specialist",
   description = "11+ years building scalable solutions with Python, Django, TypeScript, and automation tools. Based in Medellín.",
-  showChatWidget = true,
+  showChatWidget = false,
 } = Astro.props;
 ---
 
@@ -24,6 +24,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="icon" type="image/x-icon" href="/images/profile/favicon.ico" />
     <ViewTransitions />
   </head>
   <body>

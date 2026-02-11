@@ -23,5 +23,5 @@ images/
 <img src="/images/logos/zattoo.svg" alt="Zattoo" />
 
 <!-- Profile photo -->
-<img src="/images/profile/photo.svg" alt="Gabor Flandorffer" />
+<img src="/images/profile/perfil.jpeg" alt="Gabor Flandorffer" />
 ```
