@@ -172,7 +172,7 @@
         ) as HTMLAnchorElement;
 
         function updateLinks() {
-            const lang = localStorage.getItem("lang") || "en";
+            const lang = localStorage.getItem("preferred-lang") || "en";
             if (cvBtn) {
                 cvBtn.href =
                     lang === "es"

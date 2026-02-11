@@ -189,7 +189,7 @@
         const outputEl = document.getElementById("terminal-output");
 
         function getCommands() {
-            const lang = localStorage.getItem("lang") || "en";
+            const lang = localStorage.getItem("preferred-lang") || "en";
             return lang === "es" ? commandsES : commandsEN;
         }
 

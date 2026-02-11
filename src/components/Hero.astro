@@ -219,7 +219,7 @@ import { ViewTransitions } from "astro:transitions";
         ) as HTMLAnchorElement;
         function updateHeroCv() {
             if (!heroCvBtn) return;
-            const lang = localStorage.getItem("lang") || "en";
+            const lang = localStorage.getItem("preferred-lang") || "en";
             heroCvBtn.href =
                 lang === "es"
                     ? heroCvBtn.dataset.cvEs || ""

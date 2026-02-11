@@ -198,7 +198,7 @@
         ) as HTMLAnchorElement;
 
         function updateContactLinks() {
-            const lang = localStorage.getItem("lang") || "en";
+            const lang = localStorage.getItem("preferred-lang") || "en";
             if (linkedinCard) {
                 linkedinCard.href =
                     lang === "es"
