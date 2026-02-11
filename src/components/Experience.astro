@@ -18,61 +18,12 @@ const experiences = translations.en.experience.items;
             </p>
         </div>
 
-        <div class="timeline-scroll-container reveal">
-            <div class="timeline-track">
-                {
-                    experiences.map((_, i) => (
-                        <div
-                            class="timeline-item"
-                            style={`transition-delay: ${i * 0.1}s`}
-                        >
-                            <div class="timeline-marker">
-                                <div class="timeline-dot">
-                                    <span
-                                        data-i18n={`experience.items.${i}.icon`}
-                                    />
-                                </div>
-                                <div class="timeline-connector" />
-                            </div>
-
-                            <div class="timeline-card glass-card">
-                                <span
-                                    class="card-year"
-                                    data-i18n={`experience.items.${i}.period`}
-                                />
-                                <h3
-                                    class="card-company"
-                                    data-i18n={`experience.items.${i}.company`}
-                                />
-                                <p
-                                    class="card-role"
-                                    data-i18n={`experience.items.${i}.role`}
-                                />
-                                <p
-                                    class="card-location"
-                                    data-i18n={`experience.items.${i}.location`}
-                                />
-                                <p
-                                    class="card-description"
-                                    data-i18n={`experience.items.${i}.description`}
-                                />
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-
-            <div class="scroll-hint">
-                <span class="hint-arrow">←</span>
-                <span data-i18n="experience.scroll_hint">Swipe / Scroll</span>
-                <span class="hint-arrow">→</span>
-            </div>
-        </div>
+        <ExperienceTimeline client:visible items={experiences} />
     </div>
 </section>
 
 <style>
-    .experience {
+    <style > .experience {
         padding: var(--section-padding) 0;
         overflow: hidden;
     }
@@ -88,7 +39,7 @@ const experiences = translations.en.experience.items;
     .experience-container {
         position: relative;
         z-index: 2;
-        max-width: 100%; /* Allow full width for scroll */
+        max-width: 100%;
         padding: 0;
     }
 
@@ -96,169 +47,5 @@ const experiences = translations.en.experience.items;
         text-align: center;
         margin-bottom: 3rem;
         padding: 0 2rem;
-    }
-
-    /* Horizontal Scroll Container */
-    .timeline-scroll-container {
-        width: 100%;
-        overflow-x: auto;
-        padding: 2rem 2rem 4rem 2rem; /* Bottom padding for scrollbar/shadow */
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none; /* Hide scrollbar Firefox */
-        cursor: grab;
-    }
-
-    .timeline-scroll-container::-webkit-scrollbar {
-        display: none; /* Hide scrollbar Chrome/Safari */
-    }
-
-    .timeline-scroll-container:active {
-        cursor: grabbing;
-    }
-
-    .timeline-track {
-        display: flex;
-        gap: 2rem;
-        width: max-content;
-        position: relative;
-    }
-
-    /* Connecting Line */
-    .timeline-track::before {
-        content: "";
-        position: absolute;
-        top: 29px; /* Align with dots center */
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(56, 189, 248, 0.3),
-            rgba(99, 102, 241, 0.3),
-            transparent
-        );
-        z-index: 0;
-    }
-
-    .timeline-item {
-        width: 350px;
-        flex-shrink: 0;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        scroll-snap-align: center;
-    }
-
-    .timeline-marker {
-        position: relative;
-        z-index: 2;
-        padding-left: 1rem;
-    }
-
-    .timeline-dot {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: var(--bg-card);
-        border: 2px solid rgba(56, 189, 248, 0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
-        transition: all 0.3s ease;
-    }
-
-    .timeline-item:hover .timeline-dot {
-        transform: scale(1.1);
-        border-color: var(--accent-blue);
-        box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
-    }
-
-    .timeline-card {
-        background: rgba(30, 41, 59, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 1.5rem;
-        padding: 2rem;
-        transition:
-            transform 0.3s ease,
-            border-color 0.3s ease;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .timeline-item:hover .timeline-card {
-        transform: translateY(-5px);
-        border-color: rgba(56, 189, 248, 0.2);
-    }
-
-    .card-year {
-        font-family: var(--font-mono);
-        color: var(--accent-blue);
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
-        display: block;
-    }
-
-    .card-company {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 0.25rem;
-    }
-
-    .card-role {
-        font-size: 1rem;
-        font-weight: 500;
-        color: var(--text-secondary);
-        margin-bottom: 0.25rem;
-    }
-
-    .card-location {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        margin-bottom: 1rem;
-    }
-
-    .card-description {
-        font-size: 0.95rem;
-        color: var(--text-secondary);
-        line-height: 1.6;
-        opacity: 0.9;
-    }
-
-    .scroll-hint {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
-        margin-top: 2rem;
-        color: var(--text-muted);
-        font-size: 0.85rem;
-        opacity: 0.6;
-        animation: pulse 2s infinite;
-    }
-
-    .hint-arrow {
-        font-size: 1.2rem;
-    }
-
-    @keyframes pulse {
-        0%,
-        100% {
-            opacity: 0.4;
-        }
-        50% {
-            opacity: 0.8;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .timeline-item {
-            width: 85vw; /* Almost full screen on mobile */
-        }
     }
 </style>

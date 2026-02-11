@@ -14,10 +14,10 @@ export default function ChatWidget() {
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
-    const fuse = new Fuse(agentKnowledge, {
+    const fuse = React.useMemo(() => new Fuse(agentKnowledge, {
         keys: ['keywords'],
         threshold: 0.4, // Sensitivity (0.0 = perfect match, 1.0 = match anything)
-    });
+    }), []);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -100,8 +100,8 @@ export default function ChatWidget() {
                                     className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
                                 >
                                     <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${msg.type === 'user'
-                                            ? 'bg-blue-600 text-white rounded-br-none'
-                                            : 'bg-gray-800/80 text-gray-200 border border-gray-700/50 rounded-bl-none'
+                                        ? 'bg-blue-600 text-white rounded-br-none'
+                                        : 'bg-gray-800/80 text-gray-200 border border-gray-700/50 rounded-bl-none'
                                         }`}>
                                         {msg.text}
                                         {msg.actions && (
