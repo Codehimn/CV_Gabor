@@ -70,7 +70,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-blue) var(--bg-primary);
 }

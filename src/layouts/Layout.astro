@@ -96,38 +96,60 @@ const {
       import Lenis from "@studio-freight/lenis";
       import { translations } from "../i18n";
 
+      const runtime = ((window as any).__cvRuntime ||= {});
+
       // --- CINEMATIC MOTION (LENIS) ---
       function initLenis() {
+        if (runtime.lenis) {
+          return;
+        }
+
         const lenis = new Lenis({
-          duration: 1.2,
+          duration: 0.95,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           orientation: "vertical",
           gestureOrientation: "vertical",
           smoothWheel: true,
-          wheelMultiplier: 1,
-          touchMultiplier: 2,
+          wheelMultiplier: 0.85,
+          touchMultiplier: 1.1,
           infinite: false,
         });
 
+        runtime.lenis = lenis;
+        (window as any).lenis = lenis;
+
         function raf(time: number) {
           lenis.raf(time);
-          requestAnimationFrame(raf);
+          runtime.lenisRaf = requestAnimationFrame(raf);
         }
 
-        requestAnimationFrame(raf);
+        runtime.lenisRaf = requestAnimationFrame(raf);
 
         // Reset scroll position on refresh
         window.history.scrollRestoration = "manual";
 
-        // Handle anchor links with Lenis
-        document.querySelectorAll('a[href^="#"]').forEach((anchor: any) => {
-          anchor.addEventListener("click", (e: any) => {
-            e.preventDefault();
+        if (runtime.anchorController) {
+          runtime.anchorController.abort();
+        }
+
+        runtime.anchorController = new AbortController();
+        document.addEventListener(
+          "click",
+          (e) => {
+            const target = e.target as HTMLElement;
+            const anchor = target.closest('a[href^="#"]') as
+              | HTMLAnchorElement
+              | null;
+            if (!anchor) return;
+
             const targetId = anchor.getAttribute("href");
-            if (targetId === "#") return;
+            if (!targetId || targetId === "#") return;
+
+            e.preventDefault();
             lenis.scrollTo(targetId, { offset: -80 });
-          });
-        });
+          },
+          { signal: runtime.anchorController.signal },
+        );
       }
 
       // --- UNIFIED MOUSE TRACKING (rAF-gated) ---
@@ -136,6 +158,10 @@ const {
       // ~120/sec (2 handlers × 60 events) to at most 60/sec (1 per frame).
       // This cuts layout recalculations by ~50% during continuous mouse movement.
       function initMouseTracking() {
+        if (runtime.mouseTrackingInitialized) {
+          return;
+        }
+
         const cursor = document.querySelector(
           ".custom-cursor",
         ) as HTMLElement | null;
@@ -222,10 +248,13 @@ const {
               "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
           });
         });
+
+        runtime.mouseTrackingInitialized = true;
       }
 
       // --- I18N LOGIC ---
       function updateTranslations(lang: "en" | "es") {
+        runtime.currentLang = lang;
         document.documentElement.lang = lang;
         const elements = document.querySelectorAll("[data-i18n]");
         elements.forEach((el) => {
@@ -284,14 +313,21 @@ const {
       }
 
       function initI18n() {
-        // Initialize language
         const savedLang = localStorage.getItem("preferred-lang") as
           | "en"
           | "es"
           | null;
+
         const initialLang =
-          savedLang || (navigator.language.startsWith("es") ? "es" : "en");
+          runtime.currentLang ||
+          savedLang ||
+          (navigator.language.startsWith("es") ? "es" : "en");
+
         updateTranslations(initialLang);
+
+        if (runtime.i18nInitialized) {
+          return;
+        }
 
         // Language Toggle Setup
         document.addEventListener("click", (e) => {
@@ -302,12 +338,18 @@ const {
             updateTranslations(lang);
           }
         });
+
+        runtime.i18nInitialized = true;
       }
 
       // --- REFINED SCROLL & REVEAL LOGIC ---
       let revealObserver: IntersectionObserver;
 
       function initAnimations() {
+        if (revealObserver) {
+          revealObserver.disconnect();
+        }
+
         revealObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
@@ -364,13 +406,16 @@ const {
 
       // Initial Setup
       function setup() {
-        initLenis();
+        if (!runtime.baseInitialized) {
+          initLenis();
+          initMouseTracking(); // ⚡ Single consolidated handler for cursor + spotlight
+          window.addEventListener("scroll", onScroll, { passive: true });
+          runtime.baseInitialized = true;
+        }
 
         initI18n();
         initAnimations();
-        initMouseTracking(); // ⚡ Single consolidated handler for cursor + spotlight
         updateScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
       }
 
       document.addEventListener("DOMContentLoaded", setup);

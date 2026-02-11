@@ -113,6 +113,23 @@ const biasMetadata = [
                             >{educationData.certs_google.length}</span
                         >
                     </h4>
+                    {educationData.certs_google[0]?.link && (
+                        <a
+                            href={educationData.certs_google[0].link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="featured-cert-badge-link"
+                            aria-label="View Google IT Automation badge"
+                        >
+                            <img
+                                src="/images/certificate/GCC_badge_python.png"
+                                alt="Google IT Automation with Python Professional Certificate badge"
+                                class="featured-cert-badge"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </a>
+                    )}
                     <div class="certifications-list stagger-children">
                         {
                             educationData.certs_google.map((cert, i) => (
@@ -135,23 +152,6 @@ const biasMetadata = [
                                             {cert.issuer}
                                         </p>
                                     </div>
-                                    {i === 0 && (
-                                        <a
-                                            href={cert.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="cert-badge-link"
-                                            aria-label="View Google IT Automation badge"
-                                        >
-                                            <img
-                                                src="/images/certificate/GCC_badge_python.png"
-                                                alt="Google IT Automation with Python Professional Certificate badge"
-                                                class="cert-badge"
-                                                loading="lazy"
-                                                decoding="async"
-                                            />
-                                        </a>
-                                    )}
                                     {cert.link && (
                                         <a
                                             href={cert.link}
@@ -577,6 +577,36 @@ const biasMetadata = [
         background: rgba(56, 189, 248, 0.04) !important;
     }
 
+    .featured-cert-badge-link {
+        display: inline-flex;
+        margin: 0 0 1rem;
+        border-radius: 999px;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.25s ease;
+        overflow: visible;
+    }
+
+    .featured-cert-badge {
+        width: 86px;
+        height: 86px;
+        border-radius: 999px;
+        border: 2px solid rgba(56, 189, 248, 0.45);
+        box-shadow: 0 10px 20px rgba(56, 189, 248, 0.24);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        transform-origin: left center;
+    }
+
+    .featured-cert-badge-link:hover {
+        transform: translateY(-4px);
+        z-index: 30;
+    }
+
+    .featured-cert-badge-link:hover .featured-cert-badge {
+        transform: scale(2.2) rotate(-4deg);
+        box-shadow: 0 20px 42px rgba(56, 189, 248, 0.35);
+    }
+
     /* ── Shared ── */
     .edu-column-title {
         display: flex;
@@ -635,49 +665,44 @@ const biasMetadata = [
     }
 
     .cert-link {
-        color: var(--text-muted);
-        transition: all 0.3s;
-        opacity: 0.4;
-    }
-
-    .cert-badge-link {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border-radius: 999px;
-        border: 1px solid rgba(56, 189, 248, 0.35);
-        box-shadow: 0 6px 14px rgba(56, 189, 248, 0.12);
-        overflow: visible;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.08);
+        color: var(--accent-blue);
         flex-shrink: 0;
-        position: relative;
-        z-index: 1;
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        opacity: 0.95;
+        transition: all 0.25s ease;
     }
 
-    .cert-badge-link:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 16px 26px rgba(56, 189, 248, 0.28);
-        z-index: 20;
-    }
-
-    .cert-badge {
-        width: 46px;
-        height: 46px;
-        object-fit: cover;
+    .cert-link svg {
+        width: 20px;
+        height: 20px;
         display: block;
-        border-radius: 999px;
-        transition: transform 0.25s ease;
-        transform-origin: center;
-    }
-
-    .cert-badge-link:hover .cert-badge {
-        transform: scale(1.9);
     }
 
     .cert-link:hover {
-        color: var(--accent-blue);
+        color: #fff;
         opacity: 1;
-        transform: scale(1.1);
+        transform: scale(1.14);
+        background: rgba(56, 189, 248, 0.25);
+        border-color: rgba(56, 189, 248, 0.6);
+        box-shadow: 0 8px 18px rgba(56, 189, 248, 0.28);
+    }
+
+    @media (max-width: 480px) {
+        .featured-cert-badge {
+            width: 74px;
+            height: 74px;
+        }
+
+        .featured-cert-badge-link:hover .featured-cert-badge {
+            transform: scale(1.45);
+        }
     }
 
     .talk-btn {
