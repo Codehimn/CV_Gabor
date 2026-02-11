@@ -56,14 +56,19 @@ export default function ExperienceScroll({ items }: Props) {
                             }}
                             className="relative w-[350px] md:w-[450px] flex-shrink-0"
                         >
-                            <div className="h-full bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden group/card hover:border-blue-500/30 transition-colors duration-500">
+                            <article
+                                tabIndex={0}
+                                role="article"
+                                aria-label={`${item.role} at ${item.company}`}
+                                className="h-full bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden group/card hover:border-blue-500/30 focus-visible:border-blue-500/30 focus-visible:ring-2 focus-visible:ring-blue-500 outline-none transition-all duration-500 cursor-default"
+                            >
 
-                                {/* Hover Glow Effect */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+                                {/* Hover/Focus Glow Effect */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-transparent opacity-0 group-hover/card:opacity-100 group-focus-visible/card:opacity-100 transition-opacity duration-500" />
 
                                 {/* Header */}
                                 <div className="relative z-10 flex justify-between items-start mb-6">
-                                    <div className="p-3 bg-blue-500/20 rounded-2xl border border-blue-500/30 text-blue-400 group-hover/card:text-blue-300 group-hover/card:scale-110 transition-all duration-300">
+                                    <div className="p-3 bg-blue-500/20 rounded-2xl border border-blue-500/30 text-blue-400 group-hover/card:text-blue-300 group-focus-visible/card:text-blue-300 group-hover/card:scale-110 group-focus-visible/card:scale-110 transition-all duration-300">
                                         {renderIcon(item.icon || "Briefcase")}
                                     </div>
                                     <div className="text-right">
@@ -78,7 +83,7 @@ export default function ExperienceScroll({ items }: Props) {
 
                                 {/* Content */}
                                 <div className="relative z-10 mb-6">
-                                    <h3 className="text-2xl font-bold text-white mb-2 group-hover/card:text-blue-200 transition-colors">
+                                    <h3 className="text-2xl font-bold text-white mb-2 group-hover/card:text-blue-200 group-focus-visible/card:text-blue-200 transition-colors">
                                         {item.company}
                                     </h3>
                                     <p className="text-lg text-blue-400 font-medium mb-4">
@@ -95,7 +100,7 @@ export default function ExperienceScroll({ items }: Props) {
                                         {item.tags.slice(0, 4).map((tag, i) => (
                                             <span
                                                 key={i}
-                                                className="px-3 py-1 bg-white/5 rounded-full text-xs text-slate-300 border border-white/5 hover:bg-white/10 hover:border-white/20 transition-colors"
+                                                className="px-3 py-1 bg-white/5 rounded-full text-xs text-slate-300 border border-white/5 group-hover/card:bg-white/10 group-focus-visible/card:bg-white/10 hover:border-white/20 transition-colors"
                                             >
                                                 {tag}
                                             </span>
@@ -107,7 +112,7 @@ export default function ExperienceScroll({ items }: Props) {
                                         )}
                                     </div>
                                 )}
-                            </div>
+                            </article>
                         </motion.div>
                     ))}
                 </div>
