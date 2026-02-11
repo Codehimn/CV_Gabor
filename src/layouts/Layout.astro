@@ -36,22 +36,6 @@ const {
     <!-- Scroll Progress Bar -->
     <div id="scroll-progress" class="scroll-progress"></div>
 
-    <!-- Side Dot Navigation -->
-    <div class="side-nav">
-      <a href="#about" class="dot active" data-id="about"><span>About</span></a>
-      <a href="#experience" class="dot" data-id="experience"
-        ><span>Experience</span></a
-      >
-      <a href="#skills" class="dot" data-id="skills"><span>Skills</span></a>
-      <a href="#projects" class="dot" data-id="projects"
-        ><span>Projects</span></a
-      >
-      <a href="#education" class="dot" data-id="education"
-        ><span>Education</span></a
-      >
-      <a href="#contact" class="dot" data-id="contact"><span>Contact</span></a>
-    </div>
-
     <slot />
 
     <!-- WhatsApp Floating Button -->
@@ -111,21 +95,97 @@ const {
         });
       }
 
-      // --- MOUSE SPOTLIGHT ---
-      function initSpotlight() {
+      // --- UNIFIED MOUSE TRACKING (rAF-gated) ---
+      // ⚡ Perf: Consolidates cursor + spotlight into ONE mousemove listener
+      // with requestAnimationFrame batching. Reduces style writes from
+      // ~120/sec (2 handlers × 60 events) to at most 60/sec (1 per frame).
+      // This cuts layout recalculations by ~50% during continuous mouse movement.
+      function initMouseTracking() {
+        const cursor = document.querySelector(
+          ".custom-cursor",
+        ) as HTMLElement | null;
         const spotlight = document.querySelector(
           ".mouse-spotlight",
         ) as HTMLElement | null;
-        if (!spotlight) return;
 
-        window.addEventListener("mousemove", (e) => {
-          spotlight.style.left = e.clientX + "px";
-          spotlight.style.top = e.clientY + "px";
-          spotlight.style.opacity = "1";
-        });
+        // Skip entirely if neither element exists
+        if (!cursor && !spotlight) return;
 
-        window.addEventListener("mouseleave", () => {
-          spotlight.style.opacity = "0";
+        let mouseX = 0;
+        let mouseY = 0;
+        let rafScheduled = false;
+
+        // Batched DOM update — runs at most once per paint frame
+        function updatePositions() {
+          if (cursor) {
+            cursor.style.left = mouseX + "px";
+            cursor.style.top = mouseY + "px";
+          }
+          if (spotlight) {
+            spotlight.style.left = mouseX + "px";
+            spotlight.style.top = mouseY + "px";
+            spotlight.style.opacity = "1";
+          }
+          rafScheduled = false;
+        }
+
+        // Single listener for both cursor + spotlight
+        window.addEventListener(
+          "mousemove",
+          (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            if (!rafScheduled) {
+              rafScheduled = true;
+              requestAnimationFrame(updatePositions);
+            }
+          },
+          { passive: true },
+        );
+
+        // Spotlight fade-out on mouse leave
+        if (spotlight) {
+          window.addEventListener("mouseleave", () => {
+            spotlight.style.opacity = "0";
+          });
+        }
+
+        // Cursor click states (only if cursor exists)
+        if (cursor) {
+          document.addEventListener("mousedown", () =>
+            cursor.classList.add("active"),
+          );
+          document.addEventListener("mouseup", () =>
+            cursor.classList.remove("active"),
+          );
+
+          // Hover state for interactive elements
+          document
+            .querySelectorAll("a, button, .interactive, .magnetic")
+            .forEach((el) => {
+              el.addEventListener("mouseenter", () =>
+                cursor.classList.add("hover"),
+              );
+              el.addEventListener("mouseleave", () =>
+                cursor.classList.remove("hover"),
+              );
+            });
+        }
+
+        // Magnetic Hover Effect for Nav Links & Magnetic class
+        document.querySelectorAll(".navbar a, .magnetic").forEach((el: any) => {
+          el.addEventListener("mousemove", (e: MouseEvent) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            el.style.transition = "none";
+          });
+          el.addEventListener("mouseleave", () => {
+            el.style.transform = `translate(0px, 0px)`;
+            el.style.transition =
+              "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
+          });
         });
       }
 
@@ -267,88 +327,13 @@ const {
         }
       }
 
-      // --- CUSTOM CURSOR ---
-      function initCursor() {
-        const cursor = document.querySelector(
-          ".custom-cursor",
-        ) as HTMLElement | null;
-        if (!cursor) return;
-
-        document.addEventListener("mousemove", (e) => {
-          cursor.style.left = e.clientX + "px";
-          cursor.style.top = e.clientY + "px";
-        });
-
-        document.addEventListener("mousedown", () =>
-          cursor.classList.add("active"),
-        );
-        document.addEventListener("mouseup", () =>
-          cursor.classList.remove("active"),
-        );
-
-        document
-          .querySelectorAll("a, button, .interactive, .magnetic")
-          .forEach((el) => {
-            el.addEventListener("mouseenter", () =>
-              cursor.classList.add("hover"),
-            );
-            el.addEventListener("mouseleave", () =>
-              cursor.classList.remove("hover"),
-            );
-          });
-
-        // Magnetic Hover Effect for Nav Links & Magnetic class
-        document.querySelectorAll(".navbar a, .magnetic").forEach((el: any) => {
-          el.addEventListener("mousemove", (e: MouseEvent) => {
-            const rect = el.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-            el.style.transition = "none";
-          });
-          el.addEventListener("mouseleave", () => {
-            el.style.transform = `translate(0px, 0px)`;
-            el.style.transition =
-              "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
-          });
-        });
-      }
-
-      // --- SIDE DOT NAV ---
-      function initSideNav() {
-        const dots = document.querySelectorAll(".side-nav .dot");
-        const sections = document.querySelectorAll("section[id]");
-
-        const observerOptions = {
-          threshold: 0.3,
-          rootMargin: "-10% 0px -40% 0px",
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.getAttribute("id");
-              dots.forEach((dot) => {
-                dot.classList.toggle(
-                  "active",
-                  dot.getAttribute("data-id") === id,
-                );
-              });
-            }
-          });
-        }, observerOptions);
-
-        sections.forEach((section) => observer.observe(section));
-      }
-
       // Initial Setup
       function setup() {
         initLenis();
-        initSpotlight();
-        // initSideNav(); // Disable side nav for multi-page
+
         initI18n();
         initAnimations();
-        initCursor();
+        initMouseTracking(); // ⚡ Single consolidated handler for cursor + spotlight
         updateScroll();
         window.addEventListener("scroll", onScroll, { passive: true });
       }
