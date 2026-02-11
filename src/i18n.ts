@@ -19,6 +19,7 @@ export const translations = {
             projects: "Projects",
             cta_primary: "Explore My Work",
             cta_secondary: "Get In Touch",
+            download_cv: "Download CV",
             scroll: "Scroll down"
         },
         about: {
@@ -33,7 +34,12 @@ export const translations = {
                 problem: "Problem Solver"
             },
             location: "Based in Medellín, Colombia",
-            remote: "Open to remote worldwide"
+            remote: "Open to remote worldwide",
+            download_cv: "Download CV",
+            stat_years: "Years Experience",
+            stat_projects: "Projects Delivered",
+            stat_certs: "Certifications",
+            stat_countries: "Countries"
         },
         experience: {
             label: "Professional Journey",
@@ -242,6 +248,7 @@ export const translations = {
             projects: "Proyectos",
             cta_primary: "Ver Mi Trabajo",
             cta_secondary: "Contáctame",
+            download_cv: "Descargar CV",
             scroll: "Desliza hacia abajo"
         },
         about: {
@@ -256,7 +263,12 @@ export const translations = {
                 problem: "Solucionador de Problemas"
             },
             location: "Basado en Medellín, Colombia",
-            remote: "Abierto a remoto mundial"
+            remote: "Abierto a remoto mundial",
+            download_cv: "Descargar CV",
+            stat_years: "Años de Experiencia",
+            stat_projects: "Proyectos Entregados",
+            stat_certs: "Certificaciones",
+            stat_countries: "Países"
         },
         experience: {
             label: "Trayectoria Profesional",

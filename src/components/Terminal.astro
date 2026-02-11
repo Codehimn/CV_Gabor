@@ -143,83 +143,154 @@
 </style>
 
 <script>
-    const commands = [
-        {
-            input: "whoami",
-            output: "Gabor Flandorffer\nSenior Automation Architect\n11+ years of experience | Berlin & Medellín",
-        },
-        {
-            input: "docker compose up -d production",
-            output: "Creating network 'prod-net'...\nCreating container 'api-v2' (Django)...\nCreating container 'bot-farm' (Puppeteer)...\n[SUCCESS] Production systems online.",
-        },
-        {
-            input: "python analyze_roi.py --project scale-up",
-            output: "[INFO] Analyzing ROI for smart pipelines...\n[CALCULATED] Total savings: $12.4M/year via automated workflows.\n[REPORT] High business impact confirmed.",
-        },
-        {
-            input: "ls certifications/",
-            output: "Google_IT_Automation.pdf\nReact_Advanced.cert\nSQL_Expert.cert\nPython_Specialist.cert",
-        },
-    ];
+    function initTerminal() {
+        const commandsEN = [
+            {
+                input: "whoami",
+                output: "Gabor Flandorffer\nSenior Automation Architect\n11+ years of experience | Berlin & Medellín",
+            },
+            {
+                input: "docker compose up -d production",
+                output: "Creating network 'prod-net'...\nCreating container 'api-v2' (Django)...\nCreating container 'bot-farm' (Puppeteer)...\n[SUCCESS] Production systems online.",
+            },
+            {
+                input: "python analyze_roi.py --project scale-up",
+                output: "[INFO] Analyzing ROI for smart pipelines...\n[CALCULATED] Total savings: $12.4M/year via automated workflows.\n[REPORT] High business impact confirmed.",
+            },
+            {
+                input: "ls certifications/",
+                output: "Google_IT_Automation.pdf\nReact_Advanced.cert\nSQL_Expert.cert\nPython_Specialist.cert",
+            },
+        ];
 
-    let currentCmd = 0;
-    const initialCmdEl = document.getElementById("initial-command");
-    const outputEl = document.getElementById("terminal-output");
+        const commandsES = [
+            {
+                input: "whoami",
+                output: "Gabor Flandorffer\nArquitecto Senior de Automatización\n11+ años de experiencia | Berlín y Medellín",
+            },
+            {
+                input: "docker compose up -d produccion",
+                output: "Creando red 'prod-net'...\nCreando contenedor 'api-v2' (Django)...\nCreando contenedor 'bot-farm' (Puppeteer)...\n[ÉXITO] Sistemas de producción en línea.",
+            },
+            {
+                input: "python analizar_roi.py --proyecto escalar",
+                output: "[INFO] Analizando ROI de pipelines inteligentes...\n[CALCULADO] Ahorro total: $12.4M/año vía flujos automatizados.\n[REPORTE] Alto impacto de negocio confirmado.",
+            },
+            {
+                input: "ls certificaciones/",
+                output: "Google_IT_Automatización.pdf\nReact_Avanzado.cert\nSQL_Experto.cert\nPython_Especialista.cert",
+            },
+        ];
 
-    async function typeEffect(text, element) {
-        for (let i = 0; i <= text.length; i++) {
-            element.textContent = text.substring(0, i);
-            await new Promise((r) => setTimeout(r, 50));
+        let currentCmd = 0;
+        let isRunning = false;
+        let abortController: AbortController | null = null;
+        const initialCmdEl = document.getElementById("initial-command");
+        const outputEl = document.getElementById("terminal-output");
+
+        function getCommands() {
+            const lang = localStorage.getItem("lang") || "en";
+            return lang === "es" ? commandsES : commandsEN;
         }
-    }
 
-    async function runTerminal() {
-        if (!initialCmdEl || !outputEl) return;
-
-        while (true) {
-            const cmd = commands[currentCmd];
-
-            // Type command
-            await typeEffect(cmd.input, initialCmdEl);
-            await new Promise((r) => setTimeout(r, 600));
-
-            // Show output
-            const outDiv = document.createElement("div");
-            outDiv.className = "output";
-            outDiv.innerText = cmd.output;
-            outputEl.appendChild(outDiv);
-
-            // Auto-scroll to bottom of terminal
-            const terminalBody = document.getElementById("terminal-body");
-            if (terminalBody) {
-                terminalBody.scrollTop = terminalBody.scrollHeight;
-            }
-
-            await new Promise((r) => setTimeout(r, 3000));
-
-            // Clear output for next cycle if it gets too full
-            if (outputEl.children.length > 2) {
-                outputEl.innerHTML = "";
-            }
-
-            initialCmdEl.textContent = "";
-            currentCmd = (currentCmd + 1) % commands.length;
-        }
-    }
-
-    // Run when visible
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    runTerminal();
-                    observer.unobserve(entry.target);
+        function sleep(ms: number, signal?: AbortSignal): Promise<void> {
+            return new Promise((resolve, reject) => {
+                const timer = setTimeout(resolve, ms);
+                if (signal) {
+                    signal.addEventListener("abort", () => {
+                        clearTimeout(timer);
+                        reject(new DOMException("Aborted", "AbortError"));
+                    });
                 }
             });
-        },
-        { threshold: 0.5 },
-    );
+        }
 
-    const terminal = document.querySelector(".terminal-container");
-    if (terminal) observer.observe(terminal);
+        async function typeEffect(
+            text: string,
+            element: HTMLElement,
+            signal: AbortSignal,
+        ) {
+            for (let i = 0; i <= text.length; i++) {
+                signal.throwIfAborted();
+                element.textContent = text.substring(0, i);
+                await sleep(50, signal);
+            }
+        }
+
+        async function runTerminal() {
+            if (!initialCmdEl || !outputEl || isRunning) return;
+            isRunning = true;
+
+            // Clean up previous run
+            if (abortController) abortController.abort();
+            abortController = new AbortController();
+            const signal = abortController.signal;
+
+            try {
+                while (true) {
+                    signal.throwIfAborted();
+                    const commands = getCommands();
+                    const cmd = commands[currentCmd % commands.length];
+
+                    await typeEffect(cmd.input, initialCmdEl, signal);
+                    await sleep(600, signal);
+
+                    const outDiv = document.createElement("div");
+                    outDiv.className = "output";
+                    outDiv.innerText = cmd.output;
+                    outputEl.appendChild(outDiv);
+
+                    const terminalBody =
+                        document.getElementById("terminal-body");
+                    if (terminalBody) {
+                        terminalBody.scrollTop = terminalBody.scrollHeight;
+                    }
+
+                    await sleep(3000, signal);
+
+                    if (outputEl.children.length > 2) {
+                        outputEl.innerHTML = "";
+                    }
+
+                    initialCmdEl.textContent = "";
+                    currentCmd = (currentCmd + 1) % commands.length;
+                }
+            } catch (e: any) {
+                if (e.name === "AbortError") {
+                    // Language changed — clean up and let restart happen
+                    isRunning = false;
+                    return;
+                }
+                throw e;
+            }
+        }
+
+        // Restart terminal on language change
+        window.addEventListener("langChanged", () => {
+            if (abortController) abortController.abort();
+            isRunning = false;
+            currentCmd = 0;
+            if (initialCmdEl) initialCmdEl.textContent = "";
+            if (outputEl) outputEl.innerHTML = "";
+            setTimeout(() => runTerminal(), 100);
+        });
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        runTerminal();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2 },
+        );
+
+        const terminal = document.querySelector(".terminal-container");
+        if (terminal) observer.observe(terminal);
+    }
+
+    initTerminal();
+    document.addEventListener("astro:after-swap", initTerminal);
 </script>

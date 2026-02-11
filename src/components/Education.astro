@@ -3,9 +3,44 @@ import { translations } from "../i18n";
 
 const educationData = translations.en.education;
 
-const googleIcons = ["🐍", "⚡", "🖥️", "📘", "🔧", "☁️"];
-const webIcons = ["⚛️", "📜", "🐘", "💲", "🎨", "📄"];
-const dataIcons = ["🗄️", "🐍", "🐍", "⚡", "💎"];
+const googleMeta = [
+    {
+        icon: "🐍",
+        link: "https://www.coursera.org/professional-certificates/google-it-automation",
+    },
+    {
+        icon: "⚡",
+        link: "https://www.coursera.org/learn/automating-real-world-tasks-python",
+    },
+    {
+        icon: "🖥️",
+        link: "https://www.coursera.org/learn/python-operating-system",
+    },
+    { icon: "📘", link: "https://www.coursera.org/learn/python-crash-course" },
+    {
+        icon: "🔧",
+        link: "https://www.coursera.org/learn/troubleshooting-debugging-techniques",
+    },
+    {
+        icon: "☁️",
+        link: "https://www.coursera.org/learn/configuration-management-cloud",
+    },
+];
+const webMeta = [
+    { icon: "⚛️", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "📜", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "🐘", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "💲", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "🎨", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "📄", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+];
+const dataMeta = [
+    { icon: "🗄️", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "🐍", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "🐍", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "⚡", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "💎", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+];
 
 const talkMetadata = [
     {
@@ -85,7 +120,7 @@ const biasMetadata = [
                                     class={`edu-card glass-card ${i === 0 ? "cert-main" : ""}`}
                                 >
                                     <span class="edu-card-icon">
-                                        {googleIcons[i] || "📜"}
+                                        {googleMeta[i]?.icon || "📜"}
                                     </span>
                                     <div class="edu-card-content">
                                         <strong
@@ -100,17 +135,17 @@ const biasMetadata = [
                                             {cert.issuer}
                                         </p>
                                     </div>
-                                    {i === 0 && (
+                                    {googleMeta[i]?.link && (
                                         <a
-                                            href="https://www.coursera.org/professional-certificates/google-it-automation"
+                                            href={googleMeta[i].link}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="cert-link"
                                             aria-label="View Certification"
                                         >
                                             <svg
-                                                width="20"
-                                                height="20"
+                                                width="18"
+                                                height="18"
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
@@ -151,7 +186,7 @@ const biasMetadata = [
                             educationData.certs_web.map((cert, i) => (
                                 <div class="edu-card glass-card">
                                     <span class="edu-card-icon">
-                                        {webIcons[i] || "📜"}
+                                        {webMeta[i]?.icon || "📜"}
                                     </span>
                                     <div class="edu-card-content">
                                         <strong
@@ -166,6 +201,35 @@ const biasMetadata = [
                                             {cert.issuer}
                                         </p>
                                     </div>
+                                    {webMeta[i]?.link && (
+                                        <a
+                                            href={webMeta[i].link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="cert-link"
+                                            aria-label="View Certification"
+                                        >
+                                            <svg
+                                                width="18"
+                                                height="18"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            >
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                                <polyline points="15 3 21 3 21 9" />
+                                                <line
+                                                    x1="10"
+                                                    y1="14"
+                                                    x2="21"
+                                                    y2="3"
+                                                />
+                                            </svg>
+                                        </a>
+                                    )}
                                 </div>
                             ))
                         }
@@ -188,7 +252,7 @@ const biasMetadata = [
                             educationData.certs_data.map((cert, i) => (
                                 <div class="edu-card glass-card">
                                     <span class="edu-card-icon">
-                                        {dataIcons[i] || "📜"}
+                                        {dataMeta[i]?.icon || "📜"}
                                     </span>
                                     <div class="edu-card-content">
                                         <strong
@@ -203,17 +267,17 @@ const biasMetadata = [
                                             {cert.issuer}
                                         </p>
                                     </div>
-                                    {i === 0 && (
+                                    {dataMeta[i]?.link && (
                                         <a
-                                            href="https://www.sololearn.com/certificates/CT-HDBNXW9Z"
+                                            href={dataMeta[i].link}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="cert-link"
                                             aria-label="View Certification"
                                         >
                                             <svg
-                                                width="20"
-                                                height="20"
+                                                width="18"
+                                                height="18"
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
