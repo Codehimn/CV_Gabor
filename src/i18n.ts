@@ -8,7 +8,8 @@ export const translations = {
             education: "Education",
             contact: "Contact",
             cta: "Let's Talk",
-            whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat."
+            whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat.",
+            freelancer: "Freelancer"
         },
         hero: {
             greeting: "Hi, I'm",
@@ -40,6 +41,31 @@ export const translations = {
             stat_projects: "Projects Delivered",
             stat_certs: "Certifications",
             stat_countries: "Countries"
+        },
+        testimonials: {
+            label: "Testimonials",
+            title: "Kind Words from",
+            title_accent: "Colleagues",
+            items: [
+                {
+                    quote: "Gabor is one of the most dedicated developers I've worked with. His ability to solve complex automation problems is outstanding.",
+                    author: "Alex Müller",
+                    role: "CTO at TechFlow",
+                    image: "/images/testimonials/alex.jpg"
+                },
+                {
+                    quote: "A true professional who understands both business needs and technical constraints. Highly recommended.",
+                    author: "Maria Garcia",
+                    role: "Product Manager",
+                    image: "/images/testimonials/maria.jpg"
+                },
+                {
+                    quote: "His technical leadership helped us scale our Django infrastructure from zero to thousands of users in months.",
+                    author: "James Wilson",
+                    role: "Lead Engineer",
+                    image: "/images/testimonials/james.jpg"
+                }
+            ]
         },
         experience: {
             label: "Professional Journey",
@@ -237,7 +263,8 @@ export const translations = {
             education: "Educación",
             contact: "Contacto",
             cta: "Hablemos",
-            whatsapp_msg: "¡Hola Gabor! Vi tu portafolio y me gustaría contactarte."
+            whatsapp_msg: "¡Hola Gabor! Vi tu portafolio y me gustaría contactarte.",
+            freelancer: "Freelancer"
         },
         hero: {
             greeting: "Hola, soy",
@@ -269,6 +296,31 @@ export const translations = {
             stat_projects: "Proyectos Entregados",
             stat_certs: "Certificaciones",
             stat_countries: "Países"
+        },
+        testimonials: {
+            label: "Testimonios",
+            title: "Palabras de mis",
+            title_accent: "Colegas",
+            items: [
+                {
+                    quote: "Gabor es uno de los desarrolladores más dedicados con los que he trabajado. Su habilidad para resolver problemas complejos de automatización es sobresaliente.",
+                    author: "Alex Müller",
+                    role: "CTO en TechFlow",
+                    image: "/images/testimonials/alex.jpg"
+                },
+                {
+                    quote: "Un verdadero profesional que entiende tanto las necesidades del negocio como las limitaciones técnicas. Muy recomendado.",
+                    author: "Maria Garcia",
+                    role: "Product Manager",
+                    image: "/images/testimonials/maria.jpg"
+                },
+                {
+                    quote: "Su liderazgo técnico nos ayudó a escalar nuestra infraestructura Django de cero a miles de usuarios en meses.",
+                    author: "James Wilson",
+                    role: "Lead Engineer",
+                    image: "/images/testimonials/james.jpg"
+                }
+            ]
         },
         experience: {
             label: "Trayectoria Profesional",

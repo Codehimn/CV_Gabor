@@ -99,64 +99,62 @@
                         </svg>
                         GitHub
                     </a>
-                    <a
-                        href="https://www.linkedin.com/in/gabor-flandorffer-82730146/?locale=en-US"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn btn-outline social-btn"
-                        id="linkedin-btn"
-                        data-linkedin-en="https://www.linkedin.com/in/gabor-flandorffer-82730146/?locale=en-US"
-                        data-linkedin-es="https://www.linkedin.com/in/gabor-flandorffer-82730146/?locale=es-ES"
-                    >
-                        <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                        >
-                            <path
-                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                            ></path>
-                        </svg>
-                        LinkedIn
-                    </a>
+                    LinkedIn
                 </div>
+                <a
+                    href="https://www.freelancer.com/u/Codehimn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-outline social-btn"
+                >
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M15.432 10.323c0-.395-.316-.71-.71-.71H1.71c-.394 0-.71.315-.71.71v6.387c0 .393.316.71.71.71h13.012c.394 0 .71-.317.71-.71V10.323zm-7.098 5.677L1.71 16.71h6.624L11.71 14.323l-3.376 1.677zm7.098-7.806c0-.394-.316-.71-.71-.71H1.71A.71.71 0 0 0 1 8.194v6.387c0 .394.316.71.71.71h13.012c.394 0 .71-.316.71-.71V8.194zM12 4.194h1.432v1.432H12V4.194z"
+                        ></path>
+                    </svg>
+                    <span data-i18n="nav.freelancer">Freelancer</span>
+                </a>
             </div>
         </div>
+    </div>
 
-        <!-- Stats Bar -->
-        <div class="stats-bar reveal">
-            <div class="stat-item">
-                <span class="stat-number" data-count="11">0</span>
-                <span class="stat-suffix">+</span>
-                <span class="stat-label" data-i18n="about.stat_years"
-                    >Years Experience</span
-                >
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <span class="stat-number" data-count="50">0</span>
-                <span class="stat-suffix">+</span>
-                <span class="stat-label" data-i18n="about.stat_projects"
-                    >Projects Delivered</span
-                >
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <span class="stat-number" data-count="17">0</span>
-                <span class="stat-suffix"></span>
-                <span class="stat-label" data-i18n="about.stat_certs"
-                    >Certifications</span
-                >
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <span class="stat-number" data-count="3">0</span>
-                <span class="stat-suffix"></span>
-                <span class="stat-label" data-i18n="about.stat_countries"
-                    >Countries</span
-                >
-            </div>
+    <!-- Stats Bar -->
+    <div class="stats-bar reveal">
+        <div class="stat-item">
+            <span class="stat-number" data-count="11">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label" data-i18n="about.stat_years"
+                >Years Experience</span
+            >
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-number" data-count="50">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label" data-i18n="about.stat_projects"
+                >Projects Delivered</span
+            >
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-number" data-count="17">0</span>
+            <span class="stat-suffix"></span>
+            <span class="stat-label" data-i18n="about.stat_certs"
+                >Certifications</span
+            >
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-number" data-count="3">0</span>
+            <span class="stat-suffix"></span>
+            <span class="stat-label" data-i18n="about.stat_countries"
+                >Countries</span
+            >
         </div>
     </div>
 </section>
@@ -190,35 +188,48 @@
         updateLinks();
         window.addEventListener("langChanged", updateLinks);
 
-        // Counter animation for stats bar
-        const counters = document.querySelectorAll(
-            ".stats-bar .stat-number[data-count]",
-        );
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const el = entry.target as HTMLElement;
-                        const target = parseInt(el.dataset.count || "0");
-                        let count = 0;
-                        const duration = 1800;
-                        const step = target / (duration / 16);
-                        const timer = setInterval(() => {
-                            count += step;
-                            if (count >= target) {
-                                el.textContent = target.toString();
-                                clearInterval(timer);
-                            } else {
-                                el.textContent = Math.floor(count).toString();
-                            }
-                        }, 16);
-                        observer.unobserve(el);
-                    }
-                });
-            },
-            { threshold: 0.5 },
-        );
         counters.forEach((c) => observer.observe(c));
+
+        // Photo Tilt Effect
+        const photoWrapper = document.querySelector(
+            ".about-image-wrapper",
+        ) as HTMLElement;
+        if (photoWrapper) {
+            photoWrapper.addEventListener("mousemove", (e) => {
+                const rect = photoWrapper.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                const photo = photoWrapper.querySelector(
+                    ".about-photo",
+                ) as HTMLElement;
+                if (photo) {
+                    photo.style.transform = `perspective(1000px) rotateY(${x * 15}deg) rotateX(${y * -15}deg) scale(1.05)`;
+                }
+
+                const border = photoWrapper.querySelector(
+                    ".about-image-border",
+                ) as HTMLElement;
+                if (border) {
+                    border.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+                }
+            });
+
+            photoWrapper.addEventListener("mouseleave", () => {
+                const photo = photoWrapper.querySelector(
+                    ".about-photo",
+                ) as HTMLElement;
+                if (photo) {
+                    photo.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1)`;
+                }
+                const border = photoWrapper.querySelector(
+                    ".about-image-border",
+                ) as HTMLElement;
+                if (border) {
+                    border.style.transform = `translate(0, 0)`;
+                }
+            });
+        }
     }
 
     initAbout();
@@ -286,7 +297,23 @@
         position: relative;
         z-index: 2;
         filter: grayscale(10%) contrast(1.05);
-        transition: filter 0.5s;
+        transition:
+            transform 0.3s ease-out,
+            filter 0.5s;
+        clip-path: inset(100% 0 0 0); /* Initial state for reveal */
+    }
+
+    .reveal-left.visible .about-photo {
+        animation: photo-reveal 1.2s var(--ease-out-expo) forwards 0.2s;
+    }
+
+    @keyframes photo-reveal {
+        0% {
+            clip-path: inset(100% 0 0 0);
+        }
+        100% {
+            clip-path: inset(0 0 0 0);
+        }
     }
 
     .about-image-wrapper:hover .about-photo {
@@ -301,6 +328,7 @@
         z-index: 1;
         opacity: 0.6;
         animation: border-rotate 6s linear infinite;
+        transition: transform 0.3s ease-out;
     }
 
     @keyframes border-rotate {

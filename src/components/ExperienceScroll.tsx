@@ -1,5 +1,20 @@
 import { motion } from "framer-motion";
-import * as LucideIcons from "lucide-react";
+import {
+    Briefcase,
+    Code,
+    Cpu,
+    Database,
+    Globe,
+    Layers,
+    Layout,
+    Search,
+    Server,
+    Settings,
+    Shield,
+    Smartphone,
+    Terminal,
+    Zap
+} from "lucide-react";
 import { useRef } from "react";
 
 interface ExperienceItem {
@@ -20,7 +35,10 @@ export default function ExperienceScroll({ items }: Props) {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const renderIcon = (iconName: string) => {
-        const IconComponent = (LucideIcons as any)[iconName] || LucideIcons.Briefcase;
+        const icons: Record<string, any> = {
+            Briefcase, Code, Terminal, Cpu, Database, Globe, Layout, Server, Smartphone, Layers, Zap, Shield, Search, Settings
+        };
+        const IconComponent = icons[iconName] || Briefcase;
         return <IconComponent size={24} />;
     };
 
