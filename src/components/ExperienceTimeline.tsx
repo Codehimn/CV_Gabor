@@ -9,7 +9,7 @@ interface ExperienceItem {
     role: string;
     location: string;
     description: string;
-    icon: string; // Icon name from Lucide
+    icon?: string; // Icon name from Lucide
     tags?: string[];
 }
 
@@ -50,7 +50,7 @@ export default function ExperienceTimeline({ items }: Props) {
                                     {items[activeIndex].period.split(' - ')[0]}
                                 </span>
                                 <div className="p-4 bg-blue-600/20 rounded-2xl border border-blue-500/30 text-blue-400">
-                                    {renderIcon(items[activeIndex].icon)}
+                                    {renderIcon(items[activeIndex].icon || "Briefcase")}
                                 </div>
                             </div>
 
