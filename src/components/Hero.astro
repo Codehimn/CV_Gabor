@@ -1,9 +1,12 @@
 ---
 import Terminal from "./Terminal.astro";
+import ParticlesBackground from "./ParticlesBackground";
+import { ViewTransitions } from "astro:transitions";
 ---
 
 <section class="hero zoom-section" id="hero">
     <div class="zoom-bg hero-bg-gradient"></div>
+    <ParticlesBackground client:load />
 
     <!-- Animated grid -->
     <div class="hero-grid parallax-layer" data-speed="-0.1"></div>

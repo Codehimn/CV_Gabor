@@ -1,5 +1,8 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import ChatWidget from "../components/ChatWidget";
+import CommandMenu from "../components/CommandMenu";
+import { Toaster } from "sonner";
 
 interface Props {
   title?: string;
@@ -63,6 +66,10 @@ const {
         ></path>
       </svg>
     </a>
+
+    <ChatWidget client:load />
+    <CommandMenu client:load />
+    <Toaster client:load position="top-center" />
 
     <script>
       import Lenis from "@studio-freight/lenis";
