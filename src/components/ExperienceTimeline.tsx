@@ -1,7 +1,16 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-// Import Lucide icons dynamically or map them if passed as strings
-import * as LucideIcons from "lucide-react";
+// Import Lucide icons specifically to allow tree-shaking and reduce bundle size
+import { Briefcase, Building2, Code2, GraduationCap } from "lucide-react";
+
+// Map of supported icons for the timeline to enable tree-shaking.
+// Add any new icons used in i18n data to this map.
+const ICON_MAP: Record<string, any> = {
+    Briefcase,
+    Building2,
+    Code2,
+    GraduationCap
+};
 
 interface ExperienceItem {
     period: string;
@@ -22,7 +31,8 @@ export default function ExperienceTimeline({ items }: Props) {
 
     // Dynamic Icon Renderer
     const renderIcon = (iconName: string) => {
-        const IconComponent = (LucideIcons as any)[iconName] || LucideIcons.Briefcase;
+        // Use the map to get the icon component, fallback to Briefcase
+        const IconComponent = ICON_MAP[iconName] || Briefcase;
         return <IconComponent size={24} />;
     };
 
