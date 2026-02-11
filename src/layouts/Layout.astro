@@ -7,11 +7,13 @@ import { Toaster } from "sonner";
 interface Props {
   title?: string;
   description?: string;
+  showChatWidget?: boolean;
 }
 
 const {
   title = "Gabor Flandorffer — Senior Full-Stack Developer & Automation Specialist",
   description = "11+ years building scalable solutions with Python, Django, TypeScript, and automation tools. Based in Medellín.",
+  showChatWidget = true,
 } = Astro.props;
 ---
 
@@ -67,7 +69,7 @@ const {
       </svg>
     </a>
 
-    <ChatWidget client:idle />
+    {showChatWidget && <ChatWidget client:idle />}
     <CommandMenu client:idle />
     <Toaster client:load position="top-center" />
 
@@ -343,7 +345,7 @@ const {
       function setup() {
         initLenis();
         initSpotlight();
-        initSideNav();
+        // initSideNav(); // Disable side nav for multi-page
         initI18n();
         initAnimations();
         initCursor();
