@@ -1,12 +1,12 @@
 ---
 import { translations } from "../i18n";
-import ExperienceTimeline from "./ExperienceTimeline";
+import ExperienceScroll from "./ExperienceScroll";
 const experiences = translations.en.experience.items;
 ---
 
 <section class="experience zoom-section" id="experience">
     <div class="zoom-bg experience-bg"></div>
-    <div class="container experience-container">
+    <div class="container experience-container !max-w-full">
         <div class="experience-header reveal">
             <p class="section-label" data-i18n="experience.label">
                 Career Path
@@ -19,7 +19,7 @@ const experiences = translations.en.experience.items;
             </p>
         </div>
 
-        <ExperienceTimeline client:visible items={experiences} />
+        <ExperienceScroll client:visible items={experiences} />
     </div>
 </section>
 
