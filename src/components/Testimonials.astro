@@ -23,15 +23,29 @@ const t = translations[lang as "en" | "es"].testimonials;
             {
                 t.items.map((item, index) => (
                     <div class="testimonial-card glass-card reveal-up">
-                        <div class="quote-icon">
-                            <svg
-                                width="32"
-                                height="32"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                            >
-                                <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12C14.017 12.5523 13.5693 13 13.017 13H11.017V21H14.017ZM5.017 21L5.017 18C5.017 16.8954 5.91243 16 7.017 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H6.017C5.46472 8 5.017 8.44772 5.017 9V12C5.017 12.5523 4.5693 13 4.017 13H2.017V21H5.017Z" />
-                            </svg>
+                        <div class="testimonial-header-row">
+                            <div class="quote-icon">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12C14.017 12.5523 13.5693 13 13.017 13H11.017V21H14.017ZM5.017 21L5.017 18C5.017 16.8954 5.91243 16 7.017 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H6.017C5.46472 8 5.017 8.44772 5.017 9V12C5.017 12.5523 4.5693 13 4.017 13H2.017V21H5.017Z" />
+                                </svg>
+                            </div>
+                            <div class="testimonial-rating">
+                                {[...Array(5)].map(() => (
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="#fbbf24"
+                                    >
+                                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                    </svg>
+                                ))}
+                            </div>
                         </div>
                         <p
                             class="testimonial-quote"
@@ -84,6 +98,13 @@ const t = translations[lang as "en" | "es"].testimonials;
         transition: transform 0.4s var(--ease-out-expo);
     }
 
+    .testimonial-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
     .testimonial-card:hover {
         transform: translateY(-10px);
         border-color: rgba(56, 189, 248, 0.3);
@@ -92,7 +113,11 @@ const t = translations[lang as "en" | "es"].testimonials;
     .quote-icon {
         color: var(--accent-blue);
         opacity: 0.3;
-        margin-bottom: 1.5rem;
+    }
+
+    .testimonial-rating {
+        display: flex;
+        gap: 2px;
     }
 
     .testimonial-quote {

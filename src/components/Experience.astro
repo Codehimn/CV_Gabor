@@ -1,7 +1,10 @@
 ---
 import { translations } from "../i18n";
 import ExperienceScroll from "./ExperienceScroll";
-const experiences = translations.en.experience.items;
+
+const { lang = "en" } = Astro.props;
+const t = translations[lang as "en" | "es"].experience;
+const experiences = t.items;
 ---
 
 <section class="experience zoom-section" id="experience">

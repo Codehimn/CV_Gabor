@@ -3,12 +3,11 @@ export const translations = {
         nav: {
             about: "About",
             experience: "Experience",
-            skills: "Skills",
+            credentials: "Credentials",
             projects: "Projects",
-            education: "Education",
+            ai: "Ask AI ✨",
             contact: "Contact",
             cta: "Let's Talk",
-            whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat.",
             freelancer: "Freelancer"
         },
         hero: {
@@ -44,26 +43,26 @@ export const translations = {
         },
         testimonials: {
             label: "Testimonials",
-            title: "Kind Words from",
-            title_accent: "Colleagues",
+            title: "Client",
+            title_accent: "Feedback",
             items: [
                 {
-                    quote: "Gabor is one of the most dedicated developers I've worked with. His ability to solve complex automation problems is outstanding.",
-                    author: "Alex Müller",
-                    role: "CTO at TechFlow",
-                    image: "/images/testimonials/alex.jpg"
+                    quote: "Excellent professional. Exactly what I needed for my project.",
+                    author: "Dino S.",
+                    role: "Raspberry PI & JS Specialist",
+                    rating: 5
                 },
                 {
-                    quote: "A true professional who understands both business needs and technical constraints. Highly recommended.",
-                    author: "Maria Garcia",
-                    role: "Product Manager",
-                    image: "/images/testimonials/maria.jpg"
+                    quote: "Excellent freelancer, did what I needed exactly, won't hesitate to hire again. I highly recommend him.",
+                    author: "Bassem E.",
+                    role: "Automation Client",
+                    rating: 5
                 },
                 {
-                    quote: "His technical leadership helped us scale our Django infrastructure from zero to thousands of users in months.",
-                    author: "James Wilson",
-                    role: "Lead Engineer",
-                    image: "/images/testimonials/james.jpg"
+                    quote: "Helped me on demand with an AutoIt script. Very fast and efficient.",
+                    author: "Former Client",
+                    role: "Software Automation",
+                    rating: 5
                 }
             ]
         },
@@ -256,14 +255,13 @@ export const translations = {
     },
     es: {
         nav: {
-            about: "Sobre Mí",
+            about: "Sobre Mi",
             experience: "Experiencia",
-            skills: "Habilidades",
+            credentials: "Credenciales",
             projects: "Proyectos",
-            education: "Educación",
+            ai: "Preguntar a IA ✨",
             contact: "Contacto",
             cta: "Hablemos",
-            whatsapp_msg: "¡Hola Gabor! Vi tu portafolio y me gustaría contactarte.",
             freelancer: "Freelancer"
         },
         hero: {
@@ -299,26 +297,26 @@ export const translations = {
         },
         testimonials: {
             label: "Testimonios",
-            title: "Palabras de mis",
-            title_accent: "Colegas",
+            title: "Feedback de",
+            title_accent: "Clientes",
             items: [
                 {
-                    quote: "Gabor es uno de los desarrolladores más dedicados con los que he trabajado. Su habilidad para resolver problemas complejos de automatización es sobresaliente.",
-                    author: "Alex Müller",
-                    role: "CTO en TechFlow",
-                    image: "/images/testimonials/alex.jpg"
+                    quote: "Excelente profesional. Exactamente lo que necesitaba para mi proyecto.",
+                    author: "Dino S.",
+                    role: "Especialista en Raspberry PI y JS",
+                    rating: 5
                 },
                 {
-                    quote: "Un verdadero profesional que entiende tanto las necesidades del negocio como las limitaciones técnicas. Muy recomendado.",
-                    author: "Maria Garcia",
-                    role: "Product Manager",
-                    image: "/images/testimonials/maria.jpg"
+                    quote: "Excelente freelancer, hizo exactamente lo que necesitaba, no dudaría en contratarlo de nuevo. Lo recomiendo mucho.",
+                    author: "Bassem E.",
+                    role: "Automation Client",
+                    rating: 5
                 },
                 {
-                    quote: "Su liderazgo técnico nos ayudó a escalar nuestra infraestructura Django de cero a miles de usuarios en meses.",
-                    author: "James Wilson",
-                    role: "Lead Engineer",
-                    image: "/images/testimonials/james.jpg"
+                    quote: "Me ayudó bajo demanda con un script de AutoIt. Muy rápido y eficiente.",
+                    author: "Cliente de Freelancer",
+                    role: "Software Automation",
+                    rating: 5
                 }
             ]
         },

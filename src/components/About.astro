@@ -1,240 +1,139 @@
 ---
+import { translations } from "../i18n";
 
+const { lang = "en" } = Astro.props;
+const t = translations[lang as "en" | "es"].about;
+const t_nav = translations[lang as "en" | "es"].nav;
 ---
 
 <section class="about" id="about">
     <div class="container">
-        <div class="about-grid">
-            <div class="about-visual reveal-left">
-                <div class="about-image-wrapper">
-                    <img
-                        src="/images/profile/perfil.jpeg"
-                        alt="Gabor Flandorffer"
-                        class="about-photo"
-                        loading="lazy"
-                    />
-                    <div class="about-image-border"></div>
-                </div>
-                <div class="about-floating-card glass-card">
-                    <span class="floating-emoji">🇨🇴</span>
-                    <div>
-                        <strong data-i18n="about.location"
-                            >Based in Medellín, Colombia</strong
-                        >
-                        <p data-i18n="about.remote">Open to remote worldwide</p>
+        <div class="about-header reveal">
+            <p class="section-label" data-i18n="about.label">{t.label}</p>
+            <h2 class="section-title">
+                <span data-i18n="about.title">{t.title}</span>
+                <span class="gradient-text" data-i18n="about.title_accent"
+                    >{t.title_accent}</span
+                >
+            </h2>
+        </div>
+
+        <div class="about-bento stagger-children">
+            <!-- Large Bio Card -->
+            <div class="bento-card bento-bio glass-card reveal-left">
+                <div class="bio-content">
+                    <div class="about-image-wrapper">
+                        <img
+                            src="/images/profile/Gabor-Flandorffer-Profile.jpg"
+                            alt="Gabor Flandorffer"
+                            class="about-photo"
+                            loading="eager"
+                        />
+                        <div class="about-image-border"></div>
+                    </div>
+                    <div class="bio-text">
+                        <p class="lead" data-i18n="about.description">
+                            {t.description}
+                        </p>
+                        <div class="about-actions">
+                            <a
+                                href="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
+                                target="_blank"
+                                class="btn btn-outline cv-download-btn"
+                                id="about-cv-link"
+                                data-cv-en="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
+                                data-cv-es="/pdf/CV Gabor Flandorffer 2026 ESP.pdf"
+                            >
+                                <span data-i18n="about.download_cv"
+                                    >{t.download_cv}</span
+                                >
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="about-content reveal-right">
-                <p class="section-label" data-i18n="about.label">About Me</p>
-                <h2 class="section-title" data-i18n="about.title">
-                    Building the future,<br />
-                    <span class="gradient-text"
-                        >one line of code at a time.</span
-                    >
-                </h2>
-                <p class="about-text" data-i18n="about.p1">
-                    I'm a <strong
-                        >Senior Full-Stack Developer & Automation Specialist</strong
-                    > with over
-                    <strong>11 years</strong> of professional experience. I've worked
-                    across startups and established companies in <strong
-                        >Germany, Colombia, and remotely worldwide</strong
-                    >.
-                </p>
-                <p class="about-text" data-i18n="about.p2">
-                    My expertise spans from building robust <strong
-                        >Django/Python backends</strong
-                    > and designing
-                    <strong>automation pipelines</strong> with Puppeteer and AutoIt,
-                    to deploying scalable infrastructure with <strong
-                        >Docker, AWS, and CI/CD</strong
-                    >. I'm passionate about writing clean, efficient code that
-                    solves real-world problems.
-                </p>
+            <!-- Expertise Card -->
+            <div class="bento-card bento-expertise glass-card reveal-up">
+                <div class="card-header">
+                    <span class="card-icon">💻</span>
+                    <h3 data-i18n="about.expertise_title">Core Expertise</h3>
+                </div>
+                <ul class="expertise-list">
+                    <li><span>Python / Django</span> <span>11+ yrs</span></li>
+                    <li><span>Automation</span> <span>Expert</span></li>
+                    <li><span>Full-Stack</span> <span>Architecture</span></li>
+                </ul>
+            </div>
 
-                <div class="about-cta-row">
+            <!-- Location/Availability Card -->
+            <div class="bento-card bento-status glass-card reveal-up">
+                <div class="status-item">
+                    <span class="status-icon">📍</span>
+                    <div>
+                        <p class="status-label">Location</p>
+                        <p class="status-value">Remote / Global</p>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <span class="status-icon">🚀</span>
+                    <div>
+                        <p class="status-label">Availability</p>
+                        <p class="status-value" data-i18n="hero.badge">
+                            Available for projects
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social/Link Card -->
+            <div class="bento-card bento-social glass-card reveal-right">
+                <div class="card-header">
+                    <h3 data-i18n="nav.contact">Contact</h3>
+                </div>
+                <div class="social-links-grid">
                     <a
-                        href="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
+                        href="https://linkedin.com/in/gabor-flandorffer/"
                         target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn btn-primary download-cv-btn"
-                        id="download-cv-btn"
-                        data-cv-en="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
-                        data-cv-es="/pdf/CV Gabor Flandorffer 2026 ESP.pdf"
+                        class="social-link-btn linkedin"
                     >
                         <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
-                            ></path><polyline points="7 10 12 15 17 10"
-                            ></polyline><line x1="12" y1="15" x2="12" y2="3"
-                            ></line>
-                        </svg>
-                        <span data-i18n="about.download_cv">Download CV</span>
-                    </a>
-                    <a
-                        href="https://github.com/Codehimn"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn btn-outline social-btn"
-                    >
-                        <svg
-                            width="18"
-                            height="18"
+                            width="20"
+                            height="20"
                             viewBox="0 0 24 24"
                             fill="currentColor"
+                            ><path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                            ></path></svg
                         >
-                            <path
-                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                            ></path>
-                        </svg>
-                        GitHub
                     </a>
-                    LinkedIn
-                </div>
-                <a
-                    href="https://www.freelancer.com/u/Codehimn"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn btn-outline social-btn"
-                >
-                    <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
+                    <a
+                        href="https://www.freelancer.com/u/Codehimn"
+                        target="_blank"
+                        class="social-link-btn freelancer"
                     >
-                        <path
-                            d="M15.432 10.323c0-.395-.316-.71-.71-.71H1.71c-.394 0-.71.315-.71.71v6.387c0 .393.316.71.71.71h13.012c.394 0 .71-.317.71-.71V10.323zm-7.098 5.677L1.71 16.71h6.624L11.71 14.323l-3.376 1.677zm7.098-7.806c0-.394-.316-.71-.71-.71H1.71A.71.71 0 0 0 1 8.194v6.387c0 .394.316.71.71.71h13.012c.394 0 .71-.316.71-.71V8.194zM12 4.194h1.432v1.432H12V4.194z"
-                        ></path>
-                    </svg>
-                    <span data-i18n="nav.freelancer">Freelancer</span>
-                </a>
+                        <span>F</span>
+                    </a>
+                    <a
+                        href="https://github.com/codehimn"
+                        target="_blank"
+                        class="social-link-btn github"
+                    >
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            ><path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12"
+                            ></path></svg
+                        >
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- Stats Bar -->
-    <div class="stats-bar reveal">
-        <div class="stat-item">
-            <span class="stat-number" data-count="11">0</span>
-            <span class="stat-suffix">+</span>
-            <span class="stat-label" data-i18n="about.stat_years"
-                >Years Experience</span
-            >
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-            <span class="stat-number" data-count="50">0</span>
-            <span class="stat-suffix">+</span>
-            <span class="stat-label" data-i18n="about.stat_projects"
-                >Projects Delivered</span
-            >
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-            <span class="stat-number" data-count="17">0</span>
-            <span class="stat-suffix"></span>
-            <span class="stat-label" data-i18n="about.stat_certs"
-                >Certifications</span
-            >
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-            <span class="stat-number" data-count="3">0</span>
-            <span class="stat-suffix"></span>
-            <span class="stat-label" data-i18n="about.stat_countries"
-                >Countries</span
-            >
-        </div>
-    </div>
 </section>
-
-<script>
-    function initAbout() {
-        // Language-aware CV download
-        const cvBtn = document.getElementById(
-            "download-cv-btn",
-        ) as HTMLAnchorElement;
-        const linkedinBtn = document.getElementById(
-            "linkedin-btn",
-        ) as HTMLAnchorElement;
-
-        function updateLinks() {
-            const lang = localStorage.getItem("preferred-lang") || "en";
-            if (cvBtn) {
-                cvBtn.href =
-                    lang === "es"
-                        ? cvBtn.dataset.cvEs || ""
-                        : cvBtn.dataset.cvEn || "";
-            }
-            if (linkedinBtn) {
-                linkedinBtn.href =
-                    lang === "es"
-                        ? linkedinBtn.dataset.linkedinEs || ""
-                        : linkedinBtn.dataset.linkedinEn || "";
-            }
-        }
-
-        updateLinks();
-        window.addEventListener("langChanged", updateLinks);
-
-        counters.forEach((c) => observer.observe(c));
-
-        // Photo Tilt Effect
-        const photoWrapper = document.querySelector(
-            ".about-image-wrapper",
-        ) as HTMLElement;
-        if (photoWrapper) {
-            photoWrapper.addEventListener("mousemove", (e) => {
-                const rect = photoWrapper.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width - 0.5;
-                const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-                const photo = photoWrapper.querySelector(
-                    ".about-photo",
-                ) as HTMLElement;
-                if (photo) {
-                    photo.style.transform = `perspective(1000px) rotateY(${x * 15}deg) rotateX(${y * -15}deg) scale(1.05)`;
-                }
-
-                const border = photoWrapper.querySelector(
-                    ".about-image-border",
-                ) as HTMLElement;
-                if (border) {
-                    border.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
-                }
-            });
-
-            photoWrapper.addEventListener("mouseleave", () => {
-                const photo = photoWrapper.querySelector(
-                    ".about-photo",
-                ) as HTMLElement;
-                if (photo) {
-                    photo.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1)`;
-                }
-                const border = photoWrapper.querySelector(
-                    ".about-image-border",
-                ) as HTMLElement;
-                if (border) {
-                    border.style.transform = `translate(0, 0)`;
-                }
-            });
-        }
-    }
-
-    initAbout();
-    document.addEventListener("astro:after-swap", initAbout);
-</script>
 
 <style>
     .about {
@@ -242,257 +141,254 @@
         position: relative;
     }
 
-    .about::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(
-            ellipse 60% 40% at 20% 50%,
-            rgba(129, 140, 248, 0.05) 0%,
-            transparent 60%
-        );
-        pointer-events: none;
+    .about-header {
+        text-align: center;
+        margin-bottom: 3.5rem;
     }
 
-    .about-grid {
+    .about-bento {
         display: grid;
-        grid-template-columns: 1fr 1.3fr;
-        gap: 4rem;
-        align-items: center;
-    }
-
-    .section-label {
-        font-family: var(--font-mono);
-        font-size: 0.85rem;
-        color: var(--accent-blue);
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        margin-bottom: 0.75rem;
-        font-weight: 600;
-    }
-
-    /* ── Photo ── */
-    .about-visual {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto auto;
         gap: 1.5rem;
+    }
+
+    .bento-card {
+        padding: 2rem;
+        height: 100%;
+        transition:
+            transform 0.4s var(--ease-out-expo),
+            border-color 0.3s;
+    }
+
+    .bento-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    .bento-bio {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+
+    .bio-content {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
     }
 
     .about-image-wrapper {
         position: relative;
-        width: 280px;
-        height: 320px;
+        flex-shrink: 0;
     }
 
     .about-photo {
-        width: 100%;
-        height: 100%;
-        border-radius: var(--radius-xl);
+        width: 140px;
+        height: 140px;
         object-fit: cover;
+        border-radius: var(--radius-lg);
         position: relative;
         z-index: 2;
-        filter: grayscale(10%) contrast(1.05);
-        transition:
-            transform 0.3s ease-out,
-            filter 0.5s;
-        clip-path: inset(100% 0 0 0); /* Initial state for reveal */
-    }
-
-    .reveal-left.visible .about-photo {
-        animation: photo-reveal 1.2s var(--ease-out-expo) forwards 0.2s;
-    }
-
-    @keyframes photo-reveal {
-        0% {
-            clip-path: inset(100% 0 0 0);
-        }
-        100% {
-            clip-path: inset(0 0 0 0);
-        }
-    }
-
-    .about-image-wrapper:hover .about-photo {
-        filter: grayscale(0%) contrast(1.1);
+        transition: transform 0.3s var(--ease-out-expo);
     }
 
     .about-image-border {
         position: absolute;
-        inset: -3px;
-        border-radius: var(--radius-xl);
-        background: var(--gradient-primary);
+        inset: -8px;
+        border: 2px solid var(--accent-blue);
+        border-radius: calc(var(--radius-lg) + 4px);
+        opacity: 0.2;
         z-index: 1;
-        opacity: 0.6;
-        animation: border-rotate 6s linear infinite;
-        transition: transform 0.3s ease-out;
+        transition: all 0.3s;
     }
 
-    @keyframes border-rotate {
-        0% {
-            filter: hue-rotate(0deg);
-        }
-        100% {
-            filter: hue-rotate(360deg);
-        }
+    .bento-card:hover .about-image-border {
+        opacity: 0.5;
+        inset: -12px;
     }
 
-    /* ── Floating Card ── */
-    .about-floating-card {
+    .bio-text {
+        flex: 1;
+    }
+
+    .lead {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+    }
+
+    /* Expertise Card */
+    .card-header {
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        padding: 0.8rem 1.2rem;
-        font-size: 0.85rem;
-        animation: float-card 4s ease-in-out infinite;
+        margin-bottom: 1.5rem;
     }
 
-    .about-floating-card p {
-        color: var(--text-muted);
-        font-size: 0.75rem;
-        margin-top: 0.15rem;
-    }
-
-    .floating-emoji {
-        font-size: 1.6rem;
-    }
-
-    @keyframes float-card {
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(-8px);
-        }
-    }
-
-    /* ── Text ── */
-    .about-text {
-        color: var(--text-secondary);
-        margin-bottom: 1rem;
-        font-size: 1rem;
-        line-height: 1.8;
-    }
-
-    .about-text strong {
+    .card-header h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
         color: var(--text-primary);
     }
 
-    /* ── CTA Row ── */
-    .about-cta-row {
+    .expertise-list {
+        list-style: none;
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.8rem;
-        margin-top: 2rem;
+        flex-direction: column;
+        gap: 1rem;
     }
 
-    .download-cv-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .social-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.7rem 1.2rem;
-        font-size: 0.85rem;
-    }
-
-    /* ── Stats Bar ── */
-    .stats-bar {
+    .expertise-list li {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 2.5rem;
-        margin-top: 4rem;
-        padding: 2.5rem 3rem;
-        border-radius: var(--radius-xl);
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(12px);
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .stat-item {
-        text-align: center;
-        position: relative;
-    }
-
-    .stat-number {
-        font-size: clamp(2rem, 4vw, 2.8rem);
-        font-weight: 800;
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        line-height: 1;
-    }
-
-    .stat-suffix {
-        font-size: 1.4rem;
-        font-weight: 700;
+    .expertise-list li span:last-child {
         color: var(--accent-blue);
-        margin-left: 1px;
+        font-family: var(--font-mono);
+        font-weight: 600;
     }
 
-    .stat-label {
-        display: block;
-        font-size: 0.72rem;
+    /* Status Card */
+    .bento-status {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    .status-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .status-icon {
+        font-size: 1.5rem;
+        background: rgba(56, 189, 248, 0.1);
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+    .status-label {
+        font-size: 0.75rem;
         color: var(--text-muted);
         text-transform: uppercase;
-        letter-spacing: 0.12em;
-        margin-top: 0.5rem;
-        font-family: var(--font-mono);
+        letter-spacing: 0.05em;
     }
 
-    .stat-divider {
-        width: 1px;
+    .status-value {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    /* Social Card */
+    .social-links-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+    }
+
+    .social-link-btn {
         height: 48px;
-        background: linear-gradient(
-            180deg,
-            transparent,
-            rgba(56, 189, 248, 0.2),
-            transparent
-        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--text-secondary);
+        transition: all 0.3s;
+        text-decoration: none;
     }
 
-    /* ── Responsive ── */
+    .social-link-btn:hover {
+        background: var(--accent-blue);
+        color: white;
+        border-color: var(--accent-blue);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
+    }
+
+    .social-link-btn.freelancer {
+        font-family: var(--font-heading);
+        font-weight: 900;
+        font-size: 1.4rem;
+    }
+
+    @media (max-width: 1024px) {
+        .about-bento {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .bento-bio {
+            grid-column: span 2;
+        }
+    }
+
     @media (max-width: 768px) {
-        .about-grid {
+        .about-bento {
             grid-template-columns: 1fr;
-            gap: 2.5rem;
         }
-
-        .about-visual {
-            order: -1;
+        .bento-bio {
+            grid-column: span 1;
         }
-
-        .about-image-wrapper {
-            width: 200px;
-            height: 240px;
-        }
-
-        .about-cta-row {
-            justify-content: center;
-        }
-
-        .stats-bar {
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            padding: 2rem 1.5rem;
-        }
-
-        .stat-divider {
-            display: none;
-        }
-
-        .stat-item {
-            flex: 1 0 40%;
+        .bio-content {
+            flex-direction: column;
+            text-align: center;
         }
     }
 </style>
+
+<script>
+    function initAboutScroll() {
+        const photoWrapper = document.querySelector(".about-image-wrapper");
+        const photo = document.querySelector(".about-photo") as HTMLElement;
+        const border = document.querySelector(
+            ".about-image-border",
+        ) as HTMLElement;
+
+        if (photoWrapper && photo && border) {
+            photoWrapper.addEventListener("mousemove", (e: any) => {
+                const rect = photoWrapper.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                photo.style.transform = `perspective(1000px) rotateY(${x * 15}deg) rotateX(${y * -15}deg) scale(1.05)`;
+                border.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+            });
+
+            photoWrapper.addEventListener("mouseleave", () => {
+                photo.style.transform = `perspective(1000px) rotateY(0) rotateX(0) scale(1)`;
+                border.style.transform = `translate(0, 0)`;
+            });
+        }
+
+        // Language toggle for CV download
+        const aboutCvLink = document.getElementById(
+            "about-cv-link",
+        ) as HTMLAnchorElement;
+        function updateAboutCv() {
+            if (!aboutCvLink) return;
+            const lang = localStorage.getItem("preferred-lang") || "en";
+            aboutCvLink.href =
+                lang === "es"
+                    ? aboutCvLink.dataset.cvEs || ""
+                    : aboutCvLink.dataset.cvEn || "";
+        }
+        updateAboutCv();
+        window.addEventListener("langChanged", updateAboutCv);
+    }
+
+    initAboutScroll();
+    document.addEventListener("astro:after-swap", initAboutScroll);
+</script>
