@@ -256,41 +256,56 @@ const {
             { signal: mouseSignal },
           );
 
-          // Hover state for interactive elements
-          document
-            .querySelectorAll("a, button, .interactive, .magnetic")
-            .forEach((el) => {
-              el.addEventListener(
-                "mouseenter",
-                () => {
-                  cursor.classList.add("hover");
-                },
-                { signal: mouseSignal },
+          // ⚡ Perf: Use event delegation for hover states instead of binding
+          // listeners to every interactive element. This reduces memory and
+          // ensures it works for dynamically added elements.
+          document.addEventListener(
+            "mouseover",
+            (e) => {
+              const target = (e.target as HTMLElement).closest(
+                "a, button, .interactive, .magnetic",
               );
-              el.addEventListener(
-                "mouseleave",
-                () => {
-                  cursor.classList.remove("hover");
-                },
-                { signal: mouseSignal },
-              );
-            });
+              cursor.classList.toggle("hover", !!target);
+            },
+            { signal: mouseSignal },
+          );
         }
 
-        // Magnetic Hover Effect for Nav Links & Magnetic class
+        // ⚡ Perf: Cache getBoundingClientRect on mouseenter to avoid layout thrashing
+        // during mousemove. This ensures high-performance magnetic effects.
         document.querySelectorAll(".navbar a, .magnetic").forEach((el: any) => {
-          el.addEventListener("mousemove", (e: MouseEvent) => {
-            const rect = el.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-            el.style.transition = "none";
-          }, { signal: mouseSignal });
-          el.addEventListener("mouseleave", () => {
-            el.style.transform = `translate(0px, 0px)`;
-            el.style.transition =
-              "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
-          }, { signal: mouseSignal });
+          let rect: DOMRect | null = null;
+
+          el.addEventListener(
+            "mouseenter",
+            () => {
+              rect = el.getBoundingClientRect();
+            },
+            { signal: mouseSignal },
+          );
+
+          el.addEventListener(
+            "mousemove",
+            (e: MouseEvent) => {
+              if (!rect) rect = el.getBoundingClientRect();
+              const x = e.clientX - rect.left - rect.width / 2;
+              const y = e.clientY - rect.top - rect.height / 2;
+              el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+              el.style.transition = "none";
+            },
+            { signal: mouseSignal },
+          );
+
+          el.addEventListener(
+            "mouseleave",
+            () => {
+              rect = null;
+              el.style.transform = `translate(0px, 0px)`;
+              el.style.transition =
+                "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
+            },
+            { signal: mouseSignal },
+          );
         });
 
         runtime.mouseTrackingInitialized = true;
