@@ -55,13 +55,15 @@ const projects = translations[lang as "en" | "es"].projects.items;
                             <p
                                 class="project-description"
                                 data-i18n={`projects.items.${i}.description`}
-                            ></p>
+                            />
 
                             <div
                                 class="project-tags"
                                 data-i18n-tags={`projects.items.${i}.tags`}
                             >
-                                {/* Tags populated via JS */}
+                                {project.tags.map((tag) => (
+                                    <span class="tag">{tag}</span>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -82,8 +84,16 @@ const projects = translations[lang as "en" | "es"].projects.items;
         position: absolute;
         inset: 0;
         background:
-            linear-gradient(165deg, rgba(15, 22, 41, 0.9), rgba(21, 30, 52, 0.78)),
-            radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.08), transparent 45%);
+            linear-gradient(
+                165deg,
+                rgba(15, 22, 41, 0.9),
+                rgba(21, 30, 52, 0.78)
+            ),
+            radial-gradient(
+                circle at 20% 20%,
+                rgba(56, 189, 248, 0.08),
+                transparent 45%
+            );
         clip-path: polygon(0 3%, 100% 0, 100% 97%, 0 100%);
         z-index: -1;
     }
