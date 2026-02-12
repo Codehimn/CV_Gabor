@@ -1,20 +1,12 @@
+import { motion } from "framer-motion";
 import {
     Award,
     BadgeCheck,
-    Briefcase,
-    Building2,
     CalendarRange,
-    Code2,
-    Cpu,
-    Globe,
-    Layers,
     MapPin,
     Rocket,
-    Server,
     Sparkles,
-    Target,
-    Terminal,
-    type LucideIcon
+    Target
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { translations } from "../i18n";
@@ -33,18 +25,6 @@ interface Props {
     items: ExperienceItem[];
     lang?: "en" | "es";
 }
-
-const ICON_MAP: Record<string, LucideIcon> = {
-    Briefcase,
-    Code2,
-    Cpu,
-    Terminal,
-    Globe,
-    Rocket,
-    Layers,
-    Building2,
-    Server
-};
 
 const UI_TEXT = {
     en: {
@@ -156,9 +136,43 @@ function isCovidEra(period: string): boolean {
     return bounds.start <= 2021 && bounds.end >= 2020;
 }
 
-function renderIcon(iconName: string) {
-    const IconComponent = ICON_MAP[iconName] || Briefcase;
-    return <IconComponent size={22} strokeWidth={2.1} />;
+function getCompanyLogo(company: string): { src: string; alt: string } | null {
+    const normalized = company.toLowerCase();
+
+    if (normalized.includes("zattoo")) {
+        return { src: "/images/logos/zattoo.png", alt: "Zattoo logo" };
+    }
+    if (normalized.includes("s&p") || normalized.includes("sp global") || normalized.includes("realtime analytics")) {
+        return { src: "/images/logos/sp-global.png", alt: "S&P Global logo" };
+    }
+    if (normalized.includes("conectsen")) {
+        return { src: "/images/logos/conectsen.png", alt: "Conectsen logo" };
+    }
+    if (normalized.includes("yaxa")) {
+        return { src: "/images/logos/yaxa.png", alt: "Yaxa logo" };
+    }
+    if (normalized.includes("freelancer")) {
+        return { src: "/images/logos/freelancer.png", alt: "Freelancer logo" };
+    }
+    if (normalized.includes("madisa")) {
+        return { src: "/images/logos/madisa.png", alt: "MADISA logo" };
+    }
+
+    return null;
+}
+
+function getCompanyInitials(company: string): string {
+    const parts = company
+        .replace(/[^a-zA-Z0-9\s]/g, "")
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2);
+
+    if (parts.length === 0) {
+        return "CO";
+    }
+
+    return parts.map((part) => part[0].toUpperCase()).join("");
 }
 
 export default function ExperienceScroll({ items, lang = "en" }: Props) {
@@ -202,15 +216,18 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
 
             <div className="xp-metrics" role="list" aria-label="Experience Metrics">
                 {metrics.map((metric, index) => (
-                    <article
+                    <motion.article
                         key={metric.label}
                         role="listitem"
-                        className="xp-metric reveal"
-                        style={{ transitionDelay: `${index * 0.08}s` }}
+                        className="xp-metric"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
                         <p className="xp-metric-value">{metric.value}</p>
                         <p className="xp-metric-label">{metric.label}</p>
-                    </article>
+                    </motion.article>
                 ))}
             </div>
 
@@ -220,12 +237,16 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     const isLeft = index % 2 === 0;
                     const impactText = getImpactText(item, locale);
                     const showCovidBadge = isCovidEra(item.period);
+                    const companyLogo = getCompanyLogo(item.company);
 
                     return (
-                        <article
+                        <motion.article
                             key={`${item.company}-${item.role}-${item.period}`}
-                            className={`xp-row ${isLeft ? "xp-row-left reveal-left" : "xp-row-right reveal-right"}`}
-                            style={{ transitionDelay: `${index * 0.06}s` }}
+                            className={`xp-row ${isLeft ? "xp-row-left" : "xp-row-right"}`}
+                            initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.6, delay: index * 0.1 }}
                         >
                             <div className="xp-column xp-column-main">
                                 <div className="xp-card">
@@ -233,7 +254,19 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
 
                                     <div className="xp-card-head">
                                         <div className="xp-icon-wrap">
-                                            {renderIcon(item.icon || "Briefcase")}
+                                            {companyLogo ? (
+                                                <img
+                                                    className="xp-company-logo"
+                                                    src={companyLogo.src}
+                                                    alt={companyLogo.alt}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                />
+                                            ) : (
+                                                <span className="xp-logo-fallback" aria-hidden="true">
+                                                    {getCompanyInitials(item.company)}
+                                                </span>
+                                            )}
                                         </div>
 
                                         <div className="xp-head-meta">
@@ -300,12 +333,18 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                                     <Sparkles size={14} />
                                 </div>
                             </div>
-                        </article>
+                        </motion.article>
                     );
                 })}
             </div>
 
-            <div className="xp-cta reveal">
+            <motion.div
+                className="xp-cta"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+            >
                 <div className="xp-cta-icon" aria-hidden="true">
                     <Rocket size={20} />
                 </div>
@@ -313,7 +352,7 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     <p className="xp-cta-title">{text.ctaTitle}</p>
                     <p className="xp-cta-subtitle">{text.ctaSubtitle}</p>
                 </div>
-            </div>
+            </motion.div>
 
             <style>{`
                 .xp-shell {
@@ -499,10 +538,25 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
+                    padding: 0.35rem;
                     background: linear-gradient(145deg, rgba(56, 189, 248, 0.22), rgba(45, 212, 191, 0.12));
                     border: 1px solid rgba(56, 189, 248, 0.3);
-                    color: #ccfbf1;
                     flex-shrink: 0;
+                }
+
+                .xp-company-logo {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    object-fit: contain;
+                }
+
+                .xp-logo-fallback {
+                    font-size: 0.7rem;
+                    font-weight: 700;
+                    color: #ccfbf1;
+                    letter-spacing: 0.03em;
+                    line-height: 1;
                 }
 
                 .xp-head-meta {
