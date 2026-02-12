@@ -47,6 +47,10 @@ import { ViewTransitions } from "astro:transitions";
                     style="display:none;"></span>
             </div>
 
+            <p class="hero-value-prop reveal" style="transition-delay: 0.5s" data-i18n="hero.value_prop">
+                I help teams automate workflows and scale reliable backend systems.
+            </p>
+
             <p
                 class="hero-description reveal"
                 style="transition-delay: 0.6s"
@@ -79,11 +83,18 @@ import { ViewTransitions } from "astro:transitions";
 
             <div class="hero-actions reveal">
                 <a
-                    href="#experience"
+                    href="#contact"
                     class="btn btn-primary magnetic"
                     data-i18n="hero.cta_primary"
                 >
-                    Explore My Work
+                    Let's Talk
+                </a>
+                <a
+                    href="#experience"
+                    class="btn btn-outline magnetic"
+                    data-i18n="hero.cta_secondary"
+                >
+                    View Experience
                 </a>
                 <a
                     href="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
@@ -98,13 +109,6 @@ import { ViewTransitions } from "astro:transitions";
                     <span class="cv-soon-note" data-i18n="hero.download_cv_notice"
                         >Will be updated soon</span
                     >
-                </a>
-                <a
-                    href="#contact"
-                    class="btn btn-outline magnetic"
-                    data-i18n="hero.cta_secondary"
-                >
-                    Get In Touch
                 </a>
             </div>
         </div>
@@ -456,6 +460,15 @@ import { ViewTransitions } from "astro:transitions";
         line-height: 1.62;
     }
 
+    .hero-value-prop {
+        font-size: clamp(0.95rem, 1.8vw, 1.08rem);
+        color: #c8e8ff;
+        margin-bottom: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        max-width: 620px;
+    }
+
     .hero-description strong {
         color: var(--text-primary);
     }
@@ -499,6 +512,10 @@ import { ViewTransitions } from "astro:transitions";
         display: flex;
         gap: 0.9rem;
         flex-wrap: wrap;
+    }
+
+    .hero-actions .btn-primary {
+        min-width: 148px;
     }
 
     .hero-download-btn {

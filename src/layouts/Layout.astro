@@ -18,6 +18,45 @@ const {
   showCommandMenu = false,
   showToaster = false,
 } = Astro.props;
+
+const siteUrl = "https://gabor.flandorffer.com";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageUrl = new URL("/images/profile/Gabor-Flandorffer-Profile.jpg", siteUrl).toString();
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Gabor Flandorffer",
+  url: siteUrl,
+  image: ogImageUrl,
+  jobTitle: "Senior Full-Stack Developer & Automation Specialist",
+  email: "mailto:gabor285@gmail.com",
+  telephone: "+49 1789752993",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Medellín",
+    addressCountry: "CO"
+  },
+  worksFor: {
+    "@type": "Organization",
+    name: "Freelance"
+  },
+  knowsAbout: [
+    "Python",
+    "Django",
+    "Automation",
+    "TypeScript",
+    "CI/CD",
+    "Backend Architecture"
+  ],
+  sameAs: [
+    "https://github.com/codehimn",
+    "https://linkedin.com/in/gabor-flandorffer/",
+    "https://www.freelancer.com/u/Codehimn"
+  ],
+  description:
+    "Senior Full-Stack Developer based in Medellín (UTC-5), available for global remote collaboration with adaptable working hours."
+};
 ---
 
 <!doctype html>
@@ -27,17 +66,24 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- SEO / OG Tags -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://gabor.dev" />
-    <meta property="og:image" content="/images/profile/Gabor-Flandorffer-Profile.jpg" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content="Gabor Flandorffer" />
+    <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/images/profile/Gabor-Flandorffer-Profile.jpg" />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:site" content="@codehimn" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="author" content="Gabor Flandorffer" />
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)}></script>
 
     <!-- Performance: Preconnect to font providers -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

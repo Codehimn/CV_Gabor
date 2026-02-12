@@ -45,7 +45,7 @@ const UI_TEXT = {
             companies: "Organizations served",
             quality: "Quality-first delivery"
         },
-        sinceYoung: "Since age 16",
+        sinceYoung: "Drawn to programming since age 16",
         milestones: {
             remote: "Remote-first",
             leadership: "Leadership",
@@ -68,7 +68,7 @@ const UI_TEXT = {
             companies: "Organizaciones atendidas",
             quality: "Entrega centrada en calidad"
         },
-        sinceYoung: "Desde los 16 años",
+        sinceYoung: "Atraido por la programacion desde los 16 años",
         milestones: {
             remote: "Remoto-first",
             leadership: "Liderazgo",
