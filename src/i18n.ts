@@ -75,6 +75,14 @@ export const translations = {
             present: "Present",
             items: [
                 {
+                    company: "S&P Global (via Realtime Analytics)",
+                    role: "Software Engineer",
+                    period: "Apr 2025 — Present",
+                    location: "Remote",
+                    description: "Developing software solutions and internal tooling for financial and analytics workflows. Focused on reliable backend services, automation, and maintainable engineering practices in a high-impact domain.",
+                    tags: ["Python", "TypeScript", "APIs", "Automation", "Backend", "CI/CD"]
+                },
+                {
                     company: "Zattoo",
                     role: "Backend Developer",
                     period: "Dec 2019 — Jul 2023",
@@ -331,6 +339,14 @@ export const translations = {
             subtitle: "De soporte técnico a automatización senior y desarrollo backend — un viaje de crecimiento continuo.",
             present: "Presente",
             items: [
+                {
+                    company: "S&P Global (via Realtime Analytics)",
+                    role: "Ingeniero de Software",
+                    period: "Abr 2025 — Presente",
+                    location: "Remoto",
+                    description: "Desarrollo de soluciones de software y herramientas internas para flujos financieros y de analitica. Enfocado en servicios backend confiables, automatizacion y buenas practicas de ingenieria en un dominio de alto impacto.",
+                    tags: ["Python", "TypeScript", "APIs", "Automatizacion", "Backend", "CI/CD"]
+                },
                 {
                     company: "Zattoo",
                     role: "Desarrollador Backend",

@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import {
     Award,
     BadgeCheck,
@@ -82,6 +81,7 @@ const UI_TEXT = {
 
 const IMPACT_COPY = {
     en: {
+        spglobal: "Building robust software for financial analytics workflows with strong reliability standards.",
         zattoo: "Built internal API mocking workflows and raised release confidence.",
         conectsen: "Delivered real-time IoT monitoring with multi-device data capture.",
         yaxa: "Scaled automation flows for logistics, messaging and pricing operations.",
@@ -89,6 +89,7 @@ const IMPACT_COPY = {
         madisa: "Strengthened technical operations and customer-side system reliability."
     },
     es: {
+        spglobal: "Construyendo software robusto para flujos de analitica financiera con altos estandares de confiabilidad.",
         zattoo: "Construi flujos internos de API mocking y aumente la confianza en releases.",
         conectsen: "Entregue monitoreo IoT en tiempo real con captura multi-dispositivo.",
         yaxa: "Escale automatizaciones para logistica, mensajeria y pricing operativo.",
@@ -111,6 +112,9 @@ function getImpactText(item: ExperienceItem, locale: "en" | "es"): string {
 
     if (company.includes("zattoo")) {
         return IMPACT_COPY[locale].zattoo;
+    }
+    if (company.includes("s&p") || company.includes("sp global") || company.includes("realtime analytics")) {
+        return IMPACT_COPY[locale].spglobal;
     }
     if (company.includes("conectsen")) {
         return IMPACT_COPY[locale].conectsen;
@@ -177,18 +181,15 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
 
             <div className="xp-metrics" role="list" aria-label="Experience Metrics">
                 {metrics.map((metric, index) => (
-                    <motion.article
+                    <article
                         key={metric.label}
                         role="listitem"
-                        className="xp-metric"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.55, delay: index * 0.08 }}
+                        className="xp-metric reveal"
+                        style={{ transitionDelay: `${index * 0.08}s` }}
                     >
                         <p className="xp-metric-value">{metric.value}</p>
                         <p className="xp-metric-label">{metric.label}</p>
-                    </motion.article>
+                    </article>
                 ))}
             </div>
 
@@ -200,13 +201,10 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     const showCovidBadge = isCovidEra(item.period);
 
                     return (
-                        <motion.article
+                        <article
                             key={`${item.company}-${item.role}-${item.period}`}
-                            className={`xp-row ${isLeft ? "xp-row-left" : "xp-row-right"}`}
-                            initial={{ opacity: 0, y: 40, x: isLeft ? -16 : 16 }}
-                            whileInView={{ opacity: 1, y: 0, x: 0 }}
-                            viewport={{ once: true, amount: 0.2 }}
-                            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                            className={`xp-row ${isLeft ? "xp-row-left reveal-left" : "xp-row-right reveal-right"}`}
+                            style={{ transitionDelay: `${index * 0.06}s` }}
                         >
                             <div className="xp-column xp-column-main">
                                 <div className="xp-card">
@@ -281,18 +279,12 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                                     <Sparkles size={14} />
                                 </div>
                             </div>
-                        </motion.article>
+                        </article>
                     );
                 })}
             </div>
 
-            <motion.div
-                className="xp-cta"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.6 }}
-            >
+            <div className="xp-cta reveal">
                 <div className="xp-cta-icon" aria-hidden="true">
                     <Rocket size={20} />
                 </div>
@@ -300,7 +292,7 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     <p className="xp-cta-title">{text.ctaTitle}</p>
                     <p className="xp-cta-subtitle">{text.ctaSubtitle}</p>
                 </div>
-            </motion.div>
+            </div>
 
             <style>{`
                 .xp-shell {
@@ -743,6 +735,26 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                 }
 
                 @media (max-width: 1024px) {
+                    /* Performance: reduce expensive paint effects on tablets/phones. */
+                    .xp-light,
+                    .xp-particles {
+                        display: none;
+                    }
+
+                    .xp-shell,
+                    .xp-card {
+                        backdrop-filter: none;
+                        -webkit-backdrop-filter: none;
+                    }
+
+                    .xp-shell {
+                        box-shadow: 0 20px 44px rgba(3, 10, 24, 0.34);
+                    }
+
+                    .xp-card {
+                        box-shadow: 0 14px 32px rgba(1, 8, 20, 0.34);
+                    }
+
                     .xp-metrics {
                         grid-template-columns: repeat(2, minmax(0, 1fr));
                     }
@@ -806,6 +818,11 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                         padding: 0.8rem 0.95rem 0.95rem;
                     }
 
+                    .xp-card:hover,
+                    .xp-tag:hover {
+                        transform: none;
+                    }
+
                     .xp-pill {
                         padding: 0.32rem 0.55rem;
                         font-size: 0.66rem;
@@ -843,6 +860,45 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     .xp-card-glow,
                     .xp-tag {
                         transition: none;
+                    }
+                }
+
+                @media (hover: none) and (pointer: coarse) {
+                    /* Performance: ultra-lite mode for touch devices with no hover support. */
+                    .xp-light,
+                    .xp-particles,
+                    .xp-card-glow,
+                    .xp-column-side,
+                    .xp-line-label {
+                        display: none;
+                    }
+
+                    .xp-shell,
+                    .xp-card {
+                        backdrop-filter: none;
+                        -webkit-backdrop-filter: none;
+                    }
+
+                    .xp-card,
+                    .xp-tag,
+                    .xp-cta {
+                        transition: none;
+                    }
+
+                    .xp-row,
+                    .xp-row-right {
+                        grid-template-columns: 52px minmax(0, 1fr);
+                        gap: 0.5rem;
+                    }
+
+                    .xp-timeline::before {
+                        left: 25px;
+                    }
+
+                    .xp-card:hover,
+                    .xp-tag:hover {
+                        transform: none;
+                        box-shadow: none;
                     }
                 }
             `}</style>

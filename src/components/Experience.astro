@@ -29,7 +29,8 @@ const experiences = t.items;
             </p>
         </div>
 
-        <ExperienceScroll client:visible items={experiences} lang={lang} />
+        <!-- Performance: render timeline as static HTML to avoid React island hydration on /experience -->
+        <ExperienceScroll items={experiences} lang={lang} />
     </div>
 </section>
 
@@ -154,6 +155,17 @@ const experiences = t.items;
     }
 
     @media (max-width: 768px) {
+        /* Performance: reduce blend/animation cost on mobile GPUs. */
+        .experience-bg-2 {
+            animation: none;
+            mix-blend-mode: normal;
+            opacity: 0.42;
+        }
+
+        .experience-grain {
+            opacity: 0.03;
+        }
+
         .experience {
             padding-top: 4.5rem;
         }
@@ -171,6 +183,24 @@ const experiences = t.items;
         .experience-bg-1,
         .experience-bg-2 {
             animation: none;
+        }
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+        /* Performance: ultra-lite background treatment for touch devices. */
+        .experience-bg-1,
+        .experience-bg-2 {
+            animation: none;
+            filter: none;
+        }
+
+        .experience-bg-2 {
+            mix-blend-mode: normal;
+            opacity: 0.34;
+        }
+
+        .experience-grain {
+            opacity: 0.02;
         }
     }
 </style>

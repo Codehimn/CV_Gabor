@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from "astro:transitions";
 import ChatWidget from "../components/ChatWidget";
 import CommandMenu from "../components/CommandMenu";
 import { Toaster } from "sonner";
@@ -62,7 +61,6 @@ const {
     <link rel="icon" type="image/x-icon" href="/images/profile/favicon.ico" />
     <link rel="apple-touch-icon" href="/images/profile/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
-    <ViewTransitions />
   </head>
   <body>
     <!-- Custom Cursor -->
@@ -101,6 +99,11 @@ const {
       import { translations } from "../i18n";
 
       const runtime = ((window as any).__cvRuntime ||= {});
+
+      function shouldUseHeavyEffects() {
+        const supportsFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        return supportsFinePointer;
+      }
 
       // --- CINEMATIC MOTION (LENIS) ---
       function initLenis() {
@@ -156,6 +159,24 @@ const {
         );
       }
 
+      function teardownLenis() {
+        if (runtime.anchorController) {
+          runtime.anchorController.abort();
+          runtime.anchorController = null;
+        }
+
+        if (runtime.lenisRaf) {
+          cancelAnimationFrame(runtime.lenisRaf);
+          runtime.lenisRaf = null;
+        }
+
+        if (runtime.lenis) {
+          runtime.lenis.destroy();
+          runtime.lenis = null;
+          (window as any).lenis = null;
+        }
+      }
+
       // --- UNIFIED MOUSE TRACKING (rAF-gated) ---
       // ⚡ Perf: Consolidates cursor + spotlight into ONE mousemove listener
       // with requestAnimationFrame batching. Reduces style writes from
@@ -194,6 +215,13 @@ const {
           rafScheduled = false;
         }
 
+        if (runtime.mouseController) {
+          runtime.mouseController.abort();
+        }
+
+        runtime.mouseController = new AbortController();
+        const mouseSignal = runtime.mouseController.signal;
+
         // Single listener for both cursor + spotlight
         window.addEventListener(
           "mousemove",
@@ -205,34 +233,46 @@ const {
               requestAnimationFrame(updatePositions);
             }
           },
-          { passive: true },
+          { passive: true, signal: mouseSignal },
         );
 
         // Spotlight fade-out on mouse leave
         if (spotlight) {
           window.addEventListener("mouseleave", () => {
             spotlight.style.opacity = "0";
-          });
+          }, { signal: mouseSignal });
         }
 
         // Cursor click states (only if cursor exists)
         if (cursor) {
-          document.addEventListener("mousedown", () =>
-            cursor.classList.add("active"),
+          document.addEventListener(
+            "mousedown",
+            () => cursor.classList.add("active"),
+            { signal: mouseSignal },
           );
-          document.addEventListener("mouseup", () =>
-            cursor.classList.remove("active"),
+          document.addEventListener(
+            "mouseup",
+            () => cursor.classList.remove("active"),
+            { signal: mouseSignal },
           );
 
           // Hover state for interactive elements
           document
             .querySelectorAll("a, button, .interactive, .magnetic")
             .forEach((el) => {
-              el.addEventListener("mouseenter", () =>
-                cursor.classList.add("hover"),
+              el.addEventListener(
+                "mouseenter",
+                () => {
+                  cursor.classList.add("hover");
+                },
+                { signal: mouseSignal },
               );
-              el.addEventListener("mouseleave", () =>
-                cursor.classList.remove("hover"),
+              el.addEventListener(
+                "mouseleave",
+                () => {
+                  cursor.classList.remove("hover");
+                },
+                { signal: mouseSignal },
               );
             });
         }
@@ -245,15 +285,33 @@ const {
             const y = e.clientY - rect.top - rect.height / 2;
             el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
             el.style.transition = "none";
-          });
+          }, { signal: mouseSignal });
           el.addEventListener("mouseleave", () => {
             el.style.transform = `translate(0px, 0px)`;
             el.style.transition =
               "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
-          });
+          }, { signal: mouseSignal });
         });
 
         runtime.mouseTrackingInitialized = true;
+      }
+
+      function teardownMouseTracking() {
+        if (runtime.mouseController) {
+          runtime.mouseController.abort();
+          runtime.mouseController = null;
+        }
+
+        const cursor = document.querySelector(".custom-cursor") as HTMLElement | null;
+        const spotlight = document.querySelector(".mouse-spotlight") as HTMLElement | null;
+        if (cursor) {
+          cursor.classList.remove("active", "hover");
+        }
+        if (spotlight) {
+          spotlight.style.opacity = "0";
+        }
+
+        runtime.mouseTrackingInitialized = false;
       }
 
       // --- I18N LOGIC ---
@@ -416,11 +474,21 @@ const {
 
       // Initial Setup
       function setup() {
+        const useHeavyEffects = shouldUseHeavyEffects();
+        document.body.classList.toggle("heavy-effects", useHeavyEffects);
+
         if (!runtime.baseInitialized) {
-          initLenis();
-          initMouseTracking(); // ⚡ Single consolidated handler for cursor + spotlight
           window.addEventListener("scroll", onScroll, { passive: true });
           runtime.baseInitialized = true;
+        }
+
+        // Performance: keep smooth scrolling and mouse effects for /about desktop only.
+        if (useHeavyEffects) {
+          initLenis();
+          initMouseTracking();
+        } else {
+          teardownLenis();
+          teardownMouseTracking();
         }
 
         initI18n();

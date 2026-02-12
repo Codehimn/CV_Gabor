@@ -178,6 +178,20 @@ section {
   position: relative;
 }
 
+@supports (content-visibility: auto) {
+  /* Performance: defer rendering for below-the-fold heavy sections. */
+  #about,
+  #testimonials,
+  #experience,
+  #skills,
+  #projects,
+  #education,
+  #contact {
+    content-visibility: auto;
+    contain-intrinsic-size: 900px;
+  }
+}
+
 /* ---------- Glass Card ---------- */
 .glass-card {
   background: var(--bg-glass);
@@ -556,6 +570,11 @@ section {
   mix-blend-mode: difference;
 }
 
+body:not(.heavy-effects) .custom-cursor,
+body:not(.heavy-effects) .mouse-spotlight {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .custom-cursor {
     display: none;
@@ -588,16 +607,6 @@ section {
 }
 
 /* ---------- Language Toggle - MOVED TO NAVBAR COMPONENT ---------- */
-
-/* ---------- Performance Optimizations ---------- */
-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 500px;
-}
-
-#hero {
-  content-visibility: visible;
-}
 
 /* ---------- Component Refinements ---------- */
 .glass-card {
