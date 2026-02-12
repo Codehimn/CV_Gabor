@@ -56,24 +56,50 @@ export const translations = {
             label: "Testimonials",
             title: "Client",
             title_accent: "Feedback",
+            view_profile: "View Profile on Freelancer.com",
+            profile_url: "https://www.freelancer.com/u/Codehimn?review_context_id=20241678&review_type=project&frm=Codehimn&sb=t",
             items: [
                 {
-                    quote: "Excellent professional. Exactly what I needed for my project.",
-                    author: "Dino S.",
-                    role: "Raspberry PI & JS Specialist",
-                    rating: 5
+                    quote: "Excellent professional.",
+                    author: "@dsifuentesc",
+                    role: "Raspberry Pi / JavaScript / Cloud Integration",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=20241678&review_type=project&frm=Codehimn&sb=t"
                 },
                 {
                     quote: "Excellent freelancer, did what I needed exactly, won't hesitate to hire again. I highly recommend him.",
                     author: "Bassem E.",
-                    role: "Automation Client",
-                    rating: 5
+                    role: "Form Automation (JavaScript, MySQL, Visual FoxPro)",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=11444322&review_type=project&frm=Codehimn&sb=t"
                 },
                 {
-                    quote: "Helped me on demand with an AutoIt script. Very fast and efficient.",
-                    author: "Former Client",
-                    role: "Software Automation",
-                    rating: 5
+                    quote: "Helped me on demand with an AutoIt script.",
+                    author: "Previous client (inactive)",
+                    role: "AutoIt Scripting Support",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=11097779&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "It is a very professional person, he loves to work on automations, has good communication, and I recommend him. He has experience, I give a positive A+.",
+                    author: "@frfrienp",
+                    role: "Web Scraping / JavaScript Automation",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10574876&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "It maybe seems like he does not have enough experience because of not many reviews. But he did a great job. I did not have programming knowledge, and he tried hard to understand what I wanted and built exactly what I needed. He is kind, helpful, and I would love to work with him again.",
+                    author: "Aya S.",
+                    role: "Bot Development / Automation",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10515196&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "Work delivered in less than 30min. Good developer. Can trust. Excellent communication.",
+                    author: "Boubacar L.",
+                    role: "Windows Bash Script / Bulk SMS",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10523911&review_type=project&frm=Codehimn&sb=t"
                 }
             ]
         },
@@ -415,24 +441,50 @@ export const translations = {
             label: "Testimonios",
             title: "Feedback de",
             title_accent: "Clientes",
+            view_profile: "Ver Perfil en Freelancer.com",
+            profile_url: "https://www.freelancer.com/u/Codehimn?review_context_id=20241678&review_type=project&frm=Codehimn&sb=t",
             items: [
                 {
-                    quote: "Excelente profesional. Exactamente lo que necesitaba para mi proyecto.",
-                    author: "Dino S.",
-                    role: "Especialista en Raspberry PI y JS",
-                    rating: 5
+                    quote: "Excelente profesional.",
+                    author: "@dsifuentesc",
+                    role: "Raspberry Pi / JavaScript / Integración en la Nube",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=20241678&review_type=project&frm=Codehimn&sb=t"
                 },
                 {
                     quote: "Excelente freelancer, hizo exactamente lo que necesitaba, no dudaría en contratarlo de nuevo. Lo recomiendo mucho.",
                     author: "Bassem E.",
-                    role: "Automation Client",
-                    rating: 5
+                    role: "Automatización de Formularios (JavaScript, MySQL, Visual FoxPro)",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=11444322&review_type=project&frm=Codehimn&sb=t"
                 },
                 {
-                    quote: "Me ayudó bajo demanda con un script de AutoIt. Muy rápido y eficiente.",
-                    author: "Cliente de Freelancer",
-                    role: "Software Automation",
-                    rating: 5
+                    quote: "Me ayudó bajo demanda con un script en AutoIt.",
+                    author: "Cliente anterior (inactivo)",
+                    role: "Soporte de Scripting AutoIt",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=11097779&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "Es una persona muy profesional, le encanta trabajar en automatizaciones, tiene buena comunicación y lo recomiendo. Tiene experiencia, le doy un A+ positivo.",
+                    author: "@frfrienp",
+                    role: "Web Scraping / Automatización con JavaScript",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10574876&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "Puede parecer que no tiene suficiente experiencia por tener pocas reseñas, pero hizo un gran trabajo. Yo no tenía conocimientos de programación y se esforzó por entender exactamente lo que quería y lo construyó tal cual. Es amable, servicial y volvería a trabajar con él.",
+                    author: "Aya S.",
+                    role: "Desarrollo de Bots / Automatización",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10515196&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "Trabajo entregado en menos de 30 minutos. Buen desarrollador, confiable y con excelente comunicación.",
+                    author: "Boubacar L.",
+                    role: "Script Bash para Windows / SMS Masivos",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10523911&review_type=project&frm=Codehimn&sb=t"
                 }
             ]
         },

@@ -22,7 +22,14 @@ const t = translations[lang as "en" | "es"].testimonials;
         <div class="testimonials-grid stagger-children">
             {
                 t.items.map((item, index) => (
-                    <div class="testimonial-card glass-card reveal-up">
+                    <a
+                        href={
+                            item.link || "https://www.freelancer.com/u/Codehimn"
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="testimonial-card glass-card reveal-up interactive"
+                    >
                         <div class="testimonial-header-row">
                             <div class="quote-icon">
                                 <svg
@@ -66,10 +73,41 @@ const t = translations[lang as "en" | "es"].testimonials;
                                     {item.role}
                                 </p>
                             </div>
+                            <div class="external-link-icon">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <>
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 ))
             }
+        </div>
+
+        <div class="testimonials-cta reveal">
+            <a
+                href={t.profile_url || "https://www.freelancer.com/u/Codehimn"}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline magnetic"
+            >
+                <span data-i18n="testimonials.view_profile"
+                    >{t.view_profile || "View Profile on Freelancer.com"}</span
+                >
+            </a>
         </div>
     </div>
 </section>
@@ -82,32 +120,38 @@ const t = translations[lang as "en" | "es"].testimonials;
 
     .testimonials-header {
         text-align: center;
-        margin-bottom: 4rem;
+        margin-bottom: 3rem;
     }
 
     .testimonials-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
     }
 
     .testimonial-card {
-        padding: 2.5rem;
+        padding: 2rem;
         display: flex;
         flex-direction: column;
-        transition: transform 0.4s var(--ease-out-expo);
+        transition:
+            transform 0.4s var(--ease-out-expo),
+            border-color 0.3s ease;
+        text-decoration: none; /* Reset link style */
+        cursor: pointer;
     }
 
     .testimonial-header-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
     }
 
     .testimonial-card:hover {
         transform: translateY(-10px);
-        border-color: rgba(56, 189, 248, 0.3);
+        border-color: rgba(56, 189, 248, 0.4);
+        background: rgba(255, 255, 255, 0.03);
     }
 
     .quote-icon {
@@ -121,10 +165,10 @@ const t = translations[lang as "en" | "es"].testimonials;
     }
 
     .testimonial-quote {
-        font-size: 1.1rem;
-        line-height: 1.7;
-        color: var(--text-primary);
-        margin-bottom: 2rem;
+        font-size: 0.98rem;
+        line-height: 1.55;
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
         font-style: italic;
         flex: 1;
     }
@@ -132,25 +176,48 @@ const t = translations[lang as "en" | "es"].testimonials;
     .testimonial-author {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .author-info h4 {
         color: var(--text-primary);
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 700;
         margin-bottom: 0.2rem;
     }
 
     .author-info p {
-        color: var(--text-muted);
-        font-size: 0.85rem;
+        color: var(--accent-blue);
+        font-size: 0.8rem;
         font-family: var(--font-mono);
+        letter-spacing: 0.02em;
+    }
+
+    .external-link-icon {
+        color: var(--text-muted);
+        opacity: 0;
+        transform: translateX(-5px);
+        transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover .external-link-icon {
+        opacity: 1;
+        transform: translateX(0);
+        color: var(--accent-blue);
+    }
+
+    .testimonials-cta {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
     }
 
     @media (max-width: 768px) {
         .testimonial-card {
-            padding: 2rem;
+            padding: 1.5rem;
         }
     }
 </style>

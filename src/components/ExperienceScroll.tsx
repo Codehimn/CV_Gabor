@@ -532,13 +532,13 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                 }
 
                 .xp-icon-wrap {
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 14px;
+                    width: 78px;
+                    height: 78px;
+                    border-radius: 18px;
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    padding: 0.35rem;
+                    padding: 0.42rem;
                     background: linear-gradient(145deg, rgba(56, 189, 248, 0.22), rgba(45, 212, 191, 0.12));
                     border: 1px solid rgba(56, 189, 248, 0.3);
                     flex-shrink: 0;
@@ -905,8 +905,9 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     }
 
                     .xp-icon-wrap {
-                        width: 40px;
-                        height: 40px;
+                        width: 62px;
+                        height: 62px;
+                        border-radius: 16px;
                     }
 
                     .xp-line-label {
