@@ -46,6 +46,9 @@ const t = translations[lang as "en" | "es"].about;
                                     >{t.download_cv}</span
                                 >
                             </a>
+                            <p class="cv-update-note" data-i18n="about.download_cv_notice"
+                                >Will be updated soon</p
+                            >
                         </div>
                     </div>
                 </div>
@@ -270,6 +273,20 @@ const t = translations[lang as "en" | "es"].about;
         margin-bottom: 1rem;
     }
 
+    .about-actions {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+
+    .cv-update-note {
+        font-size: 0.66rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+
     /* Expertise Card */
     .card-header {
         display: flex;
@@ -415,6 +432,10 @@ const t = translations[lang as "en" | "es"].about;
         .bio-content {
             flex-direction: column;
             text-align: center;
+        }
+
+        .about-actions {
+            align-items: center;
         }
     }
 

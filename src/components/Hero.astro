@@ -94,7 +94,10 @@ import { ViewTransitions } from "astro:transitions";
                     data-cv-en="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
                     data-cv-es="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
                 >
-                    📄 <span data-i18n="hero.download_cv">Download CV</span>
+                    <span data-i18n="hero.download_cv">Download CV</span>
+                    <span class="cv-soon-note" data-i18n="hero.download_cv_notice"
+                        >Will be updated soon</span
+                    >
                 </a>
                 <a
                     href="#contact"
@@ -292,7 +295,7 @@ import { ViewTransitions } from "astro:transitions";
 
 <style>
     .hero {
-        min-height: clamp(680px, 92svh, 860px);
+        min-height: clamp(620px, 86svh, 760px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -498,6 +501,23 @@ import { ViewTransitions } from "astro:transitions";
         flex-wrap: wrap;
     }
 
+    .hero-download-btn {
+        position: relative;
+        align-items: center;
+    }
+
+    .cv-soon-note {
+        font-size: 0.65rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #bae6fd;
+        border: 1px solid rgba(56, 189, 248, 0.28);
+        background: rgba(56, 189, 248, 0.12);
+        border-radius: 999px;
+        padding: 0.15rem 0.45rem;
+        white-space: nowrap;
+    }
+
     .btn.magnetic {
         transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
         will-change: transform;
@@ -505,7 +525,7 @@ import { ViewTransitions } from "astro:transitions";
 
     .scroll-indicator {
         position: absolute;
-        bottom: 1.1rem;
+        bottom: 0.6rem;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
@@ -652,6 +672,11 @@ import { ViewTransitions } from "astro:transitions";
 
         .hero-actions {
             gap: 0.65rem;
+        }
+
+        .cv-soon-note {
+            font-size: 0.56rem;
+            padding: 0.14rem 0.36rem;
         }
     }
 </style>

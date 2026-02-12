@@ -16,11 +16,12 @@ export const translations = {
             badge: "Available for new opportunities",
             roles: "Senior Full-Stack Developer,Automation Architect,Backend Specialist,Problem Solver",
             description: "{years}+ years architecting zero-latency backend systems, mission-critical automation pipelines, and high-impact full-stack solutions.",
-            years: "Years Experience",
+            years: "Work Experience",
             projects: "Projects",
             cta_primary: "Explore My Work",
             cta_secondary: "Get In Touch",
             download_cv: "Download CV",
+            download_cv_notice: "Will be updated soon",
             scroll: "Scroll down"
         },
         about: {
@@ -37,6 +38,7 @@ export const translations = {
             location: "Based in Medellín, Colombia",
             remote: "Open to remote worldwide",
             download_cv: "Download CV",
+            download_cv_notice: "Will be updated soon",
             expertise_title: "Core Expertise",
             expertise_item_1_label: "Python / Django",
             expertise_item_1_value: "11+ yrs",
@@ -56,6 +58,7 @@ export const translations = {
             label: "Testimonials",
             title: "Client",
             title_accent: "Feedback",
+            open_review: "Open review",
             view_profile: "View Profile on Freelancer.com",
             profile_url: "https://www.freelancer.com/u/Codehimn?review_context_id=20241678&review_type=project&frm=Codehimn&sb=t",
             items: [
@@ -402,11 +405,12 @@ export const translations = {
             badge: "Disponible para nuevas oportunidades",
             roles: "Desarrollador Full-Stack Senior,Arquitecto de Automatización,Especialista en Backend,Solucionador de Problemas",
             description: "{years}+ años arquitectando sistemas backend de latencia cero, pipelines de automatización de misión crítica y soluciones full-stack de alto impacto.",
-            years: "Años de Experiencia",
+            years: "Experiencia Laboral",
             projects: "Proyectos",
             cta_primary: "Ver Mi Trabajo",
             cta_secondary: "Contáctame",
             download_cv: "Descargar CV",
+            download_cv_notice: "Se actualizara pronto",
             scroll: "Desliza hacia abajo"
         },
         about: {
@@ -423,6 +427,7 @@ export const translations = {
             location: "Basado en Medellín, Colombia",
             remote: "Abierto a remoto mundial",
             download_cv: "Descargar CV",
+            download_cv_notice: "Se actualizara pronto",
             expertise_title: "Experiencia Clave",
             expertise_item_1_label: "Python / Django",
             expertise_item_1_value: "11+ años",
@@ -442,6 +447,7 @@ export const translations = {
             label: "Testimonios",
             title: "Feedback de",
             title_accent: "Clientes",
+            open_review: "Abrir reseña",
             view_profile: "Ver Perfil en Freelancer.com",
             profile_url: "https://www.freelancer.com/u/Codehimn?review_context_id=20241678&review_type=project&frm=Codehimn&sb=t",
             items: [

@@ -45,6 +45,7 @@ const UI_TEXT = {
             companies: "Organizations served",
             quality: "Quality-first delivery"
         },
+        sinceYoung: "Since age 16",
         milestones: {
             remote: "Remote-first",
             leadership: "Leadership",
@@ -67,6 +68,7 @@ const UI_TEXT = {
             companies: "Organizaciones atendidas",
             quality: "Entrega centrada en calidad"
         },
+        sinceYoung: "Desde los 16 años",
         milestones: {
             remote: "Remoto-first",
             leadership: "Liderazgo",
@@ -240,12 +242,10 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
     // dynamically switch items based on current language
     const currentItems = (translations[locale].experience.items as unknown as ExperienceItem[]);
 
-    const currentYear = new Date().getFullYear();
-    const years = Math.max(11, currentYear - 2010);
     const companies = new Set(currentItems.map((item) => item.company)).size;
 
     const metrics = [
-        { label: text.metrics.years, value: `${years}+`, icon: <CalendarRange size={16} /> },
+        { label: text.metrics.years, value: text.sinceYoung, icon: <CalendarRange size={16} /> },
         { label: text.metrics.roles, value: `${currentItems.length}`, icon: <Award size={16} /> },
         { label: text.metrics.companies, value: `${companies}`, icon: <Target size={16} /> },
         { label: text.metrics.quality, value: text.qualityValue, icon: <BadgeCheck size={16} /> }
@@ -471,7 +471,7 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     z-index: 2;
                     display: grid;
                     gap: 0.85rem;
-                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
                     margin-bottom: clamp(1.2rem, 3vw, 2rem);
                 }
 
