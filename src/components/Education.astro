@@ -489,29 +489,47 @@ const biasMetadata = [
 </section>
 
 <script>
-    const langObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const bars =
-                        entry.target.querySelectorAll(".lang-progress");
+    function teardownEducationAnimation() {
+        const runtime = ((window as any).__cvRuntime ||= {});
+        if (runtime.educationLangObserver) {
+            runtime.educationLangObserver.disconnect();
+            runtime.educationLangObserver = null;
+        }
+    }
+
+    function initEducationAnimation() {
+        teardownEducationAnimation();
+
+        const runtime = ((window as any).__cvRuntime ||= {});
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+
+                    const bars = entry.target.querySelectorAll(".lang-progress");
                     bars.forEach((bar, i) => {
                         const htmlBar = bar as HTMLElement;
                         setTimeout(() => {
-                            htmlBar.style.width =
-                                htmlBar.style.getPropertyValue("--progress");
+                            htmlBar.style.width = htmlBar.style.getPropertyValue("--progress");
                         }, i * 150);
                     });
-                    langObserver.unobserve(entry.target);
-                }
-            });
-        },
-        { threshold: 0.3 },
-    );
 
-    document
-        .querySelectorAll(".languages-list")
-        .forEach((el) => langObserver.observe(el));
+                    observer.unobserve(entry.target);
+                });
+            },
+            { threshold: 0.3 },
+        );
+
+        runtime.educationLangObserver = observer;
+
+        document
+            .querySelectorAll(".languages-list")
+            .forEach((el) => observer.observe(el));
+    }
+
+    initEducationAnimation();
+    document.addEventListener("astro:after-swap", initEducationAnimation);
+    document.addEventListener("astro:before-swap", teardownEducationAnimation);
 </script>
 
 <style>
@@ -523,16 +541,6 @@ const biasMetadata = [
     .education-header {
         text-align: center;
         margin-bottom: 4rem;
-    }
-
-    .section-label {
-        font-family: var(--font-mono);
-        font-size: 0.85rem;
-        color: var(--accent-blue);
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        margin-bottom: 0.75rem;
-        font-weight: 600;
     }
 
     .education-grid {
@@ -731,7 +739,7 @@ const biasMetadata = [
         background: linear-gradient(
             135deg,
             rgba(56, 189, 248, 0.08),
-            rgba(139, 92, 246, 0.08)
+            rgba(34, 211, 238, 0.08)
         );
         border: 1px solid rgba(56, 189, 248, 0.15);
         color: var(--text-secondary);
@@ -744,7 +752,7 @@ const biasMetadata = [
         background: linear-gradient(
             135deg,
             rgba(56, 189, 248, 0.15),
-            rgba(139, 92, 246, 0.15)
+            rgba(34, 211, 238, 0.15)
         );
         border-color: rgba(56, 189, 248, 0.4);
         color: var(--text-primary);
@@ -827,8 +835,8 @@ const biasMetadata = [
         gap: 0.4rem;
         padding: 0.5rem 1rem;
         border-radius: 50px;
-        background: rgba(129, 140, 248, 0.06);
-        border: 1px solid rgba(129, 140, 248, 0.1);
+        background: rgba(56, 189, 248, 0.07);
+        border: 1px solid rgba(56, 189, 248, 0.12);
         color: var(--text-secondary);
         font-size: 0.8rem;
         font-weight: 600;
@@ -836,8 +844,8 @@ const biasMetadata = [
     }
 
     .soft-tag:hover {
-        background: rgba(129, 140, 248, 0.12);
-        border-color: rgba(129, 140, 248, 0.3);
+        background: rgba(56, 189, 248, 0.13);
+        border-color: rgba(56, 189, 248, 0.32);
         color: var(--text-primary);
         transform: translateY(-3px);
     }

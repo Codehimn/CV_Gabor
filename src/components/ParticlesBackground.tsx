@@ -5,14 +5,33 @@ import { useEffect, useMemo, useState } from "react";
 
 export default function ParticlesBackground() {
     const [init, setInit] = useState(false);
+    const [enabled, setEnabled] = useState(false);
 
     useEffect(() => {
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const coarsePointer = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+        setEnabled(!reducedMotion && !coarsePointer);
+    }, []);
+
+    useEffect(() => {
+        if (!enabled) {
+            setInit(false);
+            return;
+        }
+
+        let active = true;
         initParticlesEngine(async (engine) => {
             await loadSlim(engine);
         }).then(() => {
-            setInit(true);
+            if (active) {
+                setInit(true);
+            }
         });
-    }, []);
+
+        return () => {
+            active = false;
+        };
+    }, [enabled]);
 
     const options = useMemo(
         () => ({
@@ -21,7 +40,7 @@ export default function ParticlesBackground() {
                     value: "transparent",
                 },
             },
-            fpsLimit: 30, // Reduced to 30 for better performance
+            fpsLimit: 24,
             interactivity: {
                 events: {
                     onClick: {
@@ -69,7 +88,7 @@ export default function ParticlesBackground() {
                         enable: true,
                         area: 1000,
                     },
-                    value: 20, // Reduced from 30 to 20 for better performance
+                    value: 14,
                 },
                 opacity: {
                     value: 0.2, // Reduced opacity for subtler effect
@@ -86,7 +105,7 @@ export default function ParticlesBackground() {
         [],
     );
 
-    if (init) {
+    if (enabled && init) {
         return (
             <Particles
                 id="tsparticles"

@@ -18,6 +18,13 @@
   --accent-cyan: #22d3ee;
   --accent-emerald: #34d399;
 
+  --surface-1: rgba(15, 22, 41, 0.74);
+  --surface-2: rgba(21, 30, 52, 0.78);
+  --surface-elevated: rgba(25, 37, 64, 0.88);
+  --border-soft: rgba(148, 163, 184, 0.18);
+  --border-accent: rgba(56, 189, 248, 0.3);
+  --text-tertiary: #7c8da3;
+
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
@@ -35,6 +42,7 @@
   /* Spacing */
   --section-padding: clamp(3rem, 7vh, 6rem);
   --section-scroll-margin: 80px;
+  --nav-offset: 96px;
   --container-width: min(1200px, 90vw);
 
   /* Borders */
@@ -197,8 +205,8 @@ section {
 
 /* ---------- Glass Card ---------- */
 .glass-card {
-  background: var(--bg-glass);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--surface-1);
+  border: 1px solid var(--border-soft);
   border-radius: var(--radius-lg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -207,8 +215,8 @@ section {
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(56, 189, 248, 0.3);
+  background: var(--surface-2);
+  border-color: var(--border-accent);
   transform: translateY(-8px) scale(1.01);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), var(--shadow-glow-blue);
 }
@@ -257,6 +265,48 @@ section {
   position: relative;
   overflow: hidden;
   text-decoration: none;
+  min-height: 44px;
+  border: 1px solid transparent;
+  line-height: 1.2;
+}
+
+.btn:focus-visible,
+button:focus-visible,
+.contact-card:focus-visible,
+.social-link-btn:focus-visible,
+.cert-link:focus-visible,
+.lang-btn:focus-visible,
+.hamburger-wrapper:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(10, 14, 26, 0.9), 0 0 0 4px rgba(56, 189, 248, 0.7);
+}
+
+.contact-card,
+.social-link-btn,
+.cert-link {
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+}
+
+/* ---------- Page Shell ---------- */
+.page-main {
+  min-height: 100svh;
+  padding-top: var(--nav-offset);
+}
+
+.page-main--centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page-main--chat {
+  height: 100svh;
+  overflow: hidden;
+  background: #0a0a0f;
+}
+
+.page-stack .section-divider {
+  margin: clamp(2rem, 5vw, 4rem) 0;
 }
 
 .btn-primary {
@@ -323,6 +373,7 @@ section {
   :root {
     --section-padding: 3.5rem;
     --section-scroll-margin: 70px;
+    --nav-offset: 84px;
   }
 
   .btn-whatsapp {
@@ -636,7 +687,7 @@ body:not(.heavy-effects) .mouse-spotlight {
 /* ---------- Component Refinements ---------- */
 .glass-card {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-soft);
   position: relative;
   overflow: hidden;
 }

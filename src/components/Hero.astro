@@ -121,7 +121,41 @@ import { ViewTransitions } from "astro:transitions";
 </section>
 
 <script>
+    function teardownHero() {
+        const runtime = ((window as any).__cvRuntime ||= {});
+
+        if (runtime.heroTypeTimeout) {
+            clearTimeout(runtime.heroTypeTimeout);
+            runtime.heroTypeTimeout = null;
+        }
+
+        if (runtime.heroCounterObserver) {
+            runtime.heroCounterObserver.disconnect();
+            runtime.heroCounterObserver = null;
+        }
+
+        if (runtime.heroCounterRafs) {
+            runtime.heroCounterRafs.forEach((id: number) => cancelAnimationFrame(id));
+            runtime.heroCounterRafs = [];
+        }
+
+        if (runtime.heroLangChangedHandler) {
+            window.removeEventListener("langChanged", runtime.heroLangChangedHandler);
+            runtime.heroLangChangedHandler = null;
+        }
+    }
+
     function initHero() {
+        teardownHero();
+
+        const runtime = ((window as any).__cvRuntime ||= {});
+        const stateToken = Symbol("hero-state");
+        runtime.heroStateToken = stateToken;
+
+        function isStale() {
+            return runtime.heroStateToken !== stateToken;
+        }
+
         // Typing effect logic
         const rolesSource = document.getElementById("roles-source");
         const typingEl = document.getElementById("typing-text");
@@ -134,7 +168,6 @@ import { ViewTransitions } from "astro:transitions";
         let roleIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
-        let typeTimeout: any = null;
 
         function updateRoles() {
             if (rolesSource && rolesSource.textContent) {
@@ -143,6 +176,7 @@ import { ViewTransitions } from "astro:transitions";
         }
 
         function typeWriter() {
+            if (isStale()) return;
             if (!typingEl) return;
             if (roleIndex >= roles.length) roleIndex = 0;
             const currentRole = roles[roleIndex];
@@ -152,7 +186,7 @@ import { ViewTransitions } from "astro:transitions";
                 charIndex++;
                 if (charIndex === currentRole.length) {
                     isDeleting = true;
-                    typeTimeout = setTimeout(typeWriter, 2000);
+                    runtime.heroTypeTimeout = window.setTimeout(typeWriter, 2000);
                     return;
                 }
             } else {
@@ -163,36 +197,49 @@ import { ViewTransitions } from "astro:transitions";
                     roleIndex = (roleIndex + 1) % roles.length;
                 }
             }
-            typeTimeout = setTimeout(typeWriter, isDeleting ? 40 : 80);
+            runtime.heroTypeTimeout = window.setTimeout(typeWriter, isDeleting ? 40 : 80);
         }
 
         // Counter animation
         const counters = document.querySelectorAll(".stat-number[data-count]");
+        const counterRafs: number[] = [];
+
+        function animateCounter(targetEl: HTMLElement, target: number) {
+            const duration = 1200;
+            const start = performance.now();
+
+            const frame = (now: number) => {
+                if (isStale()) return;
+                const progress = Math.min((now - start) / duration, 1);
+                targetEl.textContent = Math.floor(progress * target).toString();
+
+                if (progress < 1) {
+                    const rafId = requestAnimationFrame(frame);
+                    counterRafs.push(rafId);
+                } else {
+                    targetEl.textContent = target.toString();
+                }
+            };
+
+            const rafId = requestAnimationFrame(frame);
+            counterRafs.push(rafId);
+        }
+
         const counterObserver = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const targetEl = entry.target as HTMLElement;
-                        const target = parseInt(targetEl.dataset.count || "0");
-                        let count = 0;
-                        const duration = 2000;
-                        const step = target / (duration / 16);
-                        const timer = setInterval(() => {
-                            count += step;
-                            if (count >= target) {
-                                targetEl.textContent = target.toString();
-                                clearInterval(timer);
-                            } else {
-                                targetEl.textContent =
-                                    Math.floor(count).toString();
-                            }
-                        }, 16);
-                        counterObserver.unobserve(entry.target);
-                    }
+                    if (!entry.isIntersecting || isStale()) return;
+
+                    const targetEl = entry.target as HTMLElement;
+                    const target = parseInt(targetEl.dataset.count || "0", 10);
+                    animateCounter(targetEl, target);
+                    counterObserver.unobserve(entry.target);
                 });
             },
             { threshold: 0.5 },
         );
+        runtime.heroCounterObserver = counterObserver;
+        runtime.heroCounterRafs = counterRafs;
 
         // Initialize
         updateRoles();
@@ -214,17 +261,17 @@ import { ViewTransitions } from "astro:transitions";
         updateHeroCv();
 
         // Language change reactive listener
-        const runtime = ((window as any).__cvRuntime ||= {});
-        if (runtime.heroLangChangedHandler) {
-            window.removeEventListener("langChanged", runtime.heroLangChangedHandler);
-        }
-
         runtime.heroLangChangedHandler = () => {
+            if (isStale()) return;
             setTimeout(() => {
+                if (isStale()) return;
                 updateRoles();
                 charIndex = 0;
                 isDeleting = false;
-                if (typeTimeout) clearTimeout(typeTimeout);
+                if (runtime.heroTypeTimeout) {
+                    clearTimeout(runtime.heroTypeTimeout);
+                    runtime.heroTypeTimeout = null;
+                }
                 typeWriter();
                 updateHeroCv();
             }, 50);
@@ -233,11 +280,14 @@ import { ViewTransitions } from "astro:transitions";
         window.addEventListener("langChanged", runtime.heroLangChangedHandler);
     }
 
-    // Run on initial load
-    initHero();
+    const runtime = ((window as any).__cvRuntime ||= {});
+    if (!runtime.heroLifecycleBound) {
+        document.addEventListener("astro:after-swap", initHero);
+        document.addEventListener("astro:before-swap", teardownHero);
+        runtime.heroLifecycleBound = true;
+    }
 
-    // Run on View Transitions swap
-    document.addEventListener("astro:after-swap", initHero);
+    initHero();
 </script>
 
 <style>
@@ -564,6 +614,11 @@ import { ViewTransitions } from "astro:transitions";
     }
 
     @media (max-width: 768px) {
+        .hero {
+            padding-top: 8rem;
+            padding-bottom: 2rem;
+        }
+
         .hero-stats {
             gap: 2rem;
         }

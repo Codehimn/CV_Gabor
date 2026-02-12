@@ -16,6 +16,8 @@ import {
     Terminal,
     type LucideIcon
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { translations } from "../i18n";
 
 interface ExperienceItem {
     period: string;
@@ -62,15 +64,15 @@ const UI_TEXT = {
         qualityValue: "CI/CD + testing discipline"
     },
     es: {
-        periodLabel: "Cronologia",
+        periodLabel: "Cronología",
         impactLabel: "Impacto en Negocio",
-        techLabel: "Stack Tecnologico",
+        techLabel: "Stack Tecnológico",
         covidBadge: "Era COVID",
-        ctaTitle: "Disponible para productos y automatizacion de alto impacto",
+        ctaTitle: "Disponible para productos y automatización de alto impacto",
         ctaSubtitle:
-            "Desde arquitectura hasta ejecucion, construyo sistemas que reducen riesgo y escalan con confianza.",
+            "Desde arquitectura hasta ejecución, construyo sistemas que reducen riesgo y escalan con confianza.",
         metrics: {
-            years: "Anos construyendo software",
+            years: "Años construyendo software",
             roles: "Roles especializados",
             companies: "Organizaciones atendidas",
             quality: "Entrega centrada en calidad"
@@ -89,12 +91,12 @@ const IMPACT_COPY = {
         madisa: "Strengthened technical operations and customer-side system reliability."
     },
     es: {
-        spglobal: "Construyendo software robusto para flujos de analitica financiera con altos estandares de confiabilidad.",
-        zattoo: "Construi flujos internos de API mocking y aumente la confianza en releases.",
-        conectsen: "Entregue monitoreo IoT en tiempo real con captura multi-dispositivo.",
-        yaxa: "Escale automatizaciones para logistica, mensajeria y pricing operativo.",
-        freelancer: "Lance sistemas de automatizacion personalizados integrando APIs de terceros.",
-        madisa: "Fortaleci operaciones tecnicas y la confiabilidad de sistemas del cliente."
+        spglobal: "Construyendo software robusto para flujos de analítica financiera con altos estándares de confiabilidad.",
+        zattoo: "Construí flujos internos de API mocking y aumenté la confianza en releases.",
+        conectsen: "Entregué monitoreo IoT en tiempo real con captura multi-dispositivo.",
+        yaxa: "Escalé automatizaciones para logística, mensajería y pricing operativo.",
+        freelancer: "Lancé sistemas de automatización personalizados integrando APIs de terceros.",
+        madisa: "Fortalecí operaciones técnicas y la confiabilidad de sistemas del cliente."
     }
 } as const;
 
@@ -160,15 +162,32 @@ function renderIcon(iconName: string) {
 }
 
 export default function ExperienceScroll({ items, lang = "en" }: Props) {
-    const locale: "en" | "es" = lang === "es" ? "es" : "en";
+    const [currentLang, setCurrentLang] = useState<"en" | "es">(lang === "es" ? "es" : "en");
+
+    useEffect(() => {
+        const handleLangChange = () => {
+            const storedLang = localStorage.getItem("preferred-lang") as "en" | "es";
+            if (storedLang) {
+                setCurrentLang(storedLang);
+            }
+        };
+        window.addEventListener("langChanged", handleLangChange);
+        return () => window.removeEventListener("langChanged", handleLangChange);
+    }, []);
+
+    const locale: "en" | "es" = currentLang;
     const text = UI_TEXT[locale];
+
+    // dynamically switch items based on current language
+    const currentItems = (translations[locale].experience.items as unknown as ExperienceItem[]);
+
     const currentYear = new Date().getFullYear();
     const years = Math.max(11, currentYear - 2010);
-    const companies = new Set(items.map((item) => item.company)).size;
+    const companies = new Set(currentItems.map((item) => item.company)).size;
 
     const metrics = [
         { label: text.metrics.years, value: `${years}+` },
-        { label: text.metrics.roles, value: `${items.length}` },
+        { label: text.metrics.roles, value: `${currentItems.length}` },
         { label: text.metrics.companies, value: `${companies}` },
         { label: text.metrics.quality, value: text.qualityValue }
     ];
@@ -194,7 +213,7 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
             </div>
 
             <div className="xp-timeline" aria-label="Professional timeline">
-                {items.map((item, index) => {
+                {currentItems.map((item, index) => {
                     const year = getStartYear(item.period);
                     const isLeft = index % 2 === 0;
                     const impactText = getImpactText(item, locale);
