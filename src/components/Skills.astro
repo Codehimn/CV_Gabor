@@ -136,32 +136,6 @@ const skillCategories = [
     </div>
 </section>
 
-<script>
-    const skillObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const bars =
-                        entry.target.querySelectorAll(".skill-progress");
-                    bars.forEach((bar, i) => {
-                        const htmlBar = bar as HTMLElement;
-                        setTimeout(() => {
-                            htmlBar.style.width =
-                                htmlBar.style.getPropertyValue("--progress");
-                        }, i * 80);
-                    });
-                    skillObserver.unobserve(entry.target);
-                }
-            });
-        },
-        { threshold: 0.1 },
-    );
-
-    document.querySelectorAll(".skill-category").forEach((cat) => {
-        skillObserver.observe(cat);
-    });
-</script>
-
 <style>
     .skills {
         padding: var(--section-padding) 0;

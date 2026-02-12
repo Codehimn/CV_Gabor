@@ -1,0 +1,18 @@
+---
+import AboutSection from "../components/About.astro";
+import Hero from "../components/Hero.astro";
+import Navbar from "../components/Navbar.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout showCommandMenu={true}>
+	<Navbar />
+	<main>
+		<Hero />
+		<div class="section-divider"></div>
+		<AboutSection />
+		<div class="section-divider"></div>
+		<Testimonials />
+	</main>
+</Layout>

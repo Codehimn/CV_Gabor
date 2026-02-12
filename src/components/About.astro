@@ -3,7 +3,6 @@ import { translations } from "../i18n";
 
 const { lang = "en" } = Astro.props;
 const t = translations[lang as "en" | "es"].about;
-const t_nav = translations[lang as "en" | "es"].nav;
 ---
 
 <section class="about" id="about">
@@ -12,9 +11,6 @@ const t_nav = translations[lang as "en" | "es"].nav;
             <p class="section-label" data-i18n="about.label">{t.label}</p>
             <h2 class="section-title">
                 <span data-i18n="about.title">{t.title}</span>
-                <span class="gradient-text" data-i18n="about.title_accent"
-                    >{t.title_accent}</span
-                >
             </h2>
         </div>
 
@@ -34,8 +30,8 @@ const t_nav = translations[lang as "en" | "es"].nav;
                         <div class="about-image-border"></div>
                     </div>
                     <div class="bio-text">
-                        <p class="lead" data-i18n="about.description">
-                            {t.description}
+                        <p class="lead" data-i18n="about.p1">
+                            {t.p1}
                         </p>
                         <div class="about-actions">
                             <a
@@ -44,7 +40,7 @@ const t_nav = translations[lang as "en" | "es"].nav;
                                 class="btn btn-outline cv-download-btn"
                                 id="about-cv-link"
                                 data-cv-en="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
-                                data-cv-es="/pdf/CV Gabor Flandorffer 2026 ESP.pdf"
+                                data-cv-es="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
                             >
                                 <span data-i18n="about.download_cv"
                                     >{t.download_cv}</span
@@ -74,7 +70,7 @@ const t_nav = translations[lang as "en" | "es"].nav;
                     <span class="status-icon">📍</span>
                     <div>
                         <p class="status-label">Location</p>
-                        <p class="status-value">Remote / Global</p>
+                        <p class="status-value">Medellín, Colombia</p>
                     </div>
                 </div>
                 <div class="status-item">
@@ -360,19 +356,24 @@ const t_nav = translations[lang as "en" | "es"].nav;
         ) as HTMLElement;
 
         if (photoWrapper && photo && border) {
-            photoWrapper.addEventListener("mousemove", (e: any) => {
-                const rect = photoWrapper.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width - 0.5;
-                const y = (e.clientY - rect.top) / rect.height - 0.5;
+            const wrapperEl = photoWrapper as HTMLElement;
+            if (wrapperEl.dataset.tiltBound !== "true") {
+                photoWrapper.addEventListener("mousemove", (e: any) => {
+                    const rect = photoWrapper.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5;
+                    const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-                photo.style.transform = `perspective(1000px) rotateY(${x * 15}deg) rotateX(${y * -15}deg) scale(1.05)`;
-                border.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
-            });
+                    photo.style.transform = `perspective(1000px) rotateY(${x * 15}deg) rotateX(${y * -15}deg) scale(1.05)`;
+                    border.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+                });
 
-            photoWrapper.addEventListener("mouseleave", () => {
-                photo.style.transform = `perspective(1000px) rotateY(0) rotateX(0) scale(1)`;
-                border.style.transform = `translate(0, 0)`;
-            });
+                photoWrapper.addEventListener("mouseleave", () => {
+                    photo.style.transform = `perspective(1000px) rotateY(0) rotateX(0) scale(1)`;
+                    border.style.transform = `translate(0, 0)`;
+                });
+
+                wrapperEl.dataset.tiltBound = "true";
+            }
         }
 
         // Language toggle for CV download
@@ -388,7 +389,13 @@ const t_nav = translations[lang as "en" | "es"].nav;
                     : aboutCvLink.dataset.cvEn || "";
         }
         updateAboutCv();
-        window.addEventListener("langChanged", updateAboutCv);
+        const runtime = ((window as any).__cvRuntime ||= {});
+        if (runtime.aboutLangChangedHandler) {
+            window.removeEventListener("langChanged", runtime.aboutLangChangedHandler);
+        }
+
+        runtime.aboutLangChangedHandler = updateAboutCv;
+        window.addEventListener("langChanged", runtime.aboutLangChangedHandler);
     }
 
     initAboutScroll();

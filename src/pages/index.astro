@@ -1,18 +1,22 @@
 ---
-import About from "../components/About.astro";
-import Hero from "../components/Hero.astro";
-import Navbar from "../components/Navbar.astro";
-import Testimonials from "../components/Testimonials.astro";
-import Layout from "../layouts/Layout.astro";
+const target = "/about/";
 ---
 
-<Layout>
-	<Navbar />
-	<main>
-		<Hero />
-		<div class="section-divider"></div>
-		<About />
-		<div class="section-divider"></div>
-		<Testimonials />
-	</main>
-</Layout>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Redirecting...</title>
+        <meta http-equiv="refresh" content={`0;url=${target}`} />
+        <link rel="canonical" href={target} />
+        <script>
+            window.location.replace("/about/");
+        </script>
+    </head>
+    <body>
+        <p>
+            Redirecting to <a href={target}>/about/</a>...
+        </p>
+    </body>
+</html>

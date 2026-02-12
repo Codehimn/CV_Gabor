@@ -92,7 +92,7 @@ import { ViewTransitions } from "astro:transitions";
                     class="btn btn-outline magnetic hero-download-btn"
                     id="hero-download-cv"
                     data-cv-en="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
-                    data-cv-es="/pdf/CV Gabor Flandorffer 2026 ESP.pdf"
+                    data-cv-es="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
                 >
                     📄 <span data-i18n="hero.download_cv">Download CV</span>
                 </a>
@@ -194,20 +194,6 @@ import { ViewTransitions } from "astro:transitions";
             { threshold: 0.5 },
         );
 
-        // Magnetic Effect
-        const magneticElements = document.querySelectorAll(".magnetic");
-        magneticElements.forEach((el: any) => {
-            el.addEventListener("mousemove", (e: MouseEvent) => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-            });
-            el.addEventListener("mouseleave", () => {
-                el.style.transform = `translate(0px, 0px)`;
-            });
-        });
-
         // Initialize
         updateRoles();
         typeWriter();
@@ -228,7 +214,12 @@ import { ViewTransitions } from "astro:transitions";
         updateHeroCv();
 
         // Language change reactive listener
-        window.addEventListener("langChanged", () => {
+        const runtime = ((window as any).__cvRuntime ||= {});
+        if (runtime.heroLangChangedHandler) {
+            window.removeEventListener("langChanged", runtime.heroLangChangedHandler);
+        }
+
+        runtime.heroLangChangedHandler = () => {
             setTimeout(() => {
                 updateRoles();
                 charIndex = 0;
@@ -237,7 +228,9 @@ import { ViewTransitions } from "astro:transitions";
                 typeWriter();
                 updateHeroCv();
             }, 50);
-        });
+        };
+
+        window.addEventListener("langChanged", runtime.heroLangChangedHandler);
     }
 
     // Run on initial load

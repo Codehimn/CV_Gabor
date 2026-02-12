@@ -12,7 +12,13 @@ interface Props {
 interface Message {
     type: 'user' | 'agent';
     text: string;
-    actions?: { label: string; url: string }[];
+    actions?: ChatAction[];
+}
+
+interface ChatAction {
+    label: string;
+    url?: string;
+    query?: string;
 }
 
 const SUGGESTION_CHIPS = [
@@ -26,6 +32,13 @@ const SIDEBAR_ITEMS = [
     { title: 'Experiencia profesional', preview: 'Más de 11 años...', query: 'experiencia' },
     { title: 'Stack tecnológico', preview: 'React, Python, Node...', query: 'stack' },
     { title: 'Servicios y tarifas', preview: 'Desarrollo, automatización...', query: 'servicios' },
+];
+
+const FALLBACK_SUGGESTIONS: ChatAction[] = [
+    { label: '¿Cuál es tu experiencia?', query: 'experiencia' },
+    { label: '¿Qué stack usas?', query: 'stack tecnologias' },
+    { label: '¿Qué servicios ofreces?', query: 'servicios' },
+    { label: '¿Cómo te contacto?', query: 'contacto' },
 ];
 
 export default function ChatWidget({ mode = 'widget' }: Props) {
@@ -71,12 +84,12 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
     const processQuery = (query: string) => {
         const results = fuse.search(query);
         let responseText = "Lo siento, no tengo información específica sobre eso. Intenta preguntar sobre mi experiencia, stack, servicios o contacto. 🤔";
-        let actions: { label: string; url: string }[] | undefined = undefined;
+        let actions: ChatAction[] | undefined = FALLBACK_SUGGESTIONS;
 
         if (results.length > 0) {
             const bestMatch = results[0].item;
             responseText = bestMatch.response;
-            actions = bestMatch.actions;
+            actions = bestMatch.actions?.map((action) => ({ label: action.label, url: action.url }));
         }
         return { responseText, actions };
     };
@@ -145,7 +158,12 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                                             <div style={{ color: '#6b7280', fontSize: '11px' }}>Online • AI Assistant</div>
                                         </div>
                                     </div>
-                                    <button onClick={() => setIsOpen(false)} style={closeButtonStyle}>
+                                    <button
+                                        onClick={() => setIsOpen(false)}
+                                        style={closeButtonStyle}
+                                        type="button"
+                                        aria-label="Cerrar chat"
+                                    >
                                         <X size={16} />
                                     </button>
                                 </div>
@@ -163,7 +181,12 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                                         </div>
                                     )}
                                     {messages.map((msg, idx) => (
-                                        <MessageBubble key={idx} msg={msg} isPageMode={false} />
+                                        <MessageBubble
+                                            key={idx}
+                                            msg={msg}
+                                            isPageMode={false}
+                                            onQuerySelect={(query) => handleSendMessage(query)}
+                                        />
                                     ))}
                                     {isTyping && <TypingIndicator />}
                                     <div ref={messagesEndRef} />
@@ -183,6 +206,8 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                                         <button
                                             onClick={() => handleSendMessage()}
                                             disabled={!inputValue.trim()}
+                                            type="button"
+                                            aria-label="Enviar mensaje"
                                             style={{
                                                 ...sendButtonStyle,
                                                 opacity: inputValue.trim() ? 1 : 0.3,
@@ -202,6 +227,9 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setIsOpen(!isOpen)}
+                    type="button"
+                    aria-label={isOpen ? 'Cerrar chat flotante' : 'Abrir chat flotante'}
+                    aria-expanded={isOpen}
                     style={fabStyle}
                 >
                     {isOpen ? <X size={24} /> : <MessageSquare size={24} className="fill-current" />}
@@ -256,7 +284,13 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                                 <Plus size={16} />
                                 <span>Nuevo chat</span>
                             </button>
-                            <button onClick={() => setSidebarOpen(false)} style={sidebarToggleStyle}>
+                            <button
+                                onClick={() => setSidebarOpen(false)}
+                                style={sidebarToggleStyle}
+                                type="button"
+                                aria-label="Ocultar panel lateral"
+                                aria-expanded={sidebarOpen}
+                            >
                                 <ChevronDown size={16} style={{ transform: 'rotate(90deg)' }} />
                             </button>
                         </div>
@@ -307,7 +341,13 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                 {/* Top Bar */}
                 <div style={topBarStyle}>
                     {!sidebarOpen && (
-                        <button onClick={() => setSidebarOpen(true)} style={sidebarToggleStyle}>
+                        <button
+                            onClick={() => setSidebarOpen(true)}
+                            style={sidebarToggleStyle}
+                            type="button"
+                            aria-label="Mostrar panel lateral"
+                            aria-expanded={sidebarOpen}
+                        >
                             <ChevronDown size={16} style={{ transform: 'rotate(-90deg)' }} />
                         </button>
                     )}
@@ -380,7 +420,12 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                         /* Messages */
                         <div style={messagesListStyle}>
                             {messages.map((msg, idx) => (
-                                <MessageBubble key={idx} msg={msg} isPageMode={true} />
+                                <MessageBubble
+                                    key={idx}
+                                    msg={msg}
+                                    isPageMode={true}
+                                    onQuerySelect={(query) => handleSendMessage(query)}
+                                />
                             ))}
                             {isTyping && <TypingIndicator isPage />}
                             <div ref={messagesEndRef} />
@@ -403,6 +448,8 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                         <button
                             onClick={() => handleSendMessage()}
                             disabled={!inputValue.trim()}
+                            type="button"
+                            aria-label="Enviar mensaje"
                             style={{
                                 ...pageSendBtnStyle,
                                 opacity: inputValue.trim() ? 1 : 0.3,
@@ -425,7 +472,7 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
 // SUB-COMPONENTS
 // ========================
 
-function MessageBubble({ msg, isPageMode }: { msg: Message; isPageMode: boolean }) {
+function MessageBubble({ msg, isPageMode, onQuerySelect }: { msg: Message; isPageMode: boolean; onQuerySelect: (query: string) => void }) {
     const isUser = msg.type === 'user';
 
     if (!isPageMode) {
@@ -452,7 +499,7 @@ function MessageBubble({ msg, isPageMode }: { msg: Message; isPageMode: boolean 
                     ),
                 }}>
                     {msg.text}
-                    {msg.actions && <ActionButtons actions={msg.actions} />}
+                    {msg.actions && <ActionButtons actions={msg.actions} onQuerySelect={onQuerySelect} />}
                 </div>
             </motion.div>
         );
@@ -479,29 +526,47 @@ function MessageBubble({ msg, isPageMode }: { msg: Message; isPageMode: boolean 
                     <div style={{ fontSize: '14px', lineHeight: 1.7, color: '#e5e7eb' }}>
                         {msg.text}
                     </div>
-                    {msg.actions && <ActionButtons actions={msg.actions} />}
+                    {msg.actions && <ActionButtons actions={msg.actions} onQuerySelect={onQuerySelect} />}
                 </div>
             </div>
         </motion.div>
     );
 }
 
-function ActionButtons({ actions }: { actions: { label: string; url: string }[] }) {
+function ActionButtons({ actions, onQuerySelect }: { actions: ChatAction[]; onQuerySelect: (query: string) => void }) {
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '6px', marginTop: '10px' }}>
-            {actions.map((action, i) => (
-                <a
-                    key={i}
-                    href={action.url}
-                    style={actionBtnStyle}
-                    target={action.url.startsWith('http') ? '_blank' : '_self'}
-                    rel="noreferrer"
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(167,139,250,0.2)'; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(167,139,250,0.1)'; }}
-                >
-                    {action.label} ↗
-                </a>
-            ))}
+            {actions.map((action, i) => {
+                if (action.query) {
+                    const query = action.query;
+                    return (
+                    <button
+                        key={i}
+                        type="button"
+                        style={actionBtnStyle}
+                        onClick={() => onQuerySelect(query)}
+                        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(167,139,250,0.2)'; }}
+                        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(167,139,250,0.1)'; }}
+                    >
+                        {action.label}
+                    </button>
+                    );
+                }
+
+                return (
+                    <a
+                        key={i}
+                        href={action.url}
+                        style={actionBtnStyle}
+                        target={action.url && action.url.startsWith('http') ? '_blank' : '_self'}
+                        rel="noreferrer"
+                        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(167,139,250,0.2)'; }}
+                        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(167,139,250,0.1)'; }}
+                    >
+                        {action.label} ↗
+                    </a>
+                );
+            })}
         </div>
     );
 }
@@ -877,6 +942,7 @@ const actionBtnStyle: React.CSSProperties = {
     transition: 'all 0.15s ease',
     textDecoration: 'none',
     border: '1px solid rgba(167,139,250,0.15)',
+    cursor: 'pointer',
 };
 
 const logoCircleStyle: React.CSSProperties = {

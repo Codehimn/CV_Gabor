@@ -27,32 +27,32 @@ const googleMeta = [
     },
 ];
 const webMeta = [
-    { icon: "⚛️", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
-    { icon: "📜", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
-    { icon: "🐘", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
-    { icon: "💲", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
-    { icon: "🎨", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
-    { icon: "📄", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "⚛️", link: "" },
+    { icon: "📜", link: "" },
+    { icon: "🐘", link: "" },
+    { icon: "💲", link: "" },
+    { icon: "🎨", link: "" },
+    { icon: "📄", link: "" },
 ];
 const dataMeta = [
-    { icon: "🗄️", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
-    { icon: "🐍", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
-    { icon: "🐍", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
-    { icon: "⚡", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
-    { icon: "💎", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" },
+    { icon: "🗄️", link: "" },
+    { icon: "🐍", link: "" },
+    { icon: "🐍", link: "" },
+    { icon: "⚡", link: "" },
+    { icon: "💎", link: "" },
 ];
 
 const talkMetadata = [
     {
         icon: "🎤",
-        link: "https://bit.ly/asincronismo-python",
+        link: "https://www.meetup.com/es/pythonbogota/events/248661418/",
         color: "indigo",
     },
 ];
 
 const langMetadata = [
     { percent: 100, flag: "🇪🇸" },
-    { percent: 80, flag: "🇬🇧" },
+    { percent: 80, flag: "US" },
     { percent: 40, flag: "🇩🇪" },
 ];
 
@@ -113,23 +113,25 @@ const biasMetadata = [
                             >{educationData.certs_google.length}</span
                         >
                     </h4>
-                    {educationData.certs_google[0]?.link && (
-                        <a
-                            href={educationData.certs_google[0].link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="featured-cert-badge-link"
-                            aria-label="View Google IT Automation badge"
-                        >
-                            <img
-                                src="/images/certificate/GCC_badge_python.png"
-                                alt="Google IT Automation with Python Professional Certificate badge"
-                                class="featured-cert-badge"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </a>
-                    )}
+                    {
+                        educationData.certs_google[0]?.link && (
+                            <a
+                                href={educationData.certs_google[0].link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="featured-cert-badge-link"
+                                aria-label="View Google IT Automation badge"
+                            >
+                                <img
+                                    src="/images/certificate/GCC_badge_python.png"
+                                    alt="Google IT Automation with Python Professional Certificate badge"
+                                    class="featured-cert-badge"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </a>
+                        )
+                    }
                     <div class="certifications-list stagger-children">
                         {
                             educationData.certs_google.map((cert, i) => (
@@ -593,7 +595,9 @@ const biasMetadata = [
         border-radius: 999px;
         border: 2px solid rgba(56, 189, 248, 0.45);
         box-shadow: 0 10px 20px rgba(56, 189, 248, 0.24);
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
         transform-origin: left center;
     }
 

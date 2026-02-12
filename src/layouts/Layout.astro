@@ -8,12 +8,16 @@ interface Props {
   title?: string;
   description?: string;
   showChatWidget?: boolean;
+  showCommandMenu?: boolean;
+  showToaster?: boolean;
 }
 
 const {
   title = "Gabor Flandorffer — Senior Full-Stack Developer & Automation Specialist",
   description = "11+ years building scalable solutions with Python, Django, TypeScript, and automation tools. Based in Medellín.",
   showChatWidget = false,
+  showCommandMenu = false,
+  showToaster = false,
 } = Astro.props;
 ---
 
@@ -30,11 +34,11 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://gabor.dev" />
-    <meta property="og:image" content="/images/og_image_premium.png" />
+    <meta property="og:image" content="/images/profile/Gabor-Flandorffer-Profile.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/images/og_image_premium.png" />
+    <meta name="twitter:image" content="/images/profile/Gabor-Flandorffer-Profile.jpg" />
 
     <!-- Performance: Preconnect to font providers -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,16 +46,16 @@ const {
 
     <!-- Performance: Preload critical fonts -->
     <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
+        rel="preload"
+        as="style"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@600&display=swap"
+        media="print"
+        onload="this.media='all'"
+      />
     <noscript
       ><link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@600&display=swap"
       /></noscript
     >
 
@@ -89,8 +93,8 @@ const {
     </a>
 
     {showChatWidget && <ChatWidget client:idle />}
-    <CommandMenu client:idle />
-    <Toaster client:load position="top-center" />
+    {showCommandMenu && <CommandMenu client:idle />}
+    {showToaster && <Toaster client:load position="top-center" />}
 
     <script>
       import Lenis from "@studio-freight/lenis";
@@ -374,6 +378,14 @@ const {
       // Scroll Handling
       let ticking = false;
       const progressEl = document.getElementById("scroll-progress");
+      const parallaxLayers: HTMLElement[] = [];
+
+      function cacheParallaxLayers() {
+        parallaxLayers.length = 0;
+        document.querySelectorAll(".parallax-layer").forEach((el) => {
+          parallaxLayers.push(el as HTMLElement);
+        });
+      }
 
       function updateScroll() {
         const scrollY = window.scrollY;
@@ -385,14 +397,12 @@ const {
           progressEl.style.width = `${progress}%`;
         }
 
-        document.querySelectorAll(".parallax-layer").forEach((el) => {
-          const htmlEl = el as HTMLElement;
-          const speed = parseFloat(htmlEl.dataset.speed || "0.2");
-          htmlEl.style.transform = `translateY(${scrollY * speed}px)`;
+        // Performance: reuse a cached list of parallax layers instead of
+        // querying the DOM on every scroll animation frame.
+        parallaxLayers.forEach((el) => {
+          const speed = parseFloat(el.dataset.speed || "0.2");
+          el.style.transform = `translateY(${scrollY * speed}px)`;
         });
-
-        const nav = document.querySelector(".navbar");
-        if (nav) nav.classList.toggle("scrolled", scrollY > 50);
 
         ticking = false;
       }
@@ -415,6 +425,7 @@ const {
 
         initI18n();
         initAnimations();
+        cacheParallaxLayers();
         updateScroll();
       }
 

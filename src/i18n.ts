@@ -204,7 +204,7 @@ export const translations = {
             talks: [
                 {
                     title: "Asynchronism: Possible Errors and How to Solve Them",
-                    venue: "Meeting Cali — Guest Speaker"
+                    venue: "Meetup Bogotá — Guest Speaker"
                 }
             ],
             activities: [
@@ -461,7 +461,7 @@ export const translations = {
             talks: [
                 {
                     title: "Asincronismo: Posibles Errores y Cómo Solucionarlos",
-                    venue: "Meeting Cali — Conferencista Invitado"
+                    venue: "Meetup Bogotá — Conferencista Invitado"
                 }
             ],
             activities: [

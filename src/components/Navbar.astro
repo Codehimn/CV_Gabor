@@ -11,7 +11,7 @@ const navItems = [
 
 <nav class="navbar">
     <div class="nav-container">
-        <a href="#" class="nav-logo">
+        <a href="/about" class="nav-logo">
             <span class="logo-bracket">&lt;</span>
             <span class="logo-name">GF</span>
             <span class="logo-bracket">/&gt;</span>
@@ -19,7 +19,7 @@ const navItems = [
 
         <ul class="nav-links">
             <li>
-                <a href="/" class="nav-link" data-i18n="nav.about">Home</a>
+                <a href="/about" class="nav-link" data-i18n="nav.about">About</a>
             </li>
             <li>
                 <a
@@ -52,7 +52,7 @@ const navItems = [
             </li>
             <li>
                 <a
-                    href="#"
+                    href="https://wa.me/491789752993?text=Hi%20Gabor!%20I%20saw%20your%20portfolio%20and%20I'd%20like%20to%20chat."
                     target="_blank"
                     rel="noopener noreferrer"
                     class="btn btn-primary nav-cta"
@@ -406,19 +406,12 @@ const navItems = [
 </style>
 
 <script>
-    const navbar = document.querySelector(".navbar") as HTMLElement | null;
-
-    if (navbar) {
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add("scrolled");
-            } else {
-                navbar.classList.remove("scrolled");
-            }
-        });
-    }
-
     function initNavbar() {
+        const runtime = ((window as any).__cvRuntime ||= {});
+        if (runtime.navbarInitialized) {
+            return;
+        }
+
         const hamburger = document.querySelector(
             ".hamburger-wrapper",
         ) as HTMLElement | null;
@@ -451,18 +444,23 @@ const navItems = [
                     layoutBody.classList.remove("menu-open");
                 }
             });
+
+            runtime.navbarInitialized = true;
         }
     }
 
-    initNavbar(); // Call the function to initialize navbar logic
+    function updateActiveNav() {
+        const navLinksElement = document.querySelector(
+            ".nav-links",
+        ) as HTMLElement | null;
 
-    // Current Path Highlighting
-    const navLinksElement = document.querySelector(
-        ".nav-links",
-    ) as HTMLElement | null;
-    if (navLinksElement) {
+        if (!navLinksElement) {
+            return;
+        }
+
         const currentPath = window.location.pathname;
         navLinksElement.querySelectorAll(".nav-link").forEach((link) => {
+            link.classList.remove("active");
             const href = link.getAttribute("href");
             if (
                 href === currentPath ||
@@ -471,5 +469,14 @@ const navItems = [
                 link.classList.add("active");
             }
         });
+    }
+
+    initNavbar();
+    updateActiveNav();
+
+    const runtime = ((window as any).__cvRuntime ||= {});
+    if (!runtime.navActivePathBound) {
+        document.addEventListener("astro:after-swap", updateActiveNav);
+        runtime.navActivePathBound = true;
     }
 </script>
