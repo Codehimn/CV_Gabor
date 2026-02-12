@@ -171,6 +171,8 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                 setCurrentLang(storedLang);
             }
         };
+
+        handleLangChange();
         window.addEventListener("langChanged", handleLangChange);
         return () => window.removeEventListener("langChanged", handleLangChange);
     }, []);

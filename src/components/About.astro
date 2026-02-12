@@ -58,9 +58,18 @@ const t = translations[lang as "en" | "es"].about;
                     <h3 data-i18n="about.expertise_title">Core Expertise</h3>
                 </div>
                 <ul class="expertise-list">
-                    <li><span>Python / Django</span> <span>11+ yrs</span></li>
-                    <li><span>Automation</span> <span>Expert</span></li>
-                    <li><span>Full-Stack</span> <span>Architecture</span></li>
+                    <li>
+                        <span data-i18n="about.expertise_item_1_label">Python / Django</span>
+                        <span data-i18n="about.expertise_item_1_value">11+ yrs</span>
+                    </li>
+                    <li>
+                        <span data-i18n="about.expertise_item_2_label">Automation</span>
+                        <span data-i18n="about.expertise_item_2_value">Expert</span>
+                    </li>
+                    <li>
+                        <span data-i18n="about.expertise_item_3_label">Full-Stack</span>
+                        <span data-i18n="about.expertise_item_3_value">Architecture</span>
+                    </li>
                 </ul>
             </div>
 
@@ -69,14 +78,14 @@ const t = translations[lang as "en" | "es"].about;
                 <div class="status-item">
                     <span class="status-icon">📍</span>
                     <div>
-                        <p class="status-label">Location</p>
-                        <p class="status-value">Medellín, Colombia</p>
+                        <p class="status-label" data-i18n="about.location_label">Location</p>
+                        <p class="status-value" data-i18n="about.location_value">Medellín, Colombia</p>
                     </div>
                 </div>
                 <div class="status-item">
                     <span class="status-icon">🚀</span>
                     <div>
-                        <p class="status-label">Availability</p>
+                        <p class="status-label" data-i18n="about.availability_label">Availability</p>
                         <p class="status-value" data-i18n="hero.badge">
                             Available for projects
                         </p>

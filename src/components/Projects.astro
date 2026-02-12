@@ -1,6 +1,7 @@
 ---
 import { translations } from "../i18n";
-const projects = translations.en.projects.items;
+const { lang = "en" } = Astro.props;
+const projects = translations[lang as "en" | "es"].projects.items;
 ---
 
 <section class="projects zoom-section" id="projects">

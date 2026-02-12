@@ -37,6 +37,16 @@ export const translations = {
             location: "Based in Medellín, Colombia",
             remote: "Open to remote worldwide",
             download_cv: "Download CV",
+            expertise_title: "Core Expertise",
+            expertise_item_1_label: "Python / Django",
+            expertise_item_1_value: "11+ yrs",
+            expertise_item_2_label: "Automation",
+            expertise_item_2_value: "Expert",
+            expertise_item_3_label: "Full-Stack",
+            expertise_item_3_value: "Architecture",
+            location_label: "Location",
+            location_value: "Medellín, Colombia",
+            availability_label: "Availability",
             stat_years: "Years Experience",
             stat_projects: "Projects Delivered",
             stat_certs: "Certifications",
@@ -135,7 +145,86 @@ export const translations = {
         skills: {
             label: "Technical Arsenal",
             title: "The Full <span class=\"gradient-text\">Stack & Beyond</span>",
-            subtitle: "A deep, multi-disciplinary toolkit ranging from low-level automation to high-level system architecture."
+            subtitle: "A deep, multi-disciplinary toolkit ranging from low-level automation to high-level system architecture.",
+            years_suffix: "yrs",
+            categories: [
+                {
+                    title: "Development Core",
+                    icon: "💻",
+                    span: "row-2",
+                    skills: [
+                        { name: "Python (Expert)", level: 100, years: "11+" },
+                        { name: "Asyncio / Aiohttp", level: 95, years: "7+" },
+                        { name: "JavaScript / TS", level: 85, years: "8+" },
+                        { name: "C# .NET / VB.NET", level: 80, years: "9+" },
+                        { name: "PHP", level: 70, years: "5+" },
+                        { name: "Cython / MicroPython", level: 75, years: "5+" }
+                    ]
+                },
+                {
+                    title: "Automation & Testing",
+                    icon: "🤖",
+                    span: "col-2",
+                    skills: [
+                        { name: "Puppeteer / Pyppeteer", level: 95, years: "7+" },
+                        { name: "AutoIt / Selenium", level: 90, years: "11+" },
+                        { name: "pytest / Mocking", level: 90, years: "7+" },
+                        { name: "Web Scraping / Crawling", level: 95, years: "11+" },
+                        { name: "OpenCV / ImageMagick", level: 80, years: "6+" }
+                    ]
+                },
+                {
+                    title: "Web & Architecture",
+                    icon: "🏗️",
+                    skills: [
+                        { name: "Django / FastAPI", level: 95, years: "10+" },
+                        { name: "REST / GraphQL / Swagger", level: 90, years: "8+" },
+                        { name: "Angular / Vue", level: 65, years: "3+" },
+                        { name: "HTML5 / CSS3 / jQuery", level: 85, years: "8+" },
+                        { name: "WebSockets / Microservices", level: 85, years: "6+" }
+                    ]
+                },
+                {
+                    title: "Databases",
+                    icon: "🗄️",
+                    skills: [
+                        { name: "PostgreSQL / MySQL", level: 90, years: "11+" },
+                        { name: "MongoDB / Redis", level: 80, years: "6+" },
+                        { name: "SQLAlchemy / ORMs", level: 90, years: "9+" },
+                        { name: "Oracle (AM, CW, FM)", level: 65, years: "3+" }
+                    ]
+                },
+                {
+                    title: "DevOps & Cloud",
+                    icon: "☁️",
+                    span: "col-2",
+                    skills: [
+                        { name: "Docker / Portainer", level: 90, years: "8+" },
+                        { name: "GitHub Actions / Jenkins", level: 90, years: "6+" },
+                        { name: "AWS / GCP", level: 75, years: "4+" },
+                        { name: "Nginx / RabbitMQ", level: 80, years: "5+" },
+                        { name: "Linux / Bash / Windows Server", level: 90, years: "11+" }
+                    ]
+                },
+                {
+                    title: "Additional Languages",
+                    icon: "💎",
+                    skills: [
+                        { name: "C++", level: 70, years: "4+" },
+                        { name: "Ruby", level: 65, years: "3+" },
+                        { name: "VBA", level: 80, years: "8+" }
+                    ]
+                },
+                {
+                    title: "Networking & Security",
+                    icon: "🔒",
+                    skills: [
+                        { name: "Wireshark", level: 70, years: "4+" },
+                        { name: "Puppet / Config Mgmt", level: 70, years: "3+" },
+                        { name: "Kali Linux / OllyDbg", level: 60, years: "3+" }
+                    ]
+                }
+            ]
         },
         projects: {
             label: "Portfolio",
@@ -185,6 +274,7 @@ export const translations = {
             competencies_title: "Core Competencies",
             toolset_title: "Everyday Toolset",
             activities_title: "Activities & Community",
+            work_philosophy_title: "Work Philosophy",
             view_talk: "View Talk",
             certs_google: [
                 { title: "Google IT Automation with Python Professional Certificate", issuer: "Google / Coursera", link: "https://www.credly.com/badges/afa01904-ac4f-4d9c-a7d5-d3a91b315669" },
@@ -260,6 +350,10 @@ export const translations = {
             whatsapp_label: "WhatsApp",
             whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat.",
             email_label: "Email",
+            linkedin_label: "LinkedIn",
+            github_label: "GitHub",
+            download_cv: "Download CV",
+            pdf_label: "PDF",
             web_label: "Website",
             footer: "Designed & built by <strong>Gabor Flandorffer</strong> — {year}"
         }
@@ -302,6 +396,16 @@ export const translations = {
             location: "Basado en Medellín, Colombia",
             remote: "Abierto a remoto mundial",
             download_cv: "Descargar CV",
+            expertise_title: "Experiencia Clave",
+            expertise_item_1_label: "Python / Django",
+            expertise_item_1_value: "11+ años",
+            expertise_item_2_label: "Automatización",
+            expertise_item_2_value: "Experto",
+            expertise_item_3_label: "Full-Stack",
+            expertise_item_3_value: "Arquitectura",
+            location_label: "Ubicación",
+            location_value: "Medellín, Colombia",
+            availability_label: "Disponibilidad",
             stat_years: "Años de Experiencia",
             stat_projects: "Proyectos Entregados",
             stat_certs: "Certificaciones",
@@ -400,7 +504,86 @@ export const translations = {
         skills: {
             label: "Arsenal Técnico",
             title: "El Full <span class=\"gradient-text\">Stack y Más Allá</span>",
-            subtitle: "Un conjunto de herramientas profundo y multidisciplinario que va desde la automatización de bajo nivel hasta la arquitectura de sistemas de alto nivel."
+            subtitle: "Un conjunto de herramientas profundo y multidisciplinario que va desde la automatización de bajo nivel hasta la arquitectura de sistemas de alto nivel.",
+            years_suffix: "años",
+            categories: [
+                {
+                    title: "Núcleo de Desarrollo",
+                    icon: "💻",
+                    span: "row-2",
+                    skills: [
+                        { name: "Python (Experto)", level: 100, years: "11+" },
+                        { name: "Asyncio / Aiohttp", level: 95, years: "7+" },
+                        { name: "JavaScript / TS", level: 85, years: "8+" },
+                        { name: "C# .NET / VB.NET", level: 80, years: "9+" },
+                        { name: "PHP", level: 70, years: "5+" },
+                        { name: "Cython / MicroPython", level: 75, years: "5+" }
+                    ]
+                },
+                {
+                    title: "Automatización y Testing",
+                    icon: "🤖",
+                    span: "col-2",
+                    skills: [
+                        { name: "Puppeteer / Pyppeteer", level: 95, years: "7+" },
+                        { name: "AutoIt / Selenium", level: 90, years: "11+" },
+                        { name: "pytest / Mocking", level: 90, years: "7+" },
+                        { name: "Web Scraping / Crawling", level: 95, years: "11+" },
+                        { name: "OpenCV / ImageMagick", level: 80, years: "6+" }
+                    ]
+                },
+                {
+                    title: "Web y Arquitectura",
+                    icon: "🏗️",
+                    skills: [
+                        { name: "Django / FastAPI", level: 95, years: "10+" },
+                        { name: "REST / GraphQL / Swagger", level: 90, years: "8+" },
+                        { name: "Angular / Vue", level: 65, years: "3+" },
+                        { name: "HTML5 / CSS3 / jQuery", level: 85, years: "8+" },
+                        { name: "WebSockets / Microservicios", level: 85, years: "6+" }
+                    ]
+                },
+                {
+                    title: "Bases de Datos",
+                    icon: "🗄️",
+                    skills: [
+                        { name: "PostgreSQL / MySQL", level: 90, years: "11+" },
+                        { name: "MongoDB / Redis", level: 80, years: "6+" },
+                        { name: "SQLAlchemy / ORMs", level: 90, years: "9+" },
+                        { name: "Oracle (AM, CW, FM)", level: 65, years: "3+" }
+                    ]
+                },
+                {
+                    title: "DevOps y Cloud",
+                    icon: "☁️",
+                    span: "col-2",
+                    skills: [
+                        { name: "Docker / Portainer", level: 90, years: "8+" },
+                        { name: "GitHub Actions / Jenkins", level: 90, years: "6+" },
+                        { name: "AWS / GCP", level: 75, years: "4+" },
+                        { name: "Nginx / RabbitMQ", level: 80, years: "5+" },
+                        { name: "Linux / Bash / Windows Server", level: 90, years: "11+" }
+                    ]
+                },
+                {
+                    title: "Lenguajes Adicionales",
+                    icon: "💎",
+                    skills: [
+                        { name: "C++", level: 70, years: "4+" },
+                        { name: "Ruby", level: 65, years: "3+" },
+                        { name: "VBA", level: 80, years: "8+" }
+                    ]
+                },
+                {
+                    title: "Redes y Seguridad",
+                    icon: "🔒",
+                    skills: [
+                        { name: "Wireshark", level: 70, years: "4+" },
+                        { name: "Puppet / Gestión Config", level: 70, years: "3+" },
+                        { name: "Kali Linux / OllyDbg", level: 60, years: "3+" }
+                    ]
+                }
+            ]
         },
         projects: {
             label: "Portafolio",
@@ -450,6 +633,7 @@ export const translations = {
             competencies_title: "Competencias Clave",
             toolset_title: "Herramientas del Día a Día",
             activities_title: "Actividades y Comunidad",
+            work_philosophy_title: "Filosofía de Trabajo",
             view_talk: "Ver Charla",
             certs_google: [
                 { title: "Certificado Profesional de Automatización de TI con Python", issuer: "Google / Coursera", link: "https://www.coursera.org/professional-certificates/google-it-automation" },
@@ -525,6 +709,10 @@ export const translations = {
             whatsapp_label: "WhatsApp",
             whatsapp_msg: "Hola Gabor! Vi tu portafolio y me gustaria conversar.",
             email_label: "Correo",
+            linkedin_label: "LinkedIn",
+            github_label: "GitHub",
+            download_cv: "Descargar CV",
+            pdf_label: "PDF",
             web_label: "Sitio Web",
             footer: "Diseñado y construido por <strong>Gabor Flandorffer</strong> — {year}"
         }

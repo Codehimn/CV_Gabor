@@ -1,7 +1,8 @@
 ---
 import { translations } from "../i18n";
 
-const educationData = translations.en.education;
+const { lang = "en" } = Astro.props;
+const educationData = translations[lang as "en" | "es"].education;
 
 const googleMeta = [
     {
@@ -117,6 +118,8 @@ const biasMetadata = [
                         educationData.certs_google[0]?.link && (
                             <a
                                 href={educationData.certs_google[0].link}
+                                data-i18n-href="education.certs_google.0.link"
+                                data-hide-if-empty-href
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="featured-cert-badge-link"
@@ -157,6 +160,8 @@ const biasMetadata = [
                                     {cert.link && (
                                         <a
                                             href={cert.link}
+                                            data-i18n-href={`education.certs_google.${i}.link`}
+                                            data-hide-if-empty-href
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="cert-link"
@@ -223,6 +228,8 @@ const biasMetadata = [
                                     {cert.link && (
                                         <a
                                             href={cert.link}
+                                            data-i18n-href={`education.certs_web.${i}.link`}
+                                            data-hide-if-empty-href
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="cert-link"
@@ -289,6 +296,8 @@ const biasMetadata = [
                                     {cert.link && (
                                         <a
                                             href={cert.link}
+                                            data-i18n-href={`education.certs_data.${i}.link`}
+                                            data-hide-if-empty-href
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="cert-link"
@@ -444,7 +453,7 @@ const biasMetadata = [
                 <!-- Dominant Bias / Work Philosophy -->
                 <h3 class="edu-column-title" style="margin-top: 2.5rem;">
                     <span class="edu-icon">🧭</span>
-                    <span>Work Philosophy</span>
+                    <span data-i18n="education.work_philosophy_title">Work Philosophy</span>
                 </h3>
                 <div class="bias-list">
                     {

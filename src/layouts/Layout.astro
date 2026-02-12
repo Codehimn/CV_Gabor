@@ -318,18 +318,27 @@ const {
       function updateTranslations(lang: "en" | "es") {
         runtime.currentLang = lang;
         document.documentElement.lang = lang;
+
+        const resolveTranslation = (key: string) => {
+          const keys = key.split(".");
+          let translation: any = translations[lang];
+
+          for (const k of keys) {
+            translation = translation?.[k];
+            if (translation === undefined || translation === null) {
+              return null;
+            }
+          }
+
+          return translation;
+        };
+
         const elements = document.querySelectorAll("[data-i18n]");
         elements.forEach((el) => {
           const key = el.getAttribute("data-i18n");
           if (!key) return;
 
-          const keys = key.split(".");
-          let translation: any = translations[lang];
-
-          for (const k of keys) {
-            translation = translation[k];
-            if (!translation) break;
-          }
+          const translation = resolveTranslation(key);
 
           if (translation) {
             const currentYear = new Date().getFullYear();
@@ -344,6 +353,44 @@ const {
                 finalHtml;
             } else {
               el.innerHTML = finalHtml;
+            }
+          }
+        });
+
+        document.querySelectorAll("[data-i18n-tags]").forEach((el) => {
+          const key = el.getAttribute("data-i18n-tags");
+          if (!key) return;
+
+          const tags = resolveTranslation(key);
+          if (!Array.isArray(tags)) return;
+
+          el.innerHTML = tags
+            .map(
+              (tag: string) =>
+                `<span class="tag">${String(tag)
+                  .replace(/&/g, "&amp;")
+                  .replace(/</g, "&lt;")
+                  .replace(/>/g, "&gt;")}</span>`,
+            )
+            .join("");
+        });
+
+        document.querySelectorAll("[data-i18n-href]").forEach((el) => {
+          const key = el.getAttribute("data-i18n-href");
+          if (!key) return;
+
+          const hrefValue = resolveTranslation(key);
+          if (typeof hrefValue !== "string") return;
+
+          if (hrefValue.trim()) {
+            el.setAttribute("href", hrefValue);
+            if (el.hasAttribute("data-hide-if-empty-href")) {
+              (el as HTMLElement).style.display = "";
+            }
+          } else {
+            el.removeAttribute("href");
+            if (el.hasAttribute("data-hide-if-empty-href")) {
+              (el as HTMLElement).style.display = "none";
             }
           }
         });

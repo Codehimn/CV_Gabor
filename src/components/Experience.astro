@@ -34,8 +34,7 @@ const experiences = t.items;
             </p>
         </div>
 
-        <!-- Performance: render timeline as static HTML to avoid React island hydration on /experience -->
-        <ExperienceScroll items={experiences} lang={lang} />
+        <ExperienceScroll items={experiences} lang={lang} client:visible />
     </div>
 </section>
 
