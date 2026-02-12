@@ -5,6 +5,7 @@ import {
     CalendarRange,
     MapPin,
     Rocket,
+    Shield,
     Sparkles,
     Target
 } from "lucide-react";
@@ -202,10 +203,10 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
     const companies = new Set(currentItems.map((item) => item.company)).size;
 
     const metrics = [
-        { label: text.metrics.years, value: `${years}+` },
-        { label: text.metrics.roles, value: `${currentItems.length}` },
-        { label: text.metrics.companies, value: `${companies}` },
-        { label: text.metrics.quality, value: text.qualityValue }
+        { label: text.metrics.years, value: `${years}+`, icon: <CalendarRange size={16} /> },
+        { label: text.metrics.roles, value: `${currentItems.length}`, icon: <Award size={16} /> },
+        { label: text.metrics.companies, value: `${companies}`, icon: <Target size={16} /> },
+        { label: text.metrics.quality, value: text.qualityValue, icon: <BadgeCheck size={16} /> }
     ];
 
     return (
@@ -225,6 +226,9 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                         viewport={{ once: true, margin: "-50px" }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
+                        <span className="xp-metric-icon" aria-hidden="true">
+                            {metric.icon}
+                        </span>
                         <p className="xp-metric-value">{metric.value}</p>
                         <p className="xp-metric-label">{metric.label}</p>
                     </motion.article>
@@ -276,7 +280,7 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                                                 <span>{item.period}</span>
                                                 {showCovidBadge && (
                                                     <span className="xp-event-badge" title={text.covidBadge}>
-                                                        <span aria-hidden="true">😷</span>
+                                                        <Shield size={12} aria-hidden="true" />
                                                         <span>{text.covidBadge}</span>
                                                     </span>
                                                 )}
@@ -424,6 +428,19 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
                 }
 
+                .xp-metric-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 9px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(56, 189, 248, 0.12);
+                    border: 1px solid rgba(56, 189, 248, 0.2);
+                    color: #7dd3fc;
+                    margin-bottom: 0.4rem;
+                }
+
                 .xp-metric-value {
                     margin: 0;
                     color: #ecfeff;
@@ -497,7 +514,7 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                 }
 
                 .xp-card:hover {
-                    transform: translateY(-6px);
+                    transform: translateY(-4px);
                     border-color: rgba(56, 189, 248, 0.4);
                     box-shadow: 0 28px 60px rgba(1, 8, 20, 0.58), 0 0 0 1px rgba(56, 189, 248, 0.12);
                 }
@@ -599,6 +616,10 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     letter-spacing: 0.02em;
                     font-weight: 700;
                     white-space: nowrap;
+                }
+
+                .xp-event-badge svg {
+                    flex-shrink: 0;
                 }
 
                 .xp-card-body {

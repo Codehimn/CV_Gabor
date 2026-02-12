@@ -40,9 +40,9 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* Spacing */
-  --section-padding: clamp(3rem, 7vh, 6rem);
+  --section-padding: clamp(2.4rem, 5.5vh, 4.8rem);
   --section-scroll-margin: 80px;
-  --nav-offset: 96px;
+  --nav-offset: 88px;
   --container-width: min(1200px, 90vw);
 
   /* Borders */
@@ -293,10 +293,18 @@ button:focus-visible,
   padding-top: var(--nav-offset);
 }
 
+.page-main>section:first-child {
+  padding-top: clamp(1.6rem, 3.2vw, 2.6rem);
+}
+
 .page-main--centered {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.page-main--centered>section:first-child {
+  padding-top: clamp(1.2rem, 2.5vw, 2rem);
 }
 
 .page-main--chat {
@@ -306,7 +314,7 @@ button:focus-visible,
 }
 
 .page-stack .section-divider {
-  margin: clamp(2rem, 5vw, 4rem) 0;
+  margin: clamp(1.2rem, 3.5vw, 2.4rem) 0;
 }
 
 .btn-primary {
@@ -371,9 +379,14 @@ button:focus-visible,
 
 @media (max-width: 768px) {
   :root {
-    --section-padding: 3.5rem;
+    --section-padding: 2.8rem;
     --section-scroll-margin: 70px;
-    --nav-offset: 84px;
+    --nav-offset: 78px;
+  }
+
+  .page-main>section:first-child,
+  .page-main--centered>section:first-child {
+    padding-top: 1rem;
   }
 
   .btn-whatsapp {
@@ -529,6 +542,17 @@ button:focus-visible,
 .reveal-scale.visible {
   opacity: 1;
   transform: scale(1);
+}
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(42px);
+  transition: opacity 0.85s var(--ease-out-expo), transform 0.85s var(--ease-out-expo);
+}
+
+.reveal-up.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Stagger children */
