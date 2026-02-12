@@ -761,15 +761,16 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
 
                     .xp-row,
                     .xp-row-right {
-                        grid-template-columns: 76px minmax(0, 1fr);
+                        grid-template-columns: 64px minmax(0, 1fr);
                     }
 
-                    .xp-row-right .xp-column-main {
-                        order: 2;
+                    .xp-column-main {
+                        order: 2 !important;
                     }
 
-                    .xp-row-right .xp-column-center {
-                        order: 1;
+                    .xp-column-center {
+                        order: 1 !important;
+                        display: flex !important;
                     }
 
                     .xp-row-right .xp-column-side {
@@ -802,12 +803,12 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
 
                     .xp-row,
                     .xp-row-right {
-                        grid-template-columns: 58px minmax(0, 1fr);
+                        grid-template-columns: 48px minmax(0, 1fr);
                         gap: 0.55rem;
                     }
 
                     .xp-timeline::before {
-                        left: 28.5px;
+                        left: 23.5px;
                     }
 
                     .xp-card-head {
@@ -887,12 +888,12 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
 
                     .xp-row,
                     .xp-row-right {
-                        grid-template-columns: 52px minmax(0, 1fr);
+                        grid-template-columns: 44px minmax(0, 1fr);
                         gap: 0.5rem;
                     }
 
                     .xp-timeline::before {
-                        left: 25px;
+                        left: 21.5px;
                     }
 
                     .xp-card:hover,

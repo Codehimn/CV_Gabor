@@ -143,8 +143,8 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: 20, scale: 0.9 }}
                             transition={{ duration: 0.2 }}
-                            style={{ height: '500px', maxHeight: '600px' }}
-                            className="mb-4 w-80 sm:w-96 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+                            style={{ height: isMobile ? '70vh' : '500px', maxHeight: '600px' }}
+                            className="mb-4 w-[calc(100vw-3rem)] sm:w-96 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
                         >
                             <div style={widgetContainerStyle}>
                                 {/* Header */}
@@ -230,9 +230,9 @@ export default function ChatWidget({ mode = 'widget' }: Props) {
                     type="button"
                     aria-label={isOpen ? 'Cerrar chat flotante' : 'Abrir chat flotante'}
                     aria-expanded={isOpen}
-                    style={fabStyle}
+                    style={{ ...fabStyle, width: isMobile ? '48px' : '56px', height: isMobile ? '48px' : '56px' }}
                 >
-                    {isOpen ? <X size={24} /> : <MessageSquare size={24} className="fill-current" />}
+                    {isOpen ? <X size={isMobile ? 20 : 24} /> : <MessageSquare size={isMobile ? 20 : 24} className="fill-current" />}
                     {!isOpen && <span style={fabBadgeStyle}></span>}
                 </motion.button>
             </div>
@@ -540,16 +540,16 @@ function ActionButtons({ actions, onQuerySelect }: { actions: ChatAction[]; onQu
                 if (action.query) {
                     const query = action.query;
                     return (
-                    <button
-                        key={i}
-                        type="button"
-                        style={actionBtnStyle}
-                        onClick={() => onQuerySelect(query)}
-                        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(167,139,250,0.2)'; }}
-                        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(167,139,250,0.1)'; }}
-                    >
-                        {action.label}
-                    </button>
+                        <button
+                            key={i}
+                            type="button"
+                            style={actionBtnStyle}
+                            onClick={() => onQuerySelect(query)}
+                            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(167,139,250,0.2)'; }}
+                            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(167,139,250,0.1)'; }}
+                        >
+                            {action.label}
+                        </button>
                     );
                 }
 
@@ -1050,11 +1050,14 @@ const fabStyle: React.CSSProperties = {
     justifyContent: 'center',
     cursor: 'pointer',
     boxShadow: '0 4px 20px rgba(124,58,237,0.4)',
-    position: 'relative',
+    position: 'fixed' as const,
+    bottom: '1.5rem',
+    right: '1.5rem',
+    zIndex: 50,
 };
 
 const fabBadgeStyle: React.CSSProperties = {
-    position: 'absolute',
+    position: 'absolute' as const,
     top: '-2px',
     right: '-2px',
     width: '12px',

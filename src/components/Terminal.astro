@@ -136,8 +136,16 @@
 
     @media (max-width: 768px) {
         .terminal-container {
-            transform: none;
-            max-width: 100%;
+            transform: none !important;
+            width: calc(100% - 2rem) !important;
+            margin: 0 1rem;
+            max-width: none;
+        }
+
+        .terminal-body {
+            padding: 1rem;
+            height: 280px;
+            font-size: 13px;
         }
     }
 </style>

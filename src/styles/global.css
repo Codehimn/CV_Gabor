@@ -34,6 +34,7 @@
 
   /* Spacing */
   --section-padding: clamp(3rem, 7vh, 6rem);
+  --section-scroll-margin: 80px;
   --container-width: min(1200px, 90vw);
 
   /* Borders */
@@ -176,9 +177,11 @@ h6 {
 section {
   padding: var(--section-padding) 0;
   position: relative;
+  scroll-margin-top: var(--section-scroll-margin);
 }
 
 @supports (content-visibility: auto) {
+
   /* Performance: defer rendering for below-the-fold heavy sections. */
   #about,
   #testimonials,
@@ -299,10 +302,12 @@ section {
 }
 
 @keyframes pulse-green {
+
   0%,
   100% {
     box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
   }
+
   50% {
     box-shadow: 0 10px 30px rgba(37, 211, 102, 0.45);
   }
@@ -312,6 +317,21 @@ section {
   transform: scale(1.1);
   box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
   color: #fff;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 3.5rem;
+    --section-scroll-margin: 70px;
+  }
+
+  .btn-whatsapp {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
 }
 
 .btn-whatsapp.is-contact-highlight {
@@ -360,23 +380,28 @@ section {
 }
 
 @keyframes contact-arrow-pulse {
+
   0%,
   100% {
     opacity: 0.75;
   }
+
   50% {
     opacity: 1;
   }
 }
 
 @keyframes contact-whatsapp-nudge {
+
   0%,
   100% {
     transform: scale(1.14) translateX(0);
   }
+
   35% {
     transform: scale(1.14) translateX(-3px);
   }
+
   70% {
     transform: scale(1.14) translateX(3px);
   }
