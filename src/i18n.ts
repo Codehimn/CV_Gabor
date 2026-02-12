@@ -378,6 +378,7 @@ export const translations = {
             email_label: "Email",
             linkedin_label: "LinkedIn",
             github_label: "GitHub",
+            freelancer_badge: "Top Rated",
             download_cv: "Download CV",
             pdf_label: "PDF",
             web_label: "Website",
@@ -688,23 +689,23 @@ export const translations = {
             work_philosophy_title: "Filosofía de Trabajo",
             view_talk: "Ver Charla",
             certs_google: [
-                { title: "Certificado Profesional de Automatización de TI con Python", issuer: "Google / Coursera", link: "https://www.coursera.org/professional-certificates/google-it-automation" },
-                { title: "Automatización de Tareas del Mundo Real con Python", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/26H3VDUEB9N9" },
-                { title: "Usar Python para Interactuar con el SO", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/8WRBNTJ98T4F" },
-                { title: "Curso Intensivo de Python", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/M7W7V3Z9N8WF" },
-                { title: "Técnicas de Depuración y Solución de Problemas", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/938HT2G6C877" },
-                { title: "Gestión de Configuración y la Nube", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/R9T9UZZ9W7WF" }
+                { title: "Certificado Profesional de Automatización de TI con Python", issuer: "Google / Coursera", link: "" },
+                { title: "Automatización de Tareas del Mundo Real con Python", issuer: "Google / Coursera", link: "" },
+                { title: "Usar Python para Interactuar con el SO", issuer: "Google / Coursera", link: "" },
+                { title: "Curso Intensivo de Python", issuer: "Google / Coursera", link: "" },
+                { title: "Técnicas de Depuración y Solución de Problemas", issuer: "Google / Coursera", link: "" },
+                { title: "Gestión de Configuración y la Nube", issuer: "Google / Coursera", link: "" }
             ],
             certs_web: [
                 { title: "React", issuer: "SoloLearn", link: "" },
-                { title: "Tutorial de JavaScript", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-V59HTXRM" },
-                { title: "Curso Tutorial de PHP", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-KPS7H39V" },
+                { title: "Tutorial de JavaScript", issuer: "SoloLearn", link: "" },
+                { title: "Curso Tutorial de PHP", issuer: "SoloLearn", link: "" },
                 { title: "Tutorial de jQuery", issuer: "SoloLearn", link: "" },
-                { title: "Fundamentos de CSS", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-B6U9J1K6" },
-                { title: "Fundamentos de HTML", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" }
+                { title: "Fundamentos de CSS", issuer: "SoloLearn", link: "" },
+                { title: "Fundamentos de HTML", issuer: "SoloLearn", link: "" }
             ],
             certs_data: [
-                { title: "SQL Intermedio", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-S9CHVDRP" },
+                { title: "SQL Intermedio", issuer: "SoloLearn", link: "" },
                 { title: "Python Core", issuer: "SoloLearn", link: "" },
                 { title: "Python Intermedio", issuer: "SoloLearn", link: "" },
                 { title: "C++", issuer: "SoloLearn", link: "" },
@@ -763,6 +764,7 @@ export const translations = {
             email_label: "Correo",
             linkedin_label: "LinkedIn",
             github_label: "GitHub",
+            freelancer_badge: "Top Rated",
             download_cv: "Descargar CV",
             pdf_label: "PDF",
             web_label: "Sitio Web",

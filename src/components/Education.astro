@@ -3,49 +3,97 @@ import { translations } from "../i18n";
 
 const { lang = "en" } = Astro.props;
 const educationData = translations[lang as "en" | "es"].education;
+const educationEn = translations.en.education;
+
+type CertItem = {
+    title: string;
+    issuer: string;
+    link?: string;
+};
+
+function withFallbackLinks(localized: CertItem[], defaults: CertItem[]) {
+    return localized.map((cert, i) => ({
+        ...cert,
+        link: cert.link?.trim() || defaults[i]?.link || "",
+    }));
+}
+
+const certsGoogle = withFallbackLinks(
+    educationData.certs_google as CertItem[],
+    educationEn.certs_google as CertItem[],
+);
+const certsWeb = withFallbackLinks(
+    educationData.certs_web as CertItem[],
+    educationEn.certs_web as CertItem[],
+);
+const certsData = withFallbackLinks(
+    educationData.certs_data as CertItem[],
+    educationEn.certs_data as CertItem[],
+);
+
+function renderLucideIcon(name: string) {
+    const icons: Record<string, string> = {
+        scroll: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10"/><path d="M17 4v8a5 5 0 0 1-10 0V4"/></svg>`,
+        code: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>`,
+        database: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>`,
+        mic: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0"/><path d="M12 18v4"/><path d="M8 22h8"/></svg>`,
+        rocket: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 19.5c1.2-2.4 3.6-3 5.4-3 2.8 0 4.7 1.2 5.8 2.5"/><path d="M14 10 21 3"/><path d="M13 3h8v8"/><circle cx="9" cy="15" r="2.5"/></svg>`,
+        globe: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg>`,
+        sparkles: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.7 3.8L17.5 8.5l-3.8 1.7L12 14l-1.7-3.8L6.5 8.5l3.8-1.7L12 3Z"/><path d="M19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9L19 14Z"/><path d="M5 14l.9 2.1L8 17l-2.1.9L5 20l-.9-2.1L2 17l2.1-.9L5 14Z"/></svg>`,
+        compass: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.7 5.4-5.4 2.7 2.7-5.4 5.4-2.7Z"/></svg>`,
+        wrench: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 3 5.8L10 19.8l-3.8.9.9-3.8 7.7-7.7a4 4 0 0 0 5.8-3"/></svg>`,
+        python: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6a4 4 0 0 1 4 4v3H9a2 2 0 0 1-2-2V7a4 4 0 0 1 2-4Z"/><path d="M15 21H9a4 4 0 0 1-4-4v-3h10a2 2 0 0 1 2 2v1a4 4 0 0 1-2 4Z"/><circle cx="15.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/><circle cx="8.5" cy="17.5" r=".8" fill="currentColor" stroke="none"/></svg>`,
+        bolt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>`,
+        monitor: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8"/><path d="M12 16v4"/></svg>`,
+        book: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>`,
+        settings: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1A1.7 1.7 0 0 0 10.1 3V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1Z"/></svg>`,
+    };
+
+    return icons[name] || icons.sparkles;
+}
 
 const googleMeta = [
     {
-        icon: "🐍",
+        icon: "python",
         link: "https://www.coursera.org/professional-certificates/google-it-automation",
     },
     {
-        icon: "⚡",
+        icon: "bolt",
         link: "https://www.coursera.org/learn/automating-real-world-tasks-python",
     },
     {
-        icon: "🖥️",
+        icon: "monitor",
         link: "https://www.coursera.org/learn/python-operating-system",
     },
-    { icon: "📘", link: "https://www.coursera.org/learn/python-crash-course" },
+    { icon: "book", link: "https://www.coursera.org/learn/python-crash-course" },
     {
-        icon: "🔧",
+        icon: "settings",
         link: "https://www.coursera.org/learn/troubleshooting-debugging-techniques",
     },
     {
-        icon: "☁️",
+        icon: "globe",
         link: "https://www.coursera.org/learn/configuration-management-cloud",
     },
 ];
 const webMeta = [
-    { icon: "⚛️", link: "" },
-    { icon: "📜", link: "" },
-    { icon: "🐘", link: "" },
-    { icon: "💲", link: "" },
-    { icon: "🎨", link: "" },
-    { icon: "📄", link: "" },
+    { icon: "code", link: "" },
+    { icon: "bolt", link: "" },
+    { icon: "database", link: "" },
+    { icon: "settings", link: "" },
+    { icon: "sparkles", link: "" },
+    { icon: "scroll", link: "" },
 ];
 const dataMeta = [
-    { icon: "🗄️", link: "" },
-    { icon: "🐍", link: "" },
-    { icon: "🐍", link: "" },
-    { icon: "⚡", link: "" },
-    { icon: "💎", link: "" },
+    { icon: "database", link: "" },
+    { icon: "python", link: "" },
+    { icon: "python", link: "" },
+    { icon: "bolt", link: "" },
+    { icon: "sparkles", link: "" },
 ];
 
 const talkMetadata = [
     {
-        icon: "🎤",
+        icon: "mic",
         link: "https://www.meetup.com/es/pythonbogota/events/248661418/",
         color: "indigo",
     },
@@ -97,7 +145,7 @@ const biasMetadata = [
             <!-- Certifications Column -->
             <div class="edu-column reveal-left">
                 <h3 class="edu-column-title">
-                    <span class="edu-icon">📜</span>
+                    <span class="edu-icon" aria-hidden="true" set:html={renderLucideIcon("scroll")}></span>
                     <span data-i18n="education.cert_title"
                         >Professional Certifications</span
                     >
@@ -106,18 +154,16 @@ const biasMetadata = [
                 <!-- Google IT Automation Sub-group -->
                 <div class="cert-group">
                     <h4 class="cert-group-title">
-                        <span class="cert-group-icon">🐍</span>
+                        <span class="cert-group-icon" aria-hidden="true" set:html={renderLucideIcon("python")}></span>
                         <span data-i18n="education.google_title"
                             >Google IT Automation</span
                         >
-                        <span class="cert-count"
-                            >{educationData.certs_google.length}</span
-                        >
+                        <span class="cert-count">{certsGoogle.length}</span>
                     </h4>
                     {
-                        educationData.certs_google[0]?.link && (
+                        certsGoogle[0]?.link && (
                             <a
-                                href={educationData.certs_google[0].link}
+                                href={certsGoogle[0].link}
                                 data-i18n-href="education.certs_google.0.link"
                                 data-hide-if-empty-href
                                 target="_blank"
@@ -137,13 +183,11 @@ const biasMetadata = [
                     }
                     <div class="certifications-list stagger-children">
                         {
-                            educationData.certs_google.map((cert, i) => (
+                            certsGoogle.map((cert, i) => (
                                 <div
                                     class={`edu-card glass-card ${i === 0 ? "cert-main" : ""}`}
                                 >
-                                    <span class="edu-card-icon">
-                                        {googleMeta[i]?.icon || "📜"}
-                                    </span>
+                                    <span class="edu-card-icon" aria-hidden="true" set:html={renderLucideIcon(googleMeta[i]?.icon || "scroll")}></span>
                                     <div class="edu-card-content">
                                         <strong
                                             data-i18n={`education.certs_google.${i}.title`}
@@ -197,21 +241,17 @@ const biasMetadata = [
                 <!-- Web Development Sub-group -->
                 <div class="cert-group">
                     <h4 class="cert-group-title">
-                        <span class="cert-group-icon">🌐</span>
+                        <span class="cert-group-icon" aria-hidden="true" set:html={renderLucideIcon("code")}></span>
                         <span data-i18n="education.web_title"
                             >Web Development</span
                         >
-                        <span class="cert-count"
-                            >{educationData.certs_web.length}</span
-                        >
+                        <span class="cert-count">{certsWeb.length}</span>
                     </h4>
                     <div class="certifications-list stagger-children">
                         {
-                            educationData.certs_web.map((cert, i) => (
+                            certsWeb.map((cert, i) => (
                                 <div class="edu-card glass-card">
-                                    <span class="edu-card-icon">
-                                        {webMeta[i]?.icon || "📜"}
-                                    </span>
+                                    <span class="edu-card-icon" aria-hidden="true" set:html={renderLucideIcon(webMeta[i]?.icon || "scroll")}></span>
                                     <div class="edu-card-content">
                                         <strong
                                             data-i18n={`education.certs_web.${i}.title`}
@@ -265,21 +305,17 @@ const biasMetadata = [
                 <!-- Data & Languages Sub-group -->
                 <div class="cert-group">
                     <h4 class="cert-group-title">
-                        <span class="cert-group-icon">🗄️</span>
+                        <span class="cert-group-icon" aria-hidden="true" set:html={renderLucideIcon("database")}></span>
                         <span data-i18n="education.data_title"
                             >Data & Languages</span
                         >
-                        <span class="cert-count"
-                            >{educationData.certs_data.length}</span
-                        >
+                        <span class="cert-count">{certsData.length}</span>
                     </h4>
                     <div class="certifications-list stagger-children">
                         {
-                            educationData.certs_data.map((cert, i) => (
+                            certsData.map((cert, i) => (
                                 <div class="edu-card glass-card">
-                                    <span class="edu-card-icon">
-                                        {dataMeta[i]?.icon || "📜"}
-                                    </span>
+                                    <span class="edu-card-icon" aria-hidden="true" set:html={renderLucideIcon(dataMeta[i]?.icon || "scroll")}></span>
                                     <div class="edu-card-content">
                                         <strong
                                             data-i18n={`education.certs_data.${i}.title`}
@@ -335,7 +371,7 @@ const biasMetadata = [
             <div class="edu-column reveal-right">
                 <!-- Speaking & Community -->
                 <h3 class="edu-column-title">
-                    <span class="edu-icon">🎙️</span>
+                    <span class="edu-icon" aria-hidden="true" set:html={renderLucideIcon("mic")}></span>
                     <span data-i18n="education.speaking_title"
                         >Speaking & Community</span
                     >
@@ -346,9 +382,7 @@ const biasMetadata = [
                             class="edu-card glass-card talk-card"
                             style={`border-left-color: var(--accent-${talkMetadata[i]?.color || "indigo"})`}
                         >
-                            <span class="edu-card-icon">
-                                {talkMetadata[i]?.icon}
-                            </span>
+                            <span class="edu-card-icon" aria-hidden="true" set:html={renderLucideIcon(talkMetadata[i]?.icon || "mic")}></span>
                             <div class="edu-card-content">
                                 <strong
                                     data-i18n={`education.talks.${i}.title`}
@@ -375,7 +409,7 @@ const biasMetadata = [
 
                 <!-- Activities & Community -->
                 <h3 class="edu-column-title" style="margin-top: 2.5rem;">
-                    <span class="edu-icon">🚀</span>
+                    <span class="edu-icon" aria-hidden="true" set:html={renderLucideIcon("rocket")}></span>
                     <span data-i18n="education.activities_title"
                         >Activities & Community</span
                     >
@@ -399,7 +433,7 @@ const biasMetadata = [
 
                 <!-- Languages -->
                 <h3 class="edu-column-title" style="margin-top: 2.5rem;">
-                    <span class="edu-icon">🌍</span>
+                    <span class="edu-icon" aria-hidden="true" set:html={renderLucideIcon("globe")}></span>
                     <span data-i18n="education.languages_title">Languages</span>
                 </h3>
                 <div class="languages-list">
@@ -432,7 +466,7 @@ const biasMetadata = [
 
                 <!-- Core Competencies -->
                 <h3 class="edu-column-title" style="margin-top: 2.5rem;">
-                    <span class="edu-icon">✨</span>
+                    <span class="edu-icon" aria-hidden="true" set:html={renderLucideIcon("sparkles")}></span>
                     <span data-i18n="education.competencies_title"
                         >Core Competencies</span
                     >
@@ -452,7 +486,7 @@ const biasMetadata = [
 
                 <!-- Dominant Bias / Work Philosophy -->
                 <h3 class="edu-column-title" style="margin-top: 2.5rem;">
-                    <span class="edu-icon">🧭</span>
+                    <span class="edu-icon" aria-hidden="true" set:html={renderLucideIcon("compass")}></span>
                     <span data-i18n="education.work_philosophy_title">Work Philosophy</span>
                 </h3>
                 <div class="bias-list">
@@ -472,7 +506,7 @@ const biasMetadata = [
 
                 <!-- Everyday Toolset -->
                 <h3 class="edu-column-title" style="margin-top: 2.5rem;">
-                    <span class="edu-icon">🛠️</span>
+                    <span class="edu-icon" aria-hidden="true" set:html={renderLucideIcon("wrench")}></span>
                     <span data-i18n="education.toolset_title"
                         >Everyday Toolset</span
                     >
@@ -576,7 +610,17 @@ const biasMetadata = [
     }
 
     .cert-group-icon {
-        font-size: 1.1rem;
+        width: 18px;
+        height: 18px;
+        color: var(--accent-blue);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cert-group-icon :global(svg) {
+        width: 18px;
+        height: 18px;
     }
 
     .cert-count {
@@ -640,7 +684,17 @@ const biasMetadata = [
     }
 
     .edu-icon {
-        font-size: 1.5rem;
+        width: 24px;
+        height: 24px;
+        color: var(--accent-blue);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .edu-icon :global(svg) {
+        width: 22px;
+        height: 22px;
     }
 
     .edu-card {
@@ -663,8 +717,18 @@ const biasMetadata = [
     }
 
     .edu-card-icon {
-        font-size: 1.4rem;
+        width: 28px;
+        height: 28px;
+        color: #7dd3fc;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         flex-shrink: 0;
+    }
+
+    .edu-card-icon :global(svg) {
+        width: 18px;
+        height: 18px;
     }
 
     .edu-card-content {
@@ -949,6 +1013,68 @@ const biasMetadata = [
         }
         .toolset-grid {
             grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 430px) {
+        .education-header {
+            margin-bottom: 1.7rem;
+        }
+
+        .education-grid {
+            gap: 1.7rem;
+        }
+
+        .edu-column-title {
+            font-size: 1.08rem;
+            gap: 0.6rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cert-group {
+            margin-bottom: 0.95rem;
+        }
+
+        .cert-group-title {
+            font-size: 0.86rem;
+            margin-bottom: 0.55rem;
+        }
+
+        .edu-card {
+            gap: 0.72rem;
+            padding: 0.66rem 0.7rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .edu-card strong {
+            font-size: 0.8rem;
+        }
+
+        .edu-issuer {
+            font-size: 0.66rem;
+        }
+
+        .cert-link {
+            width: 34px;
+            height: 34px;
+        }
+
+        .activities-list,
+        .soft-skills,
+        .bias-list {
+            gap: 0.32rem;
+        }
+
+        .activity-tag,
+        .soft-tag,
+        .bias-tag {
+            padding: 0.4rem 0.68rem;
+            font-size: 0.75rem;
+        }
+
+        .tool-card {
+            padding: 0.7rem 0.45rem;
+            gap: 0.35rem;
         }
     }
 </style>

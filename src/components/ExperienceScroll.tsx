@@ -3,11 +3,14 @@ import {
     Award,
     BadgeCheck,
     CalendarRange,
+    Cpu,
     MapPin,
     Rocket,
     Shield,
     Sparkles,
-    Target
+    Target,
+    Users,
+    Wifi
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { translations } from "../i18n";
@@ -42,6 +45,12 @@ const UI_TEXT = {
             companies: "Organizations served",
             quality: "Quality-first delivery"
         },
+        milestones: {
+            remote: "Remote-first",
+            leadership: "Leadership",
+            iot: "IoT Focus",
+            scale: "Scale Systems"
+        },
         qualityValue: "CI/CD + testing discipline"
     },
     es: {
@@ -57,6 +66,12 @@ const UI_TEXT = {
             roles: "Roles especializados",
             companies: "Organizaciones atendidas",
             quality: "Entrega centrada en calidad"
+        },
+        milestones: {
+            remote: "Remoto-first",
+            leadership: "Liderazgo",
+            iot: "Enfoque IoT",
+            scale: "Sistemas a escala"
         },
         qualityValue: "CI/CD + disciplina de testing"
     }
@@ -176,6 +191,33 @@ function getCompanyInitials(company: string): string {
     return parts.map((part) => part[0].toUpperCase()).join("");
 }
 
+type MilestoneKey = "remote" | "leadership" | "iot" | "scale";
+
+function getMilestones(item: ExperienceItem): MilestoneKey[] {
+    const company = item.company.toLowerCase();
+    const role = item.role.toLowerCase();
+    const tags = (item.tags || []).join(" ").toLowerCase();
+    const milestones: MilestoneKey[] = [];
+
+    if (company.includes("freelancer") || company.includes("zattoo") || role.includes("senior")) {
+        milestones.push("remote");
+    }
+
+    if (role.includes("senior") || role.includes("lead") || role.includes("architect")) {
+        milestones.push("leadership");
+    }
+
+    if (company.includes("conectsen") || tags.includes("iot") || tags.includes("obd2")) {
+        milestones.push("iot");
+    }
+
+    if (tags.includes("microservices") || tags.includes("real-time") || tags.includes("automation")) {
+        milestones.push("scale");
+    }
+
+    return milestones.slice(0, 2);
+}
+
 export default function ExperienceScroll({ items, lang = "en" }: Props) {
     const [currentLang, setCurrentLang] = useState<"en" | "es">(lang === "es" ? "es" : "en");
 
@@ -242,6 +284,7 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     const impactText = getImpactText(item, locale);
                     const showCovidBadge = isCovidEra(item.period);
                     const companyLogo = getCompanyLogo(item.company);
+                    const milestones = getMilestones(item);
 
                     return (
                         <motion.article
@@ -273,20 +316,33 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                                             )}
                                         </div>
 
-                                        <div className="xp-head-meta">
-                                            <p className="xp-year">{year}</p>
-                                            <div className="xp-pill">
-                                                <CalendarRange size={14} />
-                                                <span>{item.period}</span>
+                                         <div className="xp-head-meta">
+                                             <p className="xp-year">{year}</p>
+                                             <div className="xp-pill">
+                                                 <CalendarRange size={14} />
+                                                 <span>{item.period}</span>
                                                 {showCovidBadge && (
                                                     <span className="xp-event-badge" title={text.covidBadge}>
                                                         <Shield size={12} aria-hidden="true" />
                                                         <span>{text.covidBadge}</span>
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
+                                                     </span>
+                                                 )}
+                                             </div>
+                                             {milestones.length > 0 && (
+                                                 <div className="xp-milestones" aria-label="Career milestones">
+                                                     {milestones.map((milestone) => (
+                                                         <span key={`${item.company}-${item.period}-${milestone}`} className="xp-milestone-tag">
+                                                             {milestone === "remote" && <Wifi size={11} aria-hidden="true" />}
+                                                             {milestone === "leadership" && <Users size={11} aria-hidden="true" />}
+                                                             {milestone === "iot" && <Cpu size={11} aria-hidden="true" />}
+                                                             {milestone === "scale" && <Rocket size={11} aria-hidden="true" />}
+                                                             <span>{text.milestones[milestone]}</span>
+                                                         </span>
+                                                     ))}
+                                                 </div>
+                                             )}
+                                         </div>
+                                     </div>
 
                                     <div className="xp-card-body">
                                         <h3 className="xp-company">{item.company}</h3>
@@ -622,6 +678,29 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     flex-shrink: 0;
                 }
 
+                .xp-milestones {
+                    margin-top: 0.45rem;
+                    display: flex;
+                    justify-content: flex-end;
+                    flex-wrap: wrap;
+                    gap: 0.32rem;
+                }
+
+                .xp-milestone-tag {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.24rem;
+                    padding: 0.16rem 0.42rem;
+                    border-radius: 999px;
+                    border: 1px solid rgba(125, 211, 252, 0.24);
+                    background: rgba(2, 132, 199, 0.13);
+                    color: #bae6fd;
+                    font-size: 0.62rem;
+                    font-weight: 650;
+                    line-height: 1;
+                    white-space: nowrap;
+                }
+
                 .xp-card-body {
                     padding: 1rem 1.25rem 1.25rem;
                 }
@@ -944,6 +1023,74 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     .xp-cta {
                         grid-template-columns: 1fr;
                         text-align: left;
+                    }
+                }
+
+                @media (max-width: 430px) {
+                    .xp-shell {
+                        padding: 0.62rem;
+                        border-radius: 20px;
+                    }
+
+                    .xp-row,
+                    .xp-row-right {
+                        grid-template-columns: 38px minmax(0, 1fr);
+                        gap: 0.42rem;
+                    }
+
+                    .xp-timeline::before {
+                        left: 18.5px;
+                    }
+
+                    .xp-card-head {
+                        padding: 0.72rem 0.72rem 0;
+                        gap: 0.6rem;
+                    }
+
+                    .xp-card-body {
+                        padding: 0.62rem 0.72rem 0.72rem;
+                    }
+
+                    .xp-icon-wrap {
+                        width: 54px;
+                        height: 54px;
+                        border-radius: 12px;
+                    }
+
+                    .xp-year {
+                        margin-bottom: 0.28rem;
+                        font-size: 1rem;
+                    }
+
+                    .xp-pill {
+                        font-size: 0.6rem;
+                        padding: 0.24rem 0.45rem;
+                    }
+
+                    .xp-milestones {
+                        margin-top: 0.32rem;
+                        gap: 0.22rem;
+                    }
+
+                    .xp-milestone-tag {
+                        font-size: 0.58rem;
+                        padding: 0.12rem 0.32rem;
+                    }
+
+                    .xp-role {
+                        margin: 0.26rem 0 0.6rem;
+                        font-size: 0.88rem;
+                    }
+
+                    .xp-description {
+                        font-size: 0.84rem;
+                        line-height: 1.5;
+                    }
+
+                    .xp-proof-block,
+                    .xp-tags-wrap {
+                        margin-top: 0.7rem;
+                        padding-top: 0.58rem;
                     }
                 }
 

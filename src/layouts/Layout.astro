@@ -319,9 +319,9 @@ const {
         runtime.currentLang = lang;
         document.documentElement.lang = lang;
 
-        const resolveTranslation = (key: string) => {
+        const resolveTranslationForLang = (key: string, targetLang: "en" | "es") => {
           const keys = key.split(".");
-          let translation: any = translations[lang];
+          let translation: any = translations[targetLang];
 
           for (const k of keys) {
             translation = translation?.[k];
@@ -332,6 +332,8 @@ const {
 
           return translation;
         };
+
+        const resolveTranslation = (key: string) => resolveTranslationForLang(key, lang);
 
         const elements = document.querySelectorAll("[data-i18n]");
         elements.forEach((el) => {
@@ -379,7 +381,8 @@ const {
           const key = el.getAttribute("data-i18n-href");
           if (!key) return;
 
-          const hrefValue = resolveTranslation(key);
+          const hrefValue =
+            resolveTranslation(key) || resolveTranslationForLang(key, "en");
           if (typeof hrefValue !== "string") return;
 
           if (hrefValue.trim()) {
