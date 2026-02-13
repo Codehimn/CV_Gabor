@@ -9,7 +9,10 @@ export const translations = {
             contact: "Contact",
             cta: "Let's Talk",
             freelancer: "Freelancer",
-            whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat."
+            whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat.",
+            toggle_menu: "Toggle menu",
+            switch_en: "Switch to English",
+            switch_es: "Switch to Spanish"
         },
         hero: {
             greeting: "Hi, I'm",
@@ -401,7 +404,10 @@ export const translations = {
             contact: "Contacto",
             cta: "Hablemos",
             freelancer: "Freelancer",
-            whatsapp_msg: "Hola Gabor! Vi tu portafolio y me gustaria conversar."
+            whatsapp_msg: "Hola Gabor! Vi tu portafolio y me gustaria conversar.",
+            toggle_menu: "Alternar menú",
+            switch_en: "Cambiar a Inglés",
+            switch_es: "Cambiar a Español"
         },
         hero: {
             greeting: "Hola, soy",
