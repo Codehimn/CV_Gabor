@@ -510,8 +510,15 @@ const t = translations[lang as "en" | "es"].about;
         if (photoWrapper && photo && border) {
             const wrapperEl = photoWrapper as HTMLElement;
             if (wrapperEl.dataset.tiltBound !== "true") {
+                let rect: DOMRect | null = null;
+
+                // ⚡ Bolt: Cache rect on enter to avoid layout thrashing during mousemove.
+                photoWrapper.addEventListener("mouseenter", () => {
+                    rect = photoWrapper.getBoundingClientRect();
+                });
+
                 photoWrapper.addEventListener("mousemove", (e: any) => {
-                    const rect = photoWrapper.getBoundingClientRect();
+                    if (!rect) rect = photoWrapper.getBoundingClientRect();
                     const x = (e.clientX - rect.left) / rect.width - 0.5;
                     const y = (e.clientY - rect.top) / rect.height - 0.5;
 
@@ -522,6 +529,7 @@ const t = translations[lang as "en" | "es"].about;
                 photoWrapper.addEventListener("mouseleave", () => {
                     photo.style.transform = `perspective(1000px) rotateY(0) rotateX(0) scale(1)`;
                     border.style.transform = `translate(0, 0)`;
+                    rect = null;
                 });
 
                 wrapperEl.dataset.tiltBound = "true";

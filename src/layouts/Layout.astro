@@ -268,12 +268,42 @@ const personSchema = {
         runtime.mouseController = new AbortController();
         const mouseSignal = runtime.mouseController.signal;
 
+        // Optimization: Use a WeakMap to cache element bounds on enter.
+        // This prevents layout thrashing during mousemove by avoiding
+        // repeated getBoundingClientRect() calls.
+        const rectCache = new WeakMap<Element, DOMRect>();
+
+        let lastTarget: EventTarget | null = null;
+        let currentMagnetic: HTMLElement | null = null;
+
         // Single listener for both cursor + spotlight
         window.addEventListener(
           "mousemove",
           (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
+
+            // ⚡ Bolt: Magnetic Hover Optimization.
+            // Using delegation to identify magnetic targets and cached rects
+            // to eliminate layout thrashing during continuous mouse movement.
+            // Optimization: Only run closest() if the target actually changed.
+            if (e.target !== lastTarget) {
+              lastTarget = e.target;
+              currentMagnetic = (e.target as HTMLElement)?.closest(".navbar a, .magnetic") as HTMLElement | null;
+            }
+
+            if (currentMagnetic) {
+              let rect = rectCache.get(currentMagnetic);
+              if (!rect) {
+                rect = currentMagnetic.getBoundingClientRect();
+                rectCache.set(currentMagnetic, rect);
+              }
+              const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+              const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+              currentMagnetic.style.transform = `translate(${x}px, ${y}px)`;
+              currentMagnetic.style.transition = "none";
+            }
+
             if (!rafScheduled) {
               rafScheduled = true;
               requestAnimationFrame(updatePositions);
@@ -302,42 +332,29 @@ const personSchema = {
             { signal: mouseSignal },
           );
 
-          // Hover state for interactive elements
-          document
-            .querySelectorAll("a, button, .interactive, .magnetic")
-            .forEach((el) => {
-              el.addEventListener(
-                "mouseenter",
-                () => {
-                  cursor.classList.add("hover");
-                },
-                { signal: mouseSignal },
-              );
-              el.addEventListener(
-                "mouseleave",
-                () => {
-                  cursor.classList.remove("hover");
-                },
-                { signal: mouseSignal },
-              );
-            });
-        }
+          // ⚡ Bolt: Event Delegation Optimization.
+          // Using a single mouseover listener on the document to handle cursor hover
+          // states for all interactive elements. Correctly handles enter/leave.
+          document.addEventListener("mouseover", (e) => {
+            const target = e.target as HTMLElement;
+            if (target?.closest?.("a, button, .interactive, .magnetic")) {
+              cursor.classList.add("hover");
+            } else {
+              cursor.classList.remove("hover");
+            }
+          }, { signal: mouseSignal });
 
-        // Magnetic Hover Effect for Nav Links & Magnetic class
-        document.querySelectorAll(".navbar a, .magnetic").forEach((el: any) => {
-          el.addEventListener("mousemove", (e: MouseEvent) => {
-            const rect = el.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-            el.style.transition = "none";
+          document.addEventListener("mouseout", (e) => {
+            const target = e.target as HTMLElement;
+            // Cleanup magnetic state and cache on exit
+            const magnetic = target?.closest?.(".navbar a, .magnetic") as HTMLElement | null;
+            if (magnetic && (!e.relatedTarget || !(e.relatedTarget as HTMLElement).closest?.(".navbar a, .magnetic"))) {
+              magnetic.style.transform = "translate(0,0)";
+              magnetic.style.transition = "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
+              rectCache.delete(magnetic);
+            }
           }, { signal: mouseSignal });
-          el.addEventListener("mouseleave", () => {
-            el.style.transform = `translate(0px, 0px)`;
-            el.style.transition =
-              "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
-          }, { signal: mouseSignal });
-        });
+        }
 
         runtime.mouseTrackingInitialized = true;
       }

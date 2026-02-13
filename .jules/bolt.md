@@ -9,3 +9,7 @@
 ## 2026-02-11 - [Scroll Loop DOM Queries]
 **Learning:** Querying `.parallax-layer` with `querySelectorAll` inside every scroll animation frame in `Layout.astro` creates avoidable main-thread work.
 **Action:** Cache frequently accessed node lists during setup (and refresh on route swaps), then reuse them inside the scroll loop.
+
+## 2025-02-13 - [Layout Thrashing in High-Frequency Events]
+**Learning:** Calling `getBoundingClientRect()` inside `mousemove` or `scroll` listeners causes "Layout Thrashing" as the browser is forced to recalculate positions on every frame.
+**Action:** Use a `WeakMap` to cache element bounds on `mouseenter` or `mouseover` and reuse them during `mousemove`. Additionally, use event delegation for hover states to reduce listener count and memory overhead.
