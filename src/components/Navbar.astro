@@ -17,7 +17,7 @@ const navItems = [
             <span class="logo-bracket">/&gt;</span>
         </a>
 
-        <ul class="nav-links">
+        <ul class="nav-links" id="nav-menu">
             <li>
                 <a href="/about" class="nav-link" data-i18n="nav.about">About</a
                 >
@@ -66,12 +66,18 @@ const navItems = [
 
         <div class="nav-controls">
             <div class="lang-toggle">
-                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn active" data-lang="en" data-i18n-aria="nav.switch_en" aria-pressed="true">EN</button>
                 <div class="lang-separator"></div>
-                <button class="lang-btn" data-lang="es">ES</button>
+                <button class="lang-btn" data-lang="es" data-i18n-aria="nav.switch_es" aria-pressed="false">ES</button>
             </div>
             <!-- Hamburger -->
-            <button class="hamburger-wrapper" aria-label="Toggle menu" aria-expanded="false">
+            <button
+                class="hamburger-wrapper"
+                data-i18n-aria="nav.toggle_menu"
+                aria-label="Toggle menu"
+                aria-expanded="false"
+                aria-controls="nav-menu"
+            >
                 <div class="hamburger">
                     <span></span>
                     <span></span>
@@ -180,7 +186,7 @@ const navItems = [
     }
 
     .nav-link-ai {
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-weight: 700;
@@ -341,7 +347,7 @@ const navItems = [
         .nav-links.open {
             right: 0;
             visibility: visible;
-            pointer-events: auto;
+            pointer-events: all;
         }
 
         .nav-links li {
@@ -432,10 +438,10 @@ const navItems = [
 
         if (hamburger && navLinks) {
             hamburger.addEventListener("click", () => {
-                const isActive = hamburger.classList.toggle("active");
-                navLinks.classList.toggle("open");
-                layoutBody.classList.toggle("menu-open");
-                hamburger.setAttribute("aria-expanded", isActive.toString());
+                const isOpen = hamburger.classList.toggle("active");
+                navLinks.classList.toggle("open", isOpen);
+                layoutBody.classList.toggle("menu-open", isOpen);
+                hamburger.setAttribute("aria-expanded", isOpen.toString());
             });
 
             // Close menu on link click
@@ -474,12 +480,14 @@ const navItems = [
         const currentPath = window.location.pathname;
         navLinksElement.querySelectorAll(".nav-link").forEach((link) => {
             link.classList.remove("active");
+            link.removeAttribute("aria-current");
             const href = link.getAttribute("href");
             if (
                 href === currentPath ||
                 (href !== "/" && currentPath.startsWith(href || ""))
             ) {
                 link.classList.add("active");
+                link.setAttribute("aria-current", "page");
             }
         });
     }

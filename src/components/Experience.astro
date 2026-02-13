@@ -21,8 +21,10 @@ const experiences = t.items;
                 {t.label}
             </p>
             <h2 class="section-title experience-title">
-                {t.title}
-                <span class="gradient-text"> {t.title_accent || "Impact"}</span>
+                <span data-i18n="experience.title">{t.title}</span>
+                <span class="gradient-text" data-i18n="experience.title_accent">
+                    {t.title_accent || "Impact"}
+                </span>
             </h2>
             <p
                 class="section-subtitle experience-subtitle"
@@ -32,14 +34,13 @@ const experiences = t.items;
             </p>
         </div>
 
-        <!-- Performance: render timeline as static HTML to avoid React island hydration on /experience -->
-        <ExperienceScroll items={experiences} lang={lang} />
+        <ExperienceScroll items={experiences} lang={lang} client:visible />
     </div>
 </section>
 
 <style>
     .experience {
-        padding: clamp(5rem, 8vw, 8rem) 0 clamp(4rem, 6vw, 6.5rem);
+        padding: clamp(2.6rem, 5.4vw, 4.4rem) 0 clamp(2.2rem, 4.5vw, 3.6rem);
         overflow: hidden;
         position: relative;
         isolation: isolate;
@@ -56,18 +57,18 @@ const experiences = t.items;
         background:
             radial-gradient(
                 circle at 8% 20%,
-                rgba(31, 115, 183, 0.24) 0,
-                rgba(31, 115, 183, 0) 36%
+                rgba(56, 189, 248, 0.2) 0,
+                rgba(56, 189, 248, 0) 36%
             ),
             radial-gradient(
                 circle at 92% 14%,
-                rgba(20, 184, 166, 0.2) 0,
-                rgba(20, 184, 166, 0) 30%
+                rgba(129, 140, 248, 0.16) 0,
+                rgba(129, 140, 248, 0) 30%
             ),
             radial-gradient(
                 circle at 50% 105%,
-                rgba(245, 158, 11, 0.16) 0,
-                rgba(245, 158, 11, 0) 42%
+                rgba(34, 211, 238, 0.15) 0,
+                rgba(34, 211, 238, 0) 42%
             );
         filter: blur(2px);
         animation: experience-float-1 24s ease-in-out infinite alternate;
@@ -77,16 +78,16 @@ const experiences = t.items;
         background:
             linear-gradient(
                 135deg,
-                rgba(13, 24, 40, 0.42) 0%,
-                rgba(8, 15, 30, 0.1) 42%,
-                rgba(7, 20, 35, 0.36) 100%
+                rgba(13, 24, 40, 0.44) 0%,
+                rgba(8, 15, 30, 0.16) 42%,
+                rgba(7, 20, 35, 0.4) 100%
             ),
             conic-gradient(
                 from 200deg at 50% 50%,
-                rgba(31, 115, 183, 0.1),
-                rgba(14, 116, 144, 0.14),
-                rgba(245, 158, 11, 0.09),
-                rgba(31, 115, 183, 0.1)
+                rgba(56, 189, 248, 0.09),
+                rgba(129, 140, 248, 0.12),
+                rgba(34, 211, 238, 0.1),
+                rgba(56, 189, 248, 0.09)
             );
         opacity: 0.72;
         mix-blend-mode: screen;
@@ -115,12 +116,12 @@ const experiences = t.items;
 
     .experience-header {
         text-align: center;
-        margin-bottom: clamp(2rem, 5vw, 3.5rem);
+        margin-bottom: clamp(1.2rem, 3.4vw, 2.1rem);
         padding: 0 clamp(0.75rem, 2vw, 2rem);
     }
 
     .experience-label {
-        color: #8fb6d6;
+        color: var(--text-secondary);
     }
 
     .experience-title {
@@ -134,9 +135,9 @@ const experiences = t.items;
     .experience-subtitle {
         max-width: 760px;
         margin: 0 auto;
-        font-size: clamp(1.02rem, 1.8vw, 1.24rem);
-        line-height: 1.78;
-        color: #a7b6cb;
+        font-size: clamp(0.98rem, 1.6vw, 1.14rem);
+        line-height: 1.6;
+        color: var(--text-secondary);
     }
 
     @keyframes experience-float-1 {
@@ -170,7 +171,7 @@ const experiences = t.items;
         }
 
         .experience {
-            padding-top: 8rem;
+            padding-top: 1.1rem;
         }
 
         .experience-container {
@@ -179,7 +180,7 @@ const experiences = t.items;
         }
 
         .experience-header {
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.4rem;
             padding: 0 1rem;
         }
     }

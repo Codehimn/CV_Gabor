@@ -47,6 +47,10 @@ import { ViewTransitions } from "astro:transitions";
                     style="display:none;"></span>
             </div>
 
+            <p class="hero-value-prop reveal" style="transition-delay: 0.5s" data-i18n="hero.value_prop">
+                I help teams automate workflows and scale reliable backend systems.
+            </p>
+
             <p
                 class="hero-description reveal"
                 style="transition-delay: 0.6s"
@@ -79,11 +83,18 @@ import { ViewTransitions } from "astro:transitions";
 
             <div class="hero-actions reveal">
                 <a
-                    href="#experience"
+                    href="#contact"
                     class="btn btn-primary magnetic"
                     data-i18n="hero.cta_primary"
                 >
-                    Explore My Work
+                    Let's Talk
+                </a>
+                <a
+                    href="#experience"
+                    class="btn btn-outline magnetic"
+                    data-i18n="hero.cta_secondary"
+                >
+                    View Experience
                 </a>
                 <a
                     href="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
@@ -94,14 +105,10 @@ import { ViewTransitions } from "astro:transitions";
                     data-cv-en="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
                     data-cv-es="/pdf/CV Gabor Flandorffer 2026 ENG.pdf"
                 >
-                    📄 <span data-i18n="hero.download_cv">Download CV</span>
-                </a>
-                <a
-                    href="#contact"
-                    class="btn btn-outline magnetic"
-                    data-i18n="hero.cta_secondary"
-                >
-                    Get In Touch
+                    <span data-i18n="hero.download_cv">Download CV</span>
+                    <span class="cv-soon-note" data-i18n="hero.download_cv_notice"
+                        >Will be updated soon</span
+                    >
                 </a>
             </div>
         </div>
@@ -121,7 +128,41 @@ import { ViewTransitions } from "astro:transitions";
 </section>
 
 <script>
+    function teardownHero() {
+        const runtime = ((window as any).__cvRuntime ||= {});
+
+        if (runtime.heroTypeTimeout) {
+            clearTimeout(runtime.heroTypeTimeout);
+            runtime.heroTypeTimeout = null;
+        }
+
+        if (runtime.heroCounterObserver) {
+            runtime.heroCounterObserver.disconnect();
+            runtime.heroCounterObserver = null;
+        }
+
+        if (runtime.heroCounterRafs) {
+            runtime.heroCounterRafs.forEach((id: number) => cancelAnimationFrame(id));
+            runtime.heroCounterRafs = [];
+        }
+
+        if (runtime.heroLangChangedHandler) {
+            window.removeEventListener("langChanged", runtime.heroLangChangedHandler);
+            runtime.heroLangChangedHandler = null;
+        }
+    }
+
     function initHero() {
+        teardownHero();
+
+        const runtime = ((window as any).__cvRuntime ||= {});
+        const stateToken = Symbol("hero-state");
+        runtime.heroStateToken = stateToken;
+
+        function isStale() {
+            return runtime.heroStateToken !== stateToken;
+        }
+
         // Typing effect logic
         const rolesSource = document.getElementById("roles-source");
         const typingEl = document.getElementById("typing-text");
@@ -134,7 +175,6 @@ import { ViewTransitions } from "astro:transitions";
         let roleIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
-        let typeTimeout: any = null;
 
         function updateRoles() {
             if (rolesSource && rolesSource.textContent) {
@@ -143,6 +183,7 @@ import { ViewTransitions } from "astro:transitions";
         }
 
         function typeWriter() {
+            if (isStale()) return;
             if (!typingEl) return;
             if (roleIndex >= roles.length) roleIndex = 0;
             const currentRole = roles[roleIndex];
@@ -152,7 +193,7 @@ import { ViewTransitions } from "astro:transitions";
                 charIndex++;
                 if (charIndex === currentRole.length) {
                     isDeleting = true;
-                    typeTimeout = setTimeout(typeWriter, 2000);
+                    runtime.heroTypeTimeout = window.setTimeout(typeWriter, 2000);
                     return;
                 }
             } else {
@@ -163,36 +204,49 @@ import { ViewTransitions } from "astro:transitions";
                     roleIndex = (roleIndex + 1) % roles.length;
                 }
             }
-            typeTimeout = setTimeout(typeWriter, isDeleting ? 40 : 80);
+            runtime.heroTypeTimeout = window.setTimeout(typeWriter, isDeleting ? 40 : 80);
         }
 
         // Counter animation
         const counters = document.querySelectorAll(".stat-number[data-count]");
+        const counterRafs: number[] = [];
+
+        function animateCounter(targetEl: HTMLElement, target: number) {
+            const duration = 1200;
+            const start = performance.now();
+
+            const frame = (now: number) => {
+                if (isStale()) return;
+                const progress = Math.min((now - start) / duration, 1);
+                targetEl.textContent = Math.floor(progress * target).toString();
+
+                if (progress < 1) {
+                    const rafId = requestAnimationFrame(frame);
+                    counterRafs.push(rafId);
+                } else {
+                    targetEl.textContent = target.toString();
+                }
+            };
+
+            const rafId = requestAnimationFrame(frame);
+            counterRafs.push(rafId);
+        }
+
         const counterObserver = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const targetEl = entry.target as HTMLElement;
-                        const target = parseInt(targetEl.dataset.count || "0");
-                        let count = 0;
-                        const duration = 2000;
-                        const step = target / (duration / 16);
-                        const timer = setInterval(() => {
-                            count += step;
-                            if (count >= target) {
-                                targetEl.textContent = target.toString();
-                                clearInterval(timer);
-                            } else {
-                                targetEl.textContent =
-                                    Math.floor(count).toString();
-                            }
-                        }, 16);
-                        counterObserver.unobserve(entry.target);
-                    }
+                    if (!entry.isIntersecting || isStale()) return;
+
+                    const targetEl = entry.target as HTMLElement;
+                    const target = parseInt(targetEl.dataset.count || "0", 10);
+                    animateCounter(targetEl, target);
+                    counterObserver.unobserve(entry.target);
                 });
             },
             { threshold: 0.5 },
         );
+        runtime.heroCounterObserver = counterObserver;
+        runtime.heroCounterRafs = counterRafs;
 
         // Initialize
         updateRoles();
@@ -214,17 +268,17 @@ import { ViewTransitions } from "astro:transitions";
         updateHeroCv();
 
         // Language change reactive listener
-        const runtime = ((window as any).__cvRuntime ||= {});
-        if (runtime.heroLangChangedHandler) {
-            window.removeEventListener("langChanged", runtime.heroLangChangedHandler);
-        }
-
         runtime.heroLangChangedHandler = () => {
+            if (isStale()) return;
             setTimeout(() => {
+                if (isStale()) return;
                 updateRoles();
                 charIndex = 0;
                 isDeleting = false;
-                if (typeTimeout) clearTimeout(typeTimeout);
+                if (runtime.heroTypeTimeout) {
+                    clearTimeout(runtime.heroTypeTimeout);
+                    runtime.heroTypeTimeout = null;
+                }
                 typeWriter();
                 updateHeroCv();
             }, 50);
@@ -233,22 +287,25 @@ import { ViewTransitions } from "astro:transitions";
         window.addEventListener("langChanged", runtime.heroLangChangedHandler);
     }
 
-    // Run on initial load
-    initHero();
+    const runtime = ((window as any).__cvRuntime ||= {});
+    if (!runtime.heroLifecycleBound) {
+        document.addEventListener("astro:after-swap", initHero);
+        document.addEventListener("astro:before-swap", teardownHero);
+        runtime.heroLifecycleBound = true;
+    }
 
-    // Run on View Transitions swap
-    document.addEventListener("astro:after-swap", initHero);
+    initHero();
 </script>
 
 <style>
     .hero {
-        min-height: 100vh;
+        min-height: clamp(620px, 86svh, 760px);
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
         overflow: hidden;
-        padding: 4rem 0;
+        padding: 2.6rem 0 2rem;
     }
 
     .hero-bg-gradient {
@@ -297,7 +354,7 @@ import { ViewTransitions } from "astro:transitions";
         display: grid;
         grid-template-columns: 1.2fr 0.8fr;
         align-items: center;
-        gap: 4rem;
+        gap: 2.4rem;
         z-index: 2;
     }
 
@@ -307,7 +364,7 @@ import { ViewTransitions } from "astro:transitions";
 
     .hero-badge {
         display: inline-flex;
-        margin-bottom: 2rem;
+        margin-bottom: 1.15rem;
     }
 
     .badge-content {
@@ -362,7 +419,7 @@ import { ViewTransitions } from "astro:transitions";
     }
 
     .hero-title {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
     }
 
     .hero-name {
@@ -376,7 +433,7 @@ import { ViewTransitions } from "astro:transitions";
         font-family: var(--font-mono);
         font-size: clamp(1rem, 2.5vw, 1.4rem);
         color: var(--accent-blue);
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         min-height: 2rem;
     }
 
@@ -399,8 +456,17 @@ import { ViewTransitions } from "astro:transitions";
         font-size: clamp(1.1rem, 2vw, 1.25rem);
         color: var(--text-secondary);
         max-width: 550px;
-        margin-bottom: 3rem;
-        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        line-height: 1.62;
+    }
+
+    .hero-value-prop {
+        font-size: clamp(0.95rem, 1.8vw, 1.08rem);
+        color: #c8e8ff;
+        margin-bottom: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        max-width: 620px;
     }
 
     .hero-description strong {
@@ -409,8 +475,8 @@ import { ViewTransitions } from "astro:transitions";
 
     .hero-stats {
         display: flex;
-        gap: 4rem;
-        margin-bottom: 4rem;
+        gap: 2.3rem;
+        margin-bottom: 1.7rem;
     }
 
     .stat-value {
@@ -444,7 +510,29 @@ import { ViewTransitions } from "astro:transitions";
 
     .hero-actions {
         display: flex;
-        gap: 1.5rem;
+        gap: 0.9rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-actions .btn-primary {
+        min-width: 148px;
+    }
+
+    .hero-download-btn {
+        position: relative;
+        align-items: center;
+    }
+
+    .cv-soon-note {
+        font-size: 0.65rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #bae6fd;
+        border: 1px solid rgba(56, 189, 248, 0.28);
+        background: rgba(56, 189, 248, 0.12);
+        border-radius: 999px;
+        padding: 0.15rem 0.45rem;
+        white-space: nowrap;
     }
 
     .btn.magnetic {
@@ -454,7 +542,7 @@ import { ViewTransitions } from "astro:transitions";
 
     .scroll-indicator {
         position: absolute;
-        bottom: 3rem;
+        bottom: 0.6rem;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
@@ -547,7 +635,7 @@ import { ViewTransitions } from "astro:transitions";
         .hero-container {
             grid-template-columns: 1fr;
             text-align: center;
-            gap: 5rem;
+            gap: 2rem;
         }
 
         .hero-content {
@@ -564,11 +652,48 @@ import { ViewTransitions } from "astro:transitions";
     }
 
     @media (max-width: 768px) {
+        .hero {
+            min-height: auto;
+            padding-top: 6.2rem;
+            padding-bottom: 1.2rem;
+        }
+
         .hero-stats {
             gap: 2rem;
         }
         .scroll-indicator {
             display: none;
+        }
+    }
+
+    @media (max-width: 430px) {
+        .hero {
+            padding-top: 5.5rem;
+            padding-bottom: 0.9rem;
+        }
+
+        .hero-description {
+            font-size: 0.97rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .hero-stats {
+            gap: 1.4rem;
+            margin-bottom: 1.15rem;
+        }
+
+        .stat-label {
+            font-size: 0.68rem;
+            margin-top: 0.25rem;
+        }
+
+        .hero-actions {
+            gap: 0.65rem;
+        }
+
+        .cv-soon-note {
+            font-size: 0.56rem;
+            padding: 0.14rem 0.36rem;
         }
     }
 </style>

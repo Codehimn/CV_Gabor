@@ -6,15 +6,8 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Ask AI | Gabor Flandorffer" showChatWidget={false}>
     <Navbar />
-    <main class="h-screen overflow-hidden pt-20" style="background: #0a0a0f;">
+    <main class="page-main page-main--chat">
         <!-- Full Page Chat Mode (ChatGPT-style) -->
         <ChatWidget client:load mode="page" />
     </main>
 </Layout>
-
-<style>
-    main {
-        /* Ensure no scrollbar on the outer container */
-        overflow: hidden;
-    }
-</style>

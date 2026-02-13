@@ -1,82 +1,33 @@
 ---
-const skillCategories = [
-    {
-        title: "Development Core",
-        icon: "💻",
-        span: "row-2",
-        skills: [
-            { name: "Python (Expert)", level: 100, years: "11+" },
-            { name: "Asyncio / Aiohttp", level: 95, years: "7+" },
-            { name: "JavaScript / TS", level: 85, years: "8+" },
-            { name: "C# .NET / VB.NET", level: 80, years: "9+" },
-            { name: "PHP", level: 70, years: "5+" },
-            { name: "Cython / MicroPython", level: 75, years: "5+" },
-        ],
-    },
-    {
-        title: "Automation & Testing",
-        icon: "🤖",
-        span: "col-2",
-        skills: [
-            { name: "Puppeteer / Pyppeteer", level: 95, years: "7+" },
-            { name: "AutoIt / Selenium", level: 90, years: "11+" },
-            { name: "pytest / Mocking", level: 90, years: "7+" },
-            { name: "Web Scraping / Crawling", level: 95, years: "11+" },
-            { name: "OpenCV / ImageMagick", level: 80, years: "6+" },
-        ],
-    },
-    {
-        title: "Web & Architecture",
-        icon: "🏗️",
-        skills: [
-            { name: "Django / FastAPI", level: 95, years: "10+" },
-            { name: "REST / GraphQL / Swagger", level: 90, years: "8+" },
-            { name: "Angular / Vue", level: 65, years: "3+" },
-            { name: "HTML5 / CSS3 / jQuery", level: 85, years: "8+" },
-            { name: "WebSockets / Microservices", level: 85, years: "6+" },
-        ],
-    },
-    {
-        title: "Databases",
-        icon: "🗄️",
-        skills: [
-            { name: "PostgreSQL / MySQL", level: 90, years: "11+" },
-            { name: "MongoDB / Redis", level: 80, years: "6+" },
-            { name: "SQLAlchemy / ORMs", level: 90, years: "9+" },
-            { name: "Oracle (AM, CW, FM)", level: 65, years: "3+" },
-        ],
-    },
-    {
-        title: "DevOps & Cloud",
-        icon: "☁️",
-        span: "col-2",
-        skills: [
-            { name: "Docker / Portainer", level: 90, years: "8+" },
-            { name: "GitHub Actions / Jenkins", level: 90, years: "6+" },
-            { name: "AWS / GCP", level: 75, years: "4+" },
-            { name: "Nginx / RabbitMQ", level: 80, years: "5+" },
-            { name: "Linux / Bash / Windows Server", level: 90, years: "11+" },
-        ],
-    },
-    {
-        title: "Additional Languages",
-        icon: "💎",
-        skills: [
-            { name: "C++", level: 70, years: "4+" },
-            { name: "Ruby", level: 65, years: "3+" },
-            { name: "VBA", level: 80, years: "8+" },
-        ],
-    },
-    {
-        title: "Networking & Security",
-        icon: "🔒",
-        skills: [
-            { name: "Wireshark", level: 70, years: "4+" },
-            { name: "Puppet / Config Mgmt", level: 70, years: "3+" },
-            { name: "Kali Linux / OllyDbg", level: 60, years: "3+" },
-        ],
-    },
+import { translations } from "../i18n";
+
+const { lang = "en" } = Astro.props;
+const t = translations[lang as "en" | "es"].skills;
+const skillCategories = t.categories;
+
+const skillCategoryIcons = [
+    "code",
+    "bot",
+    "layers",
+    "database",
+    "cloud",
+    "gem",
+    "shield",
 ];
+
+function getSkillIcon(icon: string) {
+    const icons: Record<string, string> = {
+        code: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>`,
+        bot: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/><path d="M8 13h.01"/><path d="M16 13h.01"/><path d="M12 13h.01"/></svg>`,
+        layers: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg>`,
+        database: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>`,
+        cloud: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 20a4.5 4.5 0 1 0-1-8.88A6 6 0 1 0 6.2 18H17.5Z"/></svg>`,
+        gem: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9l4-6Z"/><path d="M2 9h20"/></svg>`,
+        shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.8 8 11 4.6-1.2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>`,
+    };
+
+    return icons[icon] || icons.code;
+}
 ---
 
 <section class="skills" id="skills">
@@ -102,19 +53,35 @@ const skillCategories = [
                         style={`transition-delay: ${i * 0.1}s`}
                     >
                         <div class="category-header">
-                            <span class="category-icon">{category.icon}</span>
-                            <h3 class="category-title">{category.title}</h3>
+                            <span
+                                class="category-icon"
+                                aria-hidden="true"
+                                set:html={getSkillIcon(skillCategoryIcons[i] || "code")}
+                            ></span>
+                            <h3
+                                class="category-title"
+                                data-i18n={`skills.categories.${i}.title`}
+                            >
+                                {category.title}
+                            </h3>
                         </div>
 
                         <div class="skill-list">
-                            {category.skills.map((skill) => (
+                            {category.skills.map((skill, skillIndex) => (
                                 <div class="skill-item">
                                     <div class="skill-info">
-                                        <span class="skill-name">
+                                        <span
+                                            class="skill-name"
+                                            data-i18n={`skills.categories.${i}.skills.${skillIndex}.name`}
+                                        >
                                             {skill.name}
                                         </span>
                                         <span class="skill-years">
-                                            {skill.years} yrs
+                                            {skill.years}
+                                            {" "}
+                                            <span data-i18n="skills.years_suffix">
+                                                {t.years_suffix}
+                                            </span>
                                         </span>
                                     </div>
                                     <div class="skill-bar">
@@ -144,7 +111,7 @@ const skillCategories = [
 
     .skills-header {
         text-align: center;
-        margin-bottom: 4rem;
+        margin-bottom: 2.8rem;
     }
 
     .bento-grid {
@@ -155,7 +122,7 @@ const skillCategories = [
     }
 
     .bento-item {
-        padding: 2rem;
+        padding: 1.35rem;
         display: flex;
         flex-direction: column;
         transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -179,15 +146,27 @@ const skillCategories = [
     .category-header {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        padding-bottom: 1.25rem;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.9rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .category-icon {
-        font-size: 1.8rem;
-        filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--accent-blue);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .category-icon svg {
+        width: 19px;
+        height: 19px;
     }
 
     .category-title {
@@ -199,7 +178,7 @@ const skillCategories = [
     .skill-list {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1rem;
         flex: 1;
         justify-content: center;
     }
@@ -268,6 +247,10 @@ const skillCategories = [
     }
 
     @media (max-width: 768px) {
+        .bento-item {
+            padding: 1.15rem;
+        }
+
         .bento-grid {
             grid-template-columns: 1fr;
             grid-auto-rows: auto;
@@ -279,27 +262,45 @@ const skillCategories = [
 </style>
 
 <script>
-    const skillObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const bars =
-                        entry.target.querySelectorAll(".skill-progress");
+    function teardownSkillsAnimation() {
+        const runtime = ((window as any).__cvRuntime ||= {});
+        if (runtime.skillsObserver) {
+            runtime.skillsObserver.disconnect();
+            runtime.skillsObserver = null;
+        }
+    }
+
+    function initSkillsAnimation() {
+        teardownSkillsAnimation();
+
+        const runtime = ((window as any).__cvRuntime ||= {});
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+
+                    const bars = entry.target.querySelectorAll(".skill-progress");
                     bars.forEach((bar, i) => {
                         const htmlBar = bar as HTMLElement;
                         setTimeout(() => {
-                            htmlBar.style.width =
-                                htmlBar.getAttribute("data-progress") + "%";
+                            htmlBar.style.width = `${htmlBar.getAttribute("data-progress") || 0}%`;
                         }, i * 100);
                     });
-                    skillObserver.unobserve(entry.target);
-                }
-            });
-        },
-        { threshold: 0.2 },
-    );
 
-    document.querySelectorAll(".bento-item").forEach((item) => {
-        skillObserver.observe(item);
-    });
+                    observer.unobserve(entry.target);
+                });
+            },
+            { threshold: 0.2 },
+        );
+
+        runtime.skillsObserver = observer;
+
+        document.querySelectorAll(".bento-item").forEach((item) => {
+            observer.observe(item);
+        });
+    }
+
+    initSkillsAnimation();
+    document.addEventListener("astro:after-swap", initSkillsAnimation);
+    document.addEventListener("astro:before-swap", teardownSkillsAnimation);
 </script>

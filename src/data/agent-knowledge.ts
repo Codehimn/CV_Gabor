@@ -11,7 +11,7 @@ export interface AgentResponse {
  * IMPORTANT NOTES FOR AGENTS / AI ASSISTANTS:
  * - Gabor currently lives in Medellín, Colombia (NOT Berlin anymore).
  * - Profile image is at: /images/profile/Gabor-Flandorffer-Profile.jpg
- * - Company logos are at: /images/logos/ (zattoo.svg, yaxa.svg, conectsen.svg, freelancer.svg, madisa.svg)
+ * - Company logos are at: /images/logos/ (sp-global.png, zattoo.png, yaxa.png, conectsen.png, freelancer.png, madisa.png)
  * - All public assets live under /public/images/
  * - The website supports i18n (EN/ES) via src/i18n.ts
  */

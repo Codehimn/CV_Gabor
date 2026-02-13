@@ -1,21 +1,19 @@
+import { motion } from "framer-motion";
 import {
     Award,
     BadgeCheck,
-    Briefcase,
-    Building2,
     CalendarRange,
-    Code2,
     Cpu,
-    Globe,
-    Layers,
     MapPin,
     Rocket,
-    Server,
+    Shield,
     Sparkles,
     Target,
-    Terminal,
-    type LucideIcon
+    Users,
+    Wifi
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { translations } from "../i18n";
 
 interface ExperienceItem {
     period: string;
@@ -32,18 +30,6 @@ interface Props {
     lang?: "en" | "es";
 }
 
-const ICON_MAP: Record<string, LucideIcon> = {
-    Briefcase,
-    Code2,
-    Cpu,
-    Terminal,
-    Globe,
-    Rocket,
-    Layers,
-    Building2,
-    Server
-};
-
 const UI_TEXT = {
     en: {
         periodLabel: "Timeline",
@@ -59,21 +45,35 @@ const UI_TEXT = {
             companies: "Organizations served",
             quality: "Quality-first delivery"
         },
+        sinceYoung: "Drawn to programming since age 16",
+        milestones: {
+            remote: "Remote-first",
+            leadership: "Leadership",
+            iot: "IoT Focus",
+            scale: "Scale Systems"
+        },
         qualityValue: "CI/CD + testing discipline"
     },
     es: {
-        periodLabel: "Cronologia",
+        periodLabel: "Cronología",
         impactLabel: "Impacto en Negocio",
-        techLabel: "Stack Tecnologico",
+        techLabel: "Stack Tecnológico",
         covidBadge: "Era COVID",
-        ctaTitle: "Disponible para productos y automatizacion de alto impacto",
+        ctaTitle: "Disponible para productos y automatización de alto impacto",
         ctaSubtitle:
-            "Desde arquitectura hasta ejecucion, construyo sistemas que reducen riesgo y escalan con confianza.",
+            "Desde arquitectura hasta ejecución, construyo sistemas que reducen riesgo y escalan con confianza.",
         metrics: {
-            years: "Anos construyendo software",
+            years: "Años construyendo software",
             roles: "Roles especializados",
             companies: "Organizaciones atendidas",
             quality: "Entrega centrada en calidad"
+        },
+        sinceYoung: "Atraido por la programacion desde los 16 años",
+        milestones: {
+            remote: "Remoto-first",
+            leadership: "Liderazgo",
+            iot: "Enfoque IoT",
+            scale: "Sistemas a escala"
         },
         qualityValue: "CI/CD + disciplina de testing"
     }
@@ -89,12 +89,12 @@ const IMPACT_COPY = {
         madisa: "Strengthened technical operations and customer-side system reliability."
     },
     es: {
-        spglobal: "Construyendo software robusto para flujos de analitica financiera con altos estandares de confiabilidad.",
-        zattoo: "Construi flujos internos de API mocking y aumente la confianza en releases.",
-        conectsen: "Entregue monitoreo IoT en tiempo real con captura multi-dispositivo.",
-        yaxa: "Escale automatizaciones para logistica, mensajeria y pricing operativo.",
-        freelancer: "Lance sistemas de automatizacion personalizados integrando APIs de terceros.",
-        madisa: "Fortaleci operaciones tecnicas y la confiabilidad de sistemas del cliente."
+        spglobal: "Construyendo software robusto para flujos de analítica financiera con altos estándares de confiabilidad.",
+        zattoo: "Construí flujos internos de API mocking y aumenté la confianza en releases.",
+        conectsen: "Entregué monitoreo IoT en tiempo real con captura multi-dispositivo.",
+        yaxa: "Escalé automatizaciones para logística, mensajería y pricing operativo.",
+        freelancer: "Lancé sistemas de automatización personalizados integrando APIs de terceros.",
+        madisa: "Fortalecí operaciones técnicas y la confiabilidad de sistemas del cliente."
     }
 } as const;
 
@@ -154,23 +154,101 @@ function isCovidEra(period: string): boolean {
     return bounds.start <= 2021 && bounds.end >= 2020;
 }
 
-function renderIcon(iconName: string) {
-    const IconComponent = ICON_MAP[iconName] || Briefcase;
-    return <IconComponent size={22} strokeWidth={2.1} />;
+function getCompanyLogo(company: string): { src: string; alt: string } | null {
+    const normalized = company.toLowerCase();
+
+    if (normalized.includes("zattoo")) {
+        return { src: "/images/logos/zattoo.png", alt: "Zattoo logo" };
+    }
+    if (normalized.includes("s&p") || normalized.includes("sp global") || normalized.includes("realtime analytics")) {
+        return { src: "/images/logos/sp-global.png", alt: "S&P Global logo" };
+    }
+    if (normalized.includes("conectsen")) {
+        return { src: "/images/logos/conectsen.png", alt: "Conectsen logo" };
+    }
+    if (normalized.includes("yaxa")) {
+        return { src: "/images/logos/yaxa.png", alt: "Yaxa logo" };
+    }
+    if (normalized.includes("freelancer")) {
+        return { src: "/images/logos/freelancer.png", alt: "Freelancer logo" };
+    }
+    if (normalized.includes("madisa")) {
+        return { src: "/images/logos/madisa.png", alt: "MADISA logo" };
+    }
+
+    return null;
+}
+
+function getCompanyInitials(company: string): string {
+    const parts = company
+        .replace(/[^a-zA-Z0-9\s]/g, "")
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2);
+
+    if (parts.length === 0) {
+        return "CO";
+    }
+
+    return parts.map((part) => part[0].toUpperCase()).join("");
+}
+
+type MilestoneKey = "remote" | "leadership" | "iot" | "scale";
+
+function getMilestones(item: ExperienceItem): MilestoneKey[] {
+    const company = item.company.toLowerCase();
+    const role = item.role.toLowerCase();
+    const tags = (item.tags || []).join(" ").toLowerCase();
+    const milestones: MilestoneKey[] = [];
+
+    if (company.includes("freelancer") || company.includes("zattoo") || role.includes("senior")) {
+        milestones.push("remote");
+    }
+
+    if (role.includes("senior") || role.includes("lead") || role.includes("architect")) {
+        milestones.push("leadership");
+    }
+
+    if (company.includes("conectsen") || tags.includes("iot") || tags.includes("obd2")) {
+        milestones.push("iot");
+    }
+
+    if (tags.includes("microservices") || tags.includes("real-time") || tags.includes("automation")) {
+        milestones.push("scale");
+    }
+
+    return milestones.slice(0, 2);
 }
 
 export default function ExperienceScroll({ items, lang = "en" }: Props) {
-    const locale: "en" | "es" = lang === "es" ? "es" : "en";
+    const [currentLang, setCurrentLang] = useState<"en" | "es">(lang === "es" ? "es" : "en");
+
+    useEffect(() => {
+        const handleLangChange = () => {
+            const storedLang = localStorage.getItem("preferred-lang") as "en" | "es";
+            if (storedLang) {
+                setCurrentLang(storedLang);
+            }
+        };
+
+        handleLangChange();
+        window.addEventListener("langChanged", handleLangChange);
+        return () => window.removeEventListener("langChanged", handleLangChange);
+    }, []);
+
+    const locale: "en" | "es" = currentLang;
     const text = UI_TEXT[locale];
-    const currentYear = new Date().getFullYear();
-    const years = Math.max(11, currentYear - 2010);
-    const companies = new Set(items.map((item) => item.company)).size;
+
+    // dynamically switch items based on current language
+    const currentItems = (translations[locale].experience.items as unknown as ExperienceItem[]);
+
+    const companies = new Set(currentItems.map((item) => item.company)).size;
 
     const metrics = [
-        { label: text.metrics.years, value: `${years}+` },
-        { label: text.metrics.roles, value: `${items.length}` },
-        { label: text.metrics.companies, value: `${companies}` },
-        { label: text.metrics.quality, value: text.qualityValue }
+        { label: text.metrics.years, value: text.sinceYoung, icon: <CalendarRange size={16} /> },
+        { label: text.metrics.roles, value: `${currentItems.length}`, icon: <Award size={16} /> },
+        { label: text.metrics.companies, value: `${companies}`, icon: <Target size={16} /> },
+        { label: text.metrics.quality, value: text.qualityValue, icon: <BadgeCheck size={16} /> }
     ];
 
     return (
@@ -181,30 +259,41 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
 
             <div className="xp-metrics" role="list" aria-label="Experience Metrics">
                 {metrics.map((metric, index) => (
-                    <article
+                    <motion.article
                         key={metric.label}
                         role="listitem"
-                        className="xp-metric reveal"
-                        style={{ transitionDelay: `${index * 0.08}s` }}
+                        className="xp-metric"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
+                        <span className="xp-metric-icon" aria-hidden="true">
+                            {metric.icon}
+                        </span>
                         <p className="xp-metric-value">{metric.value}</p>
                         <p className="xp-metric-label">{metric.label}</p>
-                    </article>
+                    </motion.article>
                 ))}
             </div>
 
             <div className="xp-timeline" aria-label="Professional timeline">
-                {items.map((item, index) => {
+                {currentItems.map((item, index) => {
                     const year = getStartYear(item.period);
                     const isLeft = index % 2 === 0;
                     const impactText = getImpactText(item, locale);
                     const showCovidBadge = isCovidEra(item.period);
+                    const companyLogo = getCompanyLogo(item.company);
+                    const milestones = getMilestones(item);
 
                     return (
-                        <article
+                        <motion.article
                             key={`${item.company}-${item.role}-${item.period}`}
-                            className={`xp-row ${isLeft ? "xp-row-left reveal-left" : "xp-row-right reveal-right"}`}
-                            style={{ transitionDelay: `${index * 0.06}s` }}
+                            className={`xp-row ${isLeft ? "xp-row-left" : "xp-row-right"}`}
+                            initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.6, delay: index * 0.1 }}
                         >
                             <div className="xp-column xp-column-main">
                                 <div className="xp-card">
@@ -212,23 +301,48 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
 
                                     <div className="xp-card-head">
                                         <div className="xp-icon-wrap">
-                                            {renderIcon(item.icon || "Briefcase")}
+                                            {companyLogo ? (
+                                                <img
+                                                    className="xp-company-logo"
+                                                    src={companyLogo.src}
+                                                    alt={companyLogo.alt}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                />
+                                            ) : (
+                                                <span className="xp-logo-fallback" aria-hidden="true">
+                                                    {getCompanyInitials(item.company)}
+                                                </span>
+                                            )}
                                         </div>
 
-                                        <div className="xp-head-meta">
-                                            <p className="xp-year">{year}</p>
-                                            <div className="xp-pill">
-                                                <CalendarRange size={14} />
-                                                <span>{item.period}</span>
+                                         <div className="xp-head-meta">
+                                             <p className="xp-year">{year}</p>
+                                             <div className="xp-pill">
+                                                 <CalendarRange size={14} />
+                                                 <span>{item.period}</span>
                                                 {showCovidBadge && (
                                                     <span className="xp-event-badge" title={text.covidBadge}>
-                                                        <span aria-hidden="true">😷</span>
+                                                        <Shield size={12} aria-hidden="true" />
                                                         <span>{text.covidBadge}</span>
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
+                                                     </span>
+                                                 )}
+                                             </div>
+                                             {milestones.length > 0 && (
+                                                 <div className="xp-milestones" aria-label="Career milestones">
+                                                     {milestones.map((milestone) => (
+                                                         <span key={`${item.company}-${item.period}-${milestone}`} className="xp-milestone-tag">
+                                                             {milestone === "remote" && <Wifi size={11} aria-hidden="true" />}
+                                                             {milestone === "leadership" && <Users size={11} aria-hidden="true" />}
+                                                             {milestone === "iot" && <Cpu size={11} aria-hidden="true" />}
+                                                             {milestone === "scale" && <Rocket size={11} aria-hidden="true" />}
+                                                             <span>{text.milestones[milestone]}</span>
+                                                         </span>
+                                                     ))}
+                                                 </div>
+                                             )}
+                                         </div>
+                                     </div>
 
                                     <div className="xp-card-body">
                                         <h3 className="xp-company">{item.company}</h3>
@@ -279,12 +393,18 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                                     <Sparkles size={14} />
                                 </div>
                             </div>
-                        </article>
+                        </motion.article>
                     );
                 })}
             </div>
 
-            <div className="xp-cta reveal">
+            <motion.div
+                className="xp-cta"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+            >
                 <div className="xp-cta-icon" aria-hidden="true">
                     <Rocket size={20} />
                 </div>
@@ -292,7 +412,7 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     <p className="xp-cta-title">{text.ctaTitle}</p>
                     <p className="xp-cta-subtitle">{text.ctaSubtitle}</p>
                 </div>
-            </div>
+            </motion.div>
 
             <style>{`
                 .xp-shell {
@@ -351,7 +471,7 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     z-index: 2;
                     display: grid;
                     gap: 0.85rem;
-                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
                     margin-bottom: clamp(1.2rem, 3vw, 2rem);
                 }
 
@@ -362,6 +482,19 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     border: 1px solid rgba(148, 163, 184, 0.15);
                     background: linear-gradient(150deg, rgba(15, 23, 42, 0.62), rgba(12, 22, 40, 0.3));
                     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+                }
+
+                .xp-metric-icon {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 9px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(56, 189, 248, 0.12);
+                    border: 1px solid rgba(56, 189, 248, 0.2);
+                    color: #7dd3fc;
+                    margin-bottom: 0.4rem;
                 }
 
                 .xp-metric-value {
@@ -437,7 +570,7 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                 }
 
                 .xp-card:hover {
-                    transform: translateY(-6px);
+                    transform: translateY(-4px);
                     border-color: rgba(56, 189, 248, 0.4);
                     box-shadow: 0 28px 60px rgba(1, 8, 20, 0.58), 0 0 0 1px rgba(56, 189, 248, 0.12);
                 }
@@ -472,16 +605,31 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                 }
 
                 .xp-icon-wrap {
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 14px;
+                    width: 78px;
+                    height: 78px;
+                    border-radius: 18px;
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
+                    padding: 0.42rem;
                     background: linear-gradient(145deg, rgba(56, 189, 248, 0.22), rgba(45, 212, 191, 0.12));
                     border: 1px solid rgba(56, 189, 248, 0.3);
-                    color: #ccfbf1;
                     flex-shrink: 0;
+                }
+
+                .xp-company-logo {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    object-fit: contain;
+                }
+
+                .xp-logo-fallback {
+                    font-size: 0.7rem;
+                    font-weight: 700;
+                    color: #ccfbf1;
+                    letter-spacing: 0.03em;
+                    line-height: 1;
                 }
 
                 .xp-head-meta {
@@ -523,6 +671,33 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     line-height: 1;
                     letter-spacing: 0.02em;
                     font-weight: 700;
+                    white-space: nowrap;
+                }
+
+                .xp-event-badge svg {
+                    flex-shrink: 0;
+                }
+
+                .xp-milestones {
+                    margin-top: 0.45rem;
+                    display: flex;
+                    justify-content: flex-end;
+                    flex-wrap: wrap;
+                    gap: 0.32rem;
+                }
+
+                .xp-milestone-tag {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.24rem;
+                    padding: 0.16rem 0.42rem;
+                    border-radius: 999px;
+                    border: 1px solid rgba(125, 211, 252, 0.24);
+                    background: rgba(2, 132, 199, 0.13);
+                    color: #bae6fd;
+                    font-size: 0.62rem;
+                    font-weight: 650;
+                    line-height: 1;
                     white-space: nowrap;
                 }
 
@@ -830,8 +1005,9 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     }
 
                     .xp-icon-wrap {
-                        width: 40px;
-                        height: 40px;
+                        width: 62px;
+                        height: 62px;
+                        border-radius: 16px;
                     }
 
                     .xp-line-label {
@@ -847,6 +1023,74 @@ export default function ExperienceScroll({ items, lang = "en" }: Props) {
                     .xp-cta {
                         grid-template-columns: 1fr;
                         text-align: left;
+                    }
+                }
+
+                @media (max-width: 430px) {
+                    .xp-shell {
+                        padding: 0.62rem;
+                        border-radius: 20px;
+                    }
+
+                    .xp-row,
+                    .xp-row-right {
+                        grid-template-columns: 38px minmax(0, 1fr);
+                        gap: 0.42rem;
+                    }
+
+                    .xp-timeline::before {
+                        left: 18.5px;
+                    }
+
+                    .xp-card-head {
+                        padding: 0.72rem 0.72rem 0;
+                        gap: 0.6rem;
+                    }
+
+                    .xp-card-body {
+                        padding: 0.62rem 0.72rem 0.72rem;
+                    }
+
+                    .xp-icon-wrap {
+                        width: 54px;
+                        height: 54px;
+                        border-radius: 12px;
+                    }
+
+                    .xp-year {
+                        margin-bottom: 0.28rem;
+                        font-size: 1rem;
+                    }
+
+                    .xp-pill {
+                        font-size: 0.6rem;
+                        padding: 0.24rem 0.45rem;
+                    }
+
+                    .xp-milestones {
+                        margin-top: 0.32rem;
+                        gap: 0.22rem;
+                    }
+
+                    .xp-milestone-tag {
+                        font-size: 0.58rem;
+                        padding: 0.12rem 0.32rem;
+                    }
+
+                    .xp-role {
+                        margin: 0.26rem 0 0.6rem;
+                        font-size: 0.88rem;
+                    }
+
+                    .xp-description {
+                        font-size: 0.84rem;
+                        line-height: 1.5;
+                    }
+
+                    .xp-proof-block,
+                    .xp-tags-wrap {
+                        margin-top: 0.7rem;
+                        padding-top: 0.58rem;
                     }
                 }
 
