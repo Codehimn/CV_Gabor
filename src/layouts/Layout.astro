@@ -405,6 +405,23 @@ const personSchema = {
           }
         });
 
+        document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+          const key = el.getAttribute("data-i18n-aria");
+          if (!key) return;
+
+          const translation = resolveTranslation(key);
+          if (translation) {
+            const currentYear = new Date().getFullYear();
+            const expYears = currentYear - 2014;
+
+            let finalLabel = translation
+              .replace("{year}", currentYear.toString())
+              .replace("{years}", expYears.toString());
+
+            el.setAttribute("aria-label", finalLabel);
+          }
+        });
+
         document.querySelectorAll("[data-i18n-tags]").forEach((el) => {
           const key = el.getAttribute("data-i18n-tags");
           if (!key) return;
@@ -456,10 +473,9 @@ const personSchema = {
 
         // Update active state of language buttons
         document.querySelectorAll(".lang-btn").forEach((btn) => {
-          btn.classList.toggle(
-            "active",
-            btn.getAttribute("data-lang") === lang,
-          );
+          const isActive = btn.getAttribute("data-lang") === lang;
+          btn.classList.toggle("active", isActive);
+          btn.setAttribute("aria-pressed", isActive ? "true" : "false");
         });
 
         localStorage.setItem("preferred-lang", lang);
