@@ -348,7 +348,9 @@ const personSchema = {
             const target = e.target as HTMLElement;
             // Cleanup magnetic state and cache on exit
             const magnetic = target?.closest?.(".navbar a, .magnetic") as HTMLElement | null;
-            if (magnetic && (!e.relatedTarget || !(e.relatedTarget as HTMLElement).closest?.(".navbar a, .magnetic"))) {
+            // ⚡ Bolt: Fix cleanup logic. Ensure we reset the transform ONLY when leaving
+            // the actual magnetic element, not just when moving between its children.
+            if (magnetic && (!e.relatedTarget || (e.relatedTarget as HTMLElement).closest?.(".navbar a, .magnetic") !== magnetic)) {
               magnetic.style.transform = "translate(0,0)";
               magnetic.style.transition = "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
               rectCache.delete(magnetic);
