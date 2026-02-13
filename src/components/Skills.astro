@@ -4,6 +4,30 @@ import { translations } from "../i18n";
 const { lang = "en" } = Astro.props;
 const t = translations[lang as "en" | "es"].skills;
 const skillCategories = t.categories;
+
+const skillCategoryIcons = [
+    "code",
+    "bot",
+    "layers",
+    "database",
+    "cloud",
+    "gem",
+    "shield",
+];
+
+function getSkillIcon(icon: string) {
+    const icons: Record<string, string> = {
+        code: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>`,
+        bot: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/><path d="M8 13h.01"/><path d="M16 13h.01"/><path d="M12 13h.01"/></svg>`,
+        layers: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg>`,
+        database: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>`,
+        cloud: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 20a4.5 4.5 0 1 0-1-8.88A6 6 0 1 0 6.2 18H17.5Z"/></svg>`,
+        gem: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9l4-6Z"/><path d="M2 9h20"/></svg>`,
+        shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.8 8 11 4.6-1.2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>`,
+    };
+
+    return icons[icon] || icons.code;
+}
 ---
 
 <section class="skills" id="skills">
@@ -29,7 +53,11 @@ const skillCategories = t.categories;
                         style={`transition-delay: ${i * 0.1}s`}
                     >
                         <div class="category-header">
-                            <span class="category-icon">{category.icon}</span>
+                            <span
+                                class="category-icon"
+                                aria-hidden="true"
+                                set:html={getSkillIcon(skillCategoryIcons[i] || "code")}
+                            ></span>
                             <h3
                                 class="category-title"
                                 data-i18n={`skills.categories.${i}.title`}
@@ -83,7 +111,7 @@ const skillCategories = t.categories;
 
     .skills-header {
         text-align: center;
-        margin-bottom: 4rem;
+        margin-bottom: 2.8rem;
     }
 
     .bento-grid {
@@ -94,7 +122,7 @@ const skillCategories = t.categories;
     }
 
     .bento-item {
-        padding: 2rem;
+        padding: 1.35rem;
         display: flex;
         flex-direction: column;
         transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -118,15 +146,27 @@ const skillCategories = t.categories;
     .category-header {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        padding-bottom: 1.25rem;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.9rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .category-icon {
-        font-size: 1.8rem;
-        filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--accent-blue);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .category-icon svg {
+        width: 19px;
+        height: 19px;
     }
 
     .category-title {
@@ -138,7 +178,7 @@ const skillCategories = t.categories;
     .skill-list {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1rem;
         flex: 1;
         justify-content: center;
     }
@@ -208,7 +248,7 @@ const skillCategories = t.categories;
 
     @media (max-width: 768px) {
         .bento-item {
-            padding: 1.25rem;
+            padding: 1.15rem;
         }
 
         .bento-grid {

@@ -10,10 +10,6 @@
 **Learning:** Querying `.parallax-layer` with `querySelectorAll` inside every scroll animation frame in `Layout.astro` creates avoidable main-thread work.
 **Action:** Cache frequently accessed node lists during setup (and refresh on route swaps), then reuse them inside the scroll loop.
 
-## 2025-05-14 - [Layout Thrashing in Mouse Events]
-**Learning:** Calling `getBoundingClientRect()` inside a `mousemove` handler (like in magnetic effects) triggers forced synchronous layouts (layout thrashing), which can cause stuttering.
-**Action:** Cache the element's bounding rectangle on `mouseenter` and only update it if necessary (e.g., on scroll or resize).
-
-## 2025-05-14 - [Event Listener Overhead]
-**Learning:** Binding individual `mouseenter`/`mouseleave` listeners to every interactive element (links, buttons) for custom cursor effects increases memory usage and requires manual cleanup/re-binding on page transitions.
-**Action:** Use event delegation with a single listener on `document` and `event.target.closest()` to handle hover states efficiently across the entire application.
+## 2025-02-13 - [Layout Thrashing in High-Frequency Events]
+**Learning:** Calling `getBoundingClientRect()` inside `mousemove` or `scroll` listeners causes "Layout Thrashing" as the browser is forced to recalculate positions on every frame.
+**Action:** Use a `WeakMap` to cache element bounds on `mouseenter` or `mouseover` and reuse them during `mousemove`. Additionally, use event delegation for hover states to reduce listener count and memory overhead.

@@ -18,6 +18,45 @@ const {
   showCommandMenu = false,
   showToaster = false,
 } = Astro.props;
+
+const siteUrl = "https://gabor.flandorffer.com";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageUrl = new URL("/images/profile/Gabor-Flandorffer-Profile.jpg", siteUrl).toString();
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Gabor Flandorffer",
+  url: siteUrl,
+  image: ogImageUrl,
+  jobTitle: "Senior Full-Stack Developer & Automation Specialist",
+  email: "mailto:gabor285@gmail.com",
+  telephone: "+49 1789752993",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Medellín",
+    addressCountry: "CO"
+  },
+  worksFor: {
+    "@type": "Organization",
+    name: "Freelance"
+  },
+  knowsAbout: [
+    "Python",
+    "Django",
+    "Automation",
+    "TypeScript",
+    "CI/CD",
+    "Backend Architecture"
+  ],
+  sameAs: [
+    "https://github.com/codehimn",
+    "https://linkedin.com/in/gabor-flandorffer/",
+    "https://www.freelancer.com/u/Codehimn"
+  ],
+  description:
+    "Senior Full-Stack Developer based in Medellín (UTC-5), available for global remote collaboration with adaptable working hours."
+};
 ---
 
 <!doctype html>
@@ -27,17 +66,24 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- SEO / OG Tags -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://gabor.dev" />
-    <meta property="og:image" content="/images/profile/Gabor-Flandorffer-Profile.jpg" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content="Gabor Flandorffer" />
+    <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/images/profile/Gabor-Flandorffer-Profile.jpg" />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:site" content="@codehimn" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="author" content="Gabor Flandorffer" />
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)}></script>
 
     <!-- Performance: Preconnect to font providers -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -222,12 +268,42 @@ const {
         runtime.mouseController = new AbortController();
         const mouseSignal = runtime.mouseController.signal;
 
+        // Optimization: Use a WeakMap to cache element bounds on enter.
+        // This prevents layout thrashing during mousemove by avoiding
+        // repeated getBoundingClientRect() calls.
+        const rectCache = new WeakMap<Element, DOMRect>();
+
+        let lastTarget: EventTarget | null = null;
+        let currentMagnetic: HTMLElement | null = null;
+
         // Single listener for both cursor + spotlight
         window.addEventListener(
           "mousemove",
           (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
+
+            // ⚡ Bolt: Magnetic Hover Optimization.
+            // Using delegation to identify magnetic targets and cached rects
+            // to eliminate layout thrashing during continuous mouse movement.
+            // Optimization: Only run closest() if the target actually changed.
+            if (e.target !== lastTarget) {
+              lastTarget = e.target;
+              currentMagnetic = (e.target as HTMLElement)?.closest(".navbar a, .magnetic") as HTMLElement | null;
+            }
+
+            if (currentMagnetic) {
+              let rect = rectCache.get(currentMagnetic);
+              if (!rect) {
+                rect = currentMagnetic.getBoundingClientRect();
+                rectCache.set(currentMagnetic, rect);
+              }
+              const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+              const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+              currentMagnetic.style.transform = `translate(${x}px, ${y}px)`;
+              currentMagnetic.style.transition = "none";
+            }
+
             if (!rafScheduled) {
               rafScheduled = true;
               requestAnimationFrame(updatePositions);
@@ -256,57 +332,31 @@ const {
             { signal: mouseSignal },
           );
 
-          // ⚡ Perf: Use event delegation for hover states instead of binding
-          // listeners to every interactive element. This reduces memory and
-          // ensures it works for dynamically added elements.
-          document.addEventListener(
-            "mouseover",
-            (e) => {
-              const target = (e.target as HTMLElement).closest(
-                "a, button, .interactive, .magnetic",
-              );
-              cursor.classList.toggle("hover", !!target);
-            },
-            { signal: mouseSignal },
-          );
+          // ⚡ Bolt: Event Delegation Optimization.
+          // Using a single mouseover listener on the document to handle cursor hover
+          // states for all interactive elements. Correctly handles enter/leave.
+          document.addEventListener("mouseover", (e) => {
+            const target = e.target as HTMLElement;
+            if (target?.closest?.("a, button, .interactive, .magnetic")) {
+              cursor.classList.add("hover");
+            } else {
+              cursor.classList.remove("hover");
+            }
+          }, { signal: mouseSignal });
+
+          document.addEventListener("mouseout", (e) => {
+            const target = e.target as HTMLElement;
+            // Cleanup magnetic state and cache on exit
+            const magnetic = target?.closest?.(".navbar a, .magnetic") as HTMLElement | null;
+            // ⚡ Bolt: Fix cleanup logic. Ensure we reset the transform ONLY when leaving
+            // the actual magnetic element, not just when moving between its children.
+            if (magnetic && (!e.relatedTarget || (e.relatedTarget as HTMLElement).closest?.(".navbar a, .magnetic") !== magnetic)) {
+              magnetic.style.transform = "translate(0,0)";
+              magnetic.style.transition = "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
+              rectCache.delete(magnetic);
+            }
+          }, { signal: mouseSignal });
         }
-
-        // ⚡ Perf: Cache getBoundingClientRect on mouseenter to avoid layout thrashing
-        // during mousemove. This ensures high-performance magnetic effects.
-        document.querySelectorAll(".navbar a, .magnetic").forEach((el: any) => {
-          let rect: DOMRect | null = null;
-
-          el.addEventListener(
-            "mouseenter",
-            () => {
-              rect = el.getBoundingClientRect();
-            },
-            { signal: mouseSignal },
-          );
-
-          el.addEventListener(
-            "mousemove",
-            (e: MouseEvent) => {
-              if (!rect) rect = el.getBoundingClientRect();
-              const x = e.clientX - rect.left - rect.width / 2;
-              const y = e.clientY - rect.top - rect.height / 2;
-              el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-              el.style.transition = "none";
-            },
-            { signal: mouseSignal },
-          );
-
-          el.addEventListener(
-            "mouseleave",
-            () => {
-              rect = null;
-              el.style.transform = `translate(0px, 0px)`;
-              el.style.transition =
-                "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
-            },
-            { signal: mouseSignal },
-          );
-        });
 
         runtime.mouseTrackingInitialized = true;
       }
@@ -334,9 +384,9 @@ const {
         runtime.currentLang = lang;
         document.documentElement.lang = lang;
 
-        const resolveTranslation = (key: string) => {
+        const resolveTranslationForLang = (key: string, targetLang: "en" | "es") => {
           const keys = key.split(".");
-          let translation: any = translations[lang];
+          let translation: any = translations[targetLang];
 
           for (const k of keys) {
             translation = translation?.[k];
@@ -347,6 +397,8 @@ const {
 
           return translation;
         };
+
+        const resolveTranslation = (key: string) => resolveTranslationForLang(key, lang);
 
         const elements = document.querySelectorAll("[data-i18n]");
         elements.forEach((el) => {
@@ -372,6 +424,23 @@ const {
           }
         });
 
+        document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+          const key = el.getAttribute("data-i18n-aria");
+          if (!key) return;
+
+          const translation = resolveTranslation(key);
+          if (translation) {
+            const currentYear = new Date().getFullYear();
+            const expYears = currentYear - 2014;
+
+            let finalLabel = translation
+              .replace("{year}", currentYear.toString())
+              .replace("{years}", expYears.toString());
+
+            el.setAttribute("aria-label", finalLabel);
+          }
+        });
+
         document.querySelectorAll("[data-i18n-tags]").forEach((el) => {
           const key = el.getAttribute("data-i18n-tags");
           if (!key) return;
@@ -394,7 +463,8 @@ const {
           const key = el.getAttribute("data-i18n-href");
           if (!key) return;
 
-          const hrefValue = resolveTranslation(key);
+          const hrefValue =
+            resolveTranslation(key) || resolveTranslationForLang(key, "en");
           if (typeof hrefValue !== "string") return;
 
           if (hrefValue.trim()) {
@@ -422,10 +492,9 @@ const {
 
         // Update active state of language buttons
         document.querySelectorAll(".lang-btn").forEach((btn) => {
-          btn.classList.toggle(
-            "active",
-            btn.getAttribute("data-lang") === lang,
-          );
+          const isActive = btn.getAttribute("data-lang") === lang;
+          btn.classList.toggle("active", isActive);
+          btn.setAttribute("aria-pressed", isActive ? "true" : "false");
         });
 
         localStorage.setItem("preferred-lang", lang);

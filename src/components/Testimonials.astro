@@ -22,7 +22,14 @@ const t = translations[lang as "en" | "es"].testimonials;
         <div class="testimonials-grid stagger-children">
             {
                 t.items.map((item, index) => (
-                    <div class="testimonial-card glass-card reveal-up">
+                    <a
+                        href={
+                            item.link || "https://www.freelancer.com/u/Codehimn"
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="testimonial-card glass-card reveal-up interactive"
+                    >
                         <div class="testimonial-header-row">
                             <div class="quote-icon">
                                 <svg
@@ -66,10 +73,44 @@ const t = translations[lang as "en" | "es"].testimonials;
                                     {item.role}
                                 </p>
                             </div>
+                            <span class="click-cue" data-i18n="testimonials.open_review"
+                                >Open review</span
+                            >
+                            <div class="external-link-icon">
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <>
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 ))
             }
+        </div>
+
+        <div class="testimonials-cta reveal">
+            <a
+                href={t.profile_url || "https://www.freelancer.com/u/Codehimn"}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline magnetic"
+            >
+                <span data-i18n="testimonials.view_profile"
+                    >{t.view_profile || "View Profile on Freelancer.com"}</span
+                >
+            </a>
         </div>
     </div>
 </section>
@@ -82,32 +123,64 @@ const t = translations[lang as "en" | "es"].testimonials;
 
     .testimonials-header {
         text-align: center;
-        margin-bottom: 4rem;
+        margin-bottom: 2.2rem;
     }
 
     .testimonials-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 1100px) {
+        .testimonials-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
     }
 
     .testimonial-card {
-        padding: 2.5rem;
+        padding: 1.35rem;
         display: flex;
         flex-direction: column;
-        transition: transform 0.4s var(--ease-out-expo);
+        position: relative;
+        overflow: hidden;
+        transition:
+            transform 0.4s var(--ease-out-expo),
+            border-color 0.3s ease;
+        text-decoration: none; /* Reset link style */
+        cursor: pointer;
+    }
+
+    .testimonial-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+            380px circle at var(--mx, 50%) var(--my, 50%),
+            rgba(56, 189, 248, 0.14),
+            transparent 40%
+        );
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        pointer-events: none;
     }
 
     .testimonial-header-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0.8rem;
     }
 
     .testimonial-card:hover {
-        transform: translateY(-10px);
-        border-color: rgba(56, 189, 248, 0.3);
+        transform: translateY(-7px);
+        border-color: rgba(56, 189, 248, 0.4);
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .testimonial-card:hover::before {
+        opacity: 1;
     }
 
     .quote-icon {
@@ -121,10 +194,10 @@ const t = translations[lang as "en" | "es"].testimonials;
     }
 
     .testimonial-quote {
-        font-size: 1.1rem;
-        line-height: 1.7;
-        color: var(--text-primary);
-        margin-bottom: 2rem;
+        font-size: 0.98rem;
+        line-height: 1.5;
+        color: var(--text-secondary);
+        margin-bottom: 0.9rem;
         font-style: italic;
         flex: 1;
     }
@@ -132,25 +205,122 @@ const t = translations[lang as "en" | "es"].testimonials;
     .testimonial-author {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .author-info h4 {
         color: var(--text-primary);
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 700;
         margin-bottom: 0.2rem;
     }
 
     .author-info p {
-        color: var(--text-muted);
-        font-size: 0.85rem;
+        color: var(--accent-blue);
+        font-size: 0.8rem;
         font-family: var(--font-mono);
+        letter-spacing: 0.02em;
+    }
+
+    .external-link-icon {
+        color: var(--text-muted);
+        opacity: 0.5;
+        transform: translateX(0);
+        transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover .external-link-icon {
+        opacity: 1;
+        transform: translateX(2px);
+        color: var(--accent-blue);
+    }
+
+    .click-cue {
+        font-size: 0.62rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #bae6fd;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        background: rgba(56, 189, 248, 0.08);
+        border-radius: 999px;
+        padding: 0.16rem 0.45rem;
+        white-space: nowrap;
+        margin-left: auto;
+        margin-right: 0.3rem;
+        transition: all 0.25s ease;
+    }
+
+    .testimonial-card:hover .click-cue {
+        color: #e0f2fe;
+        border-color: rgba(56, 189, 248, 0.58);
+        background: rgba(56, 189, 248, 0.18);
+        transform: translateX(1px);
+    }
+
+    .testimonials-cta {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.2rem;
     }
 
     @media (max-width: 768px) {
+        .testimonials-grid {
+            grid-template-columns: 1fr;
+        }
+
         .testimonial-card {
-            padding: 2rem;
+            padding: 1.5rem;
+        }
+
+        .click-cue {
+            font-size: 0.56rem;
+            padding: 0.14rem 0.34rem;
+            margin-right: 0.15rem;
         }
     }
 </style>
+
+<script>
+    function teardownTestimonialsHover() {
+        const runtime = ((window as any).__cvRuntime ||= {});
+        if (runtime.testimonialHoverAbort) {
+            runtime.testimonialHoverAbort.abort();
+            runtime.testimonialHoverAbort = null;
+        }
+    }
+
+    function initTestimonialsHover() {
+        teardownTestimonialsHover();
+
+        if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+            return;
+        }
+
+        const runtime = ((window as any).__cvRuntime ||= {});
+        const controller = new AbortController();
+        runtime.testimonialHoverAbort = controller;
+
+        const cards = document.querySelectorAll(".testimonial-card");
+        cards.forEach((card) => {
+            card.addEventListener(
+                "mousemove",
+                (e: MouseEvent) => {
+                    const el = e.currentTarget as HTMLElement;
+                    const rect = el.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    el.style.setProperty("--mx", `${x}%`);
+                    el.style.setProperty("--my", `${y}%`);
+                },
+                { signal: controller.signal },
+            );
+        });
+    }
+
+    initTestimonialsHover();
+    document.addEventListener("astro:after-swap", initTestimonialsHover);
+    document.addEventListener("astro:before-swap", teardownTestimonialsHover);
+</script>

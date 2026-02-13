@@ -9,18 +9,23 @@ export const translations = {
             contact: "Contact",
             cta: "Let's Talk",
             freelancer: "Freelancer",
-            whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat."
+            whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat.",
+            toggle_menu: "Toggle menu",
+            switch_en: "Switch to English",
+            switch_es: "Switch to Spanish"
         },
         hero: {
             greeting: "Hi, I'm",
             badge: "Available for new opportunities",
+            value_prop: "I help teams automate workflows and scale reliable backend systems.",
             roles: "Senior Full-Stack Developer,Automation Architect,Backend Specialist,Problem Solver",
             description: "{years}+ years architecting zero-latency backend systems, mission-critical automation pipelines, and high-impact full-stack solutions.",
-            years: "Years Experience",
+            years: "Work Experience",
             projects: "Projects",
-            cta_primary: "Explore My Work",
-            cta_secondary: "Get In Touch",
+            cta_primary: "Let's Talk",
+            cta_secondary: "View Experience",
             download_cv: "Download CV",
+            download_cv_notice: "Will be updated soon",
             scroll: "Scroll down"
         },
         about: {
@@ -37,6 +42,7 @@ export const translations = {
             location: "Based in Medellín, Colombia",
             remote: "Open to remote worldwide",
             download_cv: "Download CV",
+            download_cv_notice: "Will be updated soon",
             expertise_title: "Core Expertise",
             expertise_item_1_label: "Python / Django",
             expertise_item_1_value: "11+ yrs",
@@ -47,6 +53,8 @@ export const translations = {
             location_label: "Location",
             location_value: "Medellín, Colombia",
             availability_label: "Availability",
+            timezone_label: "Timezone",
+            timezone_value: "Colombia (UTC-5) — adaptable to your schedule",
             stat_years: "Years Experience",
             stat_projects: "Projects Delivered",
             stat_certs: "Certifications",
@@ -56,24 +64,51 @@ export const translations = {
             label: "Testimonials",
             title: "Client",
             title_accent: "Feedback",
+            open_review: "Open review",
+            view_profile: "View Profile on Freelancer.com",
+            profile_url: "https://www.freelancer.com/u/Codehimn?review_context_id=20241678&review_type=project&frm=Codehimn&sb=t",
             items: [
                 {
-                    quote: "Excellent professional. Exactly what I needed for my project.",
-                    author: "Dino S.",
-                    role: "Raspberry PI & JS Specialist",
-                    rating: 5
+                    quote: "Excellent professional.",
+                    author: "@dsifuentesc",
+                    role: "Raspberry Pi / JavaScript / Cloud Integration",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=20241678&review_type=project&frm=Codehimn&sb=t"
                 },
                 {
                     quote: "Excellent freelancer, did what I needed exactly, won't hesitate to hire again. I highly recommend him.",
                     author: "Bassem E.",
-                    role: "Automation Client",
-                    rating: 5
+                    role: "Form Automation (JavaScript, MySQL, Visual FoxPro)",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=11444322&review_type=project&frm=Codehimn&sb=t"
                 },
                 {
-                    quote: "Helped me on demand with an AutoIt script. Very fast and efficient.",
-                    author: "Former Client",
-                    role: "Software Automation",
-                    rating: 5
+                    quote: "Helped me on demand with an AutoIt script.",
+                    author: "Previous client (inactive)",
+                    role: "AutoIt Scripting Support",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=11097779&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "It is a very professional person, he loves to work on automations, has good communication, and I recommend him. He has experience, I give a positive A+.",
+                    author: "@frfrienp",
+                    role: "Web Scraping / JavaScript Automation",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10574876&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "It maybe seems like he does not have enough experience because of not many reviews. But he did a great job. I did not have programming knowledge, and he tried hard to understand what I wanted and built exactly what I needed. He is kind, helpful, and I would love to work with him again.",
+                    author: "Aya S.",
+                    role: "Bot Development / Automation",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10515196&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "Work delivered in less than 30min. Good developer. Can trust. Excellent communication.",
+                    author: "Boubacar L.",
+                    role: "Windows Bash Script / Bulk SMS",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10523911&review_type=project&frm=Codehimn&sb=t"
                 }
             ]
         },
@@ -352,6 +387,7 @@ export const translations = {
             email_label: "Email",
             linkedin_label: "LinkedIn",
             github_label: "GitHub",
+            freelancer_badge: "Top Rated",
             download_cv: "Download CV",
             pdf_label: "PDF",
             web_label: "Website",
@@ -368,18 +404,23 @@ export const translations = {
             contact: "Contacto",
             cta: "Hablemos",
             freelancer: "Freelancer",
-            whatsapp_msg: "Hola Gabor! Vi tu portafolio y me gustaria conversar."
+            whatsapp_msg: "Hola Gabor! Vi tu portafolio y me gustaria conversar.",
+            toggle_menu: "Alternar menú",
+            switch_en: "Cambiar a Inglés",
+            switch_es: "Cambiar a Español"
         },
         hero: {
             greeting: "Hola, soy",
             badge: "Disponible para nuevas oportunidades",
+            value_prop: "Ayudo a equipos a automatizar procesos y escalar backends confiables.",
             roles: "Desarrollador Full-Stack Senior,Arquitecto de Automatización,Especialista en Backend,Solucionador de Problemas",
             description: "{years}+ años arquitectando sistemas backend de latencia cero, pipelines de automatización de misión crítica y soluciones full-stack de alto impacto.",
-            years: "Años de Experiencia",
+            years: "Experiencia Laboral",
             projects: "Proyectos",
-            cta_primary: "Ver Mi Trabajo",
-            cta_secondary: "Contáctame",
+            cta_primary: "Hablemos",
+            cta_secondary: "Ver experiencia",
             download_cv: "Descargar CV",
+            download_cv_notice: "Se actualizara pronto",
             scroll: "Desliza hacia abajo"
         },
         about: {
@@ -396,6 +437,7 @@ export const translations = {
             location: "Basado en Medellín, Colombia",
             remote: "Abierto a remoto mundial",
             download_cv: "Descargar CV",
+            download_cv_notice: "Se actualizara pronto",
             expertise_title: "Experiencia Clave",
             expertise_item_1_label: "Python / Django",
             expertise_item_1_value: "11+ años",
@@ -406,6 +448,8 @@ export const translations = {
             location_label: "Ubicación",
             location_value: "Medellín, Colombia",
             availability_label: "Disponibilidad",
+            timezone_label: "Zona horaria",
+            timezone_value: "Colombia (UTC-5) — adaptable a tu horario",
             stat_years: "Años de Experiencia",
             stat_projects: "Proyectos Entregados",
             stat_certs: "Certificaciones",
@@ -415,24 +459,51 @@ export const translations = {
             label: "Testimonios",
             title: "Feedback de",
             title_accent: "Clientes",
+            open_review: "Abrir reseña",
+            view_profile: "Ver Perfil en Freelancer.com",
+            profile_url: "https://www.freelancer.com/u/Codehimn?review_context_id=20241678&review_type=project&frm=Codehimn&sb=t",
             items: [
                 {
-                    quote: "Excelente profesional. Exactamente lo que necesitaba para mi proyecto.",
-                    author: "Dino S.",
-                    role: "Especialista en Raspberry PI y JS",
-                    rating: 5
+                    quote: "Excelente profesional.",
+                    author: "@dsifuentesc",
+                    role: "Raspberry Pi / JavaScript / Integración en la Nube",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=20241678&review_type=project&frm=Codehimn&sb=t"
                 },
                 {
                     quote: "Excelente freelancer, hizo exactamente lo que necesitaba, no dudaría en contratarlo de nuevo. Lo recomiendo mucho.",
                     author: "Bassem E.",
-                    role: "Automation Client",
-                    rating: 5
+                    role: "Automatización de Formularios (JavaScript, MySQL, Visual FoxPro)",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=11444322&review_type=project&frm=Codehimn&sb=t"
                 },
                 {
-                    quote: "Me ayudó bajo demanda con un script de AutoIt. Muy rápido y eficiente.",
-                    author: "Cliente de Freelancer",
-                    role: "Software Automation",
-                    rating: 5
+                    quote: "Me ayudó bajo demanda con un script en AutoIt.",
+                    author: "Cliente anterior (inactivo)",
+                    role: "Soporte de Scripting AutoIt",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=11097779&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "Es una persona muy profesional, le encanta trabajar en automatizaciones, tiene buena comunicación y lo recomiendo. Tiene experiencia, le doy un A+ positivo.",
+                    author: "@frfrienp",
+                    role: "Web Scraping / Automatización con JavaScript",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10574876&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "Puede parecer que no tiene suficiente experiencia por tener pocas reseñas, pero hizo un gran trabajo. Yo no tenía conocimientos de programación y se esforzó por entender exactamente lo que quería y lo construyó tal cual. Es amable, servicial y volvería a trabajar con él.",
+                    author: "Aya S.",
+                    role: "Desarrollo de Bots / Automatización",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10515196&review_type=project&frm=Codehimn&sb=t"
+                },
+                {
+                    quote: "Trabajo entregado en menos de 30 minutos. Buen desarrollador, confiable y con excelente comunicación.",
+                    author: "Boubacar L.",
+                    role: "Script Bash para Windows / SMS Masivos",
+                    rating: 5,
+                    link: "https://www.freelancer.com/u/Codehimn?review_context_id=10523911&review_type=project&frm=Codehimn&sb=t"
                 }
             ]
         },
@@ -636,23 +707,23 @@ export const translations = {
             work_philosophy_title: "Filosofía de Trabajo",
             view_talk: "Ver Charla",
             certs_google: [
-                { title: "Certificado Profesional de Automatización de TI con Python", issuer: "Google / Coursera", link: "https://www.coursera.org/professional-certificates/google-it-automation" },
-                { title: "Automatización de Tareas del Mundo Real con Python", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/26H3VDUEB9N9" },
-                { title: "Usar Python para Interactuar con el SO", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/8WRBNTJ98T4F" },
-                { title: "Curso Intensivo de Python", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/M7W7V3Z9N8WF" },
-                { title: "Técnicas de Depuración y Solución de Problemas", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/938HT2G6C877" },
-                { title: "Gestión de Configuración y la Nube", issuer: "Google / Coursera", link: "https://www.coursera.org/account/accomplishments/verify/R9T9UZZ9W7WF" }
+                { title: "Certificado Profesional de Automatización de TI con Python", issuer: "Google / Coursera", link: "" },
+                { title: "Automatización de Tareas del Mundo Real con Python", issuer: "Google / Coursera", link: "" },
+                { title: "Usar Python para Interactuar con el SO", issuer: "Google / Coursera", link: "" },
+                { title: "Curso Intensivo de Python", issuer: "Google / Coursera", link: "" },
+                { title: "Técnicas de Depuración y Solución de Problemas", issuer: "Google / Coursera", link: "" },
+                { title: "Gestión de Configuración y la Nube", issuer: "Google / Coursera", link: "" }
             ],
             certs_web: [
                 { title: "React", issuer: "SoloLearn", link: "" },
-                { title: "Tutorial de JavaScript", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-V59HTXRM" },
-                { title: "Curso Tutorial de PHP", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-KPS7H39V" },
+                { title: "Tutorial de JavaScript", issuer: "SoloLearn", link: "" },
+                { title: "Curso Tutorial de PHP", issuer: "SoloLearn", link: "" },
                 { title: "Tutorial de jQuery", issuer: "SoloLearn", link: "" },
-                { title: "Fundamentos de CSS", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-B6U9J1K6" },
-                { title: "Fundamentos de HTML", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-HDBNXW9Z" }
+                { title: "Fundamentos de CSS", issuer: "SoloLearn", link: "" },
+                { title: "Fundamentos de HTML", issuer: "SoloLearn", link: "" }
             ],
             certs_data: [
-                { title: "SQL Intermedio", issuer: "SoloLearn", link: "https://www.sololearn.com/certificates/CT-S9CHVDRP" },
+                { title: "SQL Intermedio", issuer: "SoloLearn", link: "" },
                 { title: "Python Core", issuer: "SoloLearn", link: "" },
                 { title: "Python Intermedio", issuer: "SoloLearn", link: "" },
                 { title: "C++", issuer: "SoloLearn", link: "" },
@@ -711,6 +782,7 @@ export const translations = {
             email_label: "Correo",
             linkedin_label: "LinkedIn",
             github_label: "GitHub",
+            freelancer_badge: "Top Rated",
             download_cv: "Descargar CV",
             pdf_label: "PDF",
             web_label: "Sitio Web",
