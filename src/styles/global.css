@@ -276,9 +276,29 @@ button:focus-visible,
 .social-link-btn:focus-visible,
 .cert-link:focus-visible,
 .lang-btn:focus-visible,
-.hamburger-wrapper:focus-visible {
+.hamburger-wrapper:focus-visible,
+.skip-link:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px rgba(10, 14, 26, 0.9), 0 0 0 4px rgba(56, 189, 248, 0.7);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 2rem;
+  background: var(--gradient-primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  z-index: 10000;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: top 0.4s var(--ease-out-expo);
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 .contact-card,
