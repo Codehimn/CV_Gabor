@@ -203,7 +203,15 @@ const personSchema = {
             if (!targetId || targetId === "#") return;
 
             e.preventDefault();
-            lenis.scrollTo(targetId, { offset: -80 });
+            lenis.scrollTo(targetId, {
+              offset: -80,
+              onComplete: () => {
+                const targetEl = document.querySelector(targetId) as HTMLElement | null;
+                if (targetEl) {
+                  targetEl.focus({ preventScroll: true });
+                }
+              }
+            });
           },
           { signal: runtime.anchorController.signal },
         );
