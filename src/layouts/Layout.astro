@@ -384,6 +384,10 @@ const personSchema = {
         runtime.currentLang = lang;
         document.documentElement.lang = lang;
 
+        // ⚡ Bolt: Cache current year and experience years once outside the loops.
+        const currentYear = new Date().getFullYear().toString();
+        const expYears = (Number(currentYear) - 2014).toString();
+
         const resolveTranslationForLang = (key: string, targetLang: "en" | "es") => {
           const keys = key.split(".");
           let translation: any = translations[targetLang];
@@ -408,12 +412,9 @@ const personSchema = {
           const translation = resolveTranslation(key);
 
           if (translation) {
-            const currentYear = new Date().getFullYear();
-            const expYears = currentYear - 2014;
-
             let finalHtml = translation
-              .replace("{year}", currentYear.toString())
-              .replace("{years}", expYears.toString());
+              .replace("{year}", currentYear)
+              .replace("{years}", expYears);
 
             if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
               (el as HTMLInputElement | HTMLTextAreaElement).placeholder =
@@ -430,12 +431,9 @@ const personSchema = {
 
           const translation = resolveTranslation(key);
           if (translation) {
-            const currentYear = new Date().getFullYear();
-            const expYears = currentYear - 2014;
-
             let finalLabel = translation
-              .replace("{year}", currentYear.toString())
-              .replace("{years}", expYears.toString());
+              .replace("{year}", currentYear)
+              .replace("{years}", expYears);
 
             el.setAttribute("aria-label", finalLabel);
           }
@@ -567,12 +565,16 @@ const personSchema = {
       // Scroll Handling
       let ticking = false;
       const progressEl = document.getElementById("scroll-progress");
-      const parallaxLayers: HTMLElement[] = [];
+      const parallaxLayers: { el: HTMLElement; speed: number }[] = [];
 
       function cacheParallaxLayers() {
         parallaxLayers.length = 0;
         document.querySelectorAll(".parallax-layer").forEach((el) => {
-          parallaxLayers.push(el as HTMLElement);
+          const htmlEl = el as HTMLElement;
+          parallaxLayers.push({
+            el: htmlEl,
+            speed: parseFloat(htmlEl.dataset.speed || "0.2"),
+          });
         });
       }
 
@@ -588,8 +590,9 @@ const personSchema = {
 
         // Performance: reuse a cached list of parallax layers instead of
         // querying the DOM on every scroll animation frame.
-        parallaxLayers.forEach((el) => {
-          const speed = parseFloat(el.dataset.speed || "0.2");
+        // ⚡ Bolt: Also cached the 'speed' value to eliminate repeated parseFloat()
+        // and dataset lookups during scroll, making the animation smoother.
+        parallaxLayers.forEach(({ el, speed }) => {
           el.style.transform = `translateY(${scrollY * speed}px)`;
         });
 
