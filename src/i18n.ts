@@ -10,6 +10,8 @@ export const translations = {
             cta: "Let's Talk",
             freelancer: "Freelancer",
             whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat.",
+            logo_aria: "Gabor Flandorffer — Home",
+            skip_to_content: "Skip to content",
             toggle_menu: "Toggle menu",
             switch_en: "Switch to English",
             switch_es: "Switch to Spanish"
@@ -383,6 +385,7 @@ export const translations = {
             title: "Ready to <span class=\"gradient-text\">Build Something Great?</span>",
             text: "I'm currently <strong>open to new opportunities</strong> — whether it's a full-time role, freelance project, or an exciting collaboration. Let's talk!",
             whatsapp_label: "WhatsApp",
+            whatsapp_floating_label: "Contact via WhatsApp",
             whatsapp_msg: "Hi Gabor! I saw your portfolio and I'd like to chat.",
             email_label: "Email",
             linkedin_label: "LinkedIn",
@@ -405,6 +408,8 @@ export const translations = {
             cta: "Hablemos",
             freelancer: "Freelancer",
             whatsapp_msg: "Hola Gabor! Vi tu portafolio y me gustaria conversar.",
+            logo_aria: "Gabor Flandorffer — Inicio",
+            skip_to_content: "Saltar al contenido",
             toggle_menu: "Alternar menú",
             switch_en: "Cambiar a Inglés",
             switch_es: "Cambiar a Español"
@@ -778,6 +783,7 @@ export const translations = {
             title: "¿Listo para <span class=\"gradient-text\">Construir Algo Grande?</span>",
             text: "Actualmente estoy <strong>abierto a nuevas oportunidades</strong> — ya sea un rol de tiempo completo, un proyecto freelance o una colaboración emocionante. ¡Hablemos!",
             whatsapp_label: "WhatsApp",
+            whatsapp_floating_label: "Contactar por WhatsApp",
             whatsapp_msg: "Hola Gabor! Vi tu portafolio y me gustaria conversar.",
             email_label: "Correo",
             linkedin_label: "LinkedIn",

@@ -6,7 +6,7 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Ask AI | Gabor Flandorffer" showChatWidget={false}>
     <Navbar />
-    <main class="page-main page-main--chat">
+    <main id="main-content" class="page-main page-main--chat">
         <!-- Full Page Chat Mode (ChatGPT-style) -->
         <ChatWidget client:load mode="page" />
     </main>

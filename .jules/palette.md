@@ -5,3 +5,7 @@
 ## 2026-02-13 - Mobile Menu Focus Leakage Prevention
 **Learning:** Off-screen mobile menus (using `right: -100%`) still allow keyboard focus on their child elements. Using `visibility: hidden` and `pointer-events: none` on the container when closed is an effective way to prevent this without breaking transitions.
 **Action:** Always pair off-screen positioning with `visibility: hidden` for closed mobile menus.
+
+## 2026-02-14 - Localized Accessibility Labels
+**Learning:** In highly customized i18n systems (like this Astro/TypeScript implementation), standard `aria-label` attributes are often hardcoded and forgotten during translation. Extending the i18n system with `data-i18n-aria` ensures icon-only buttons and logos remain accessible in all languages.
+**Action:** When implementing custom i18n logic, proactively include support for ARIA attributes and other non-text attributes (like `title` or `alt`) to prevent accessibility regressions during language switches.

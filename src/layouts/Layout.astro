@@ -109,14 +109,17 @@ const personSchema = {
     <link rel="manifest" href="/manifest.json" />
   </head>
   <body>
+    <!-- Skip to Content Link -->
+    <a href="#main-content" class="skip-link" data-i18n="nav.skip_to_content">Skip to content</a>
+
     <!-- Custom Cursor -->
-    <div class="custom-cursor"></div>
+    <div class="custom-cursor" aria-hidden="true"></div>
 
     <!-- Mouse Spotlight -->
-    <div class="mouse-spotlight"></div>
+    <div class="mouse-spotlight" aria-hidden="true"></div>
 
     <!-- Scroll Progress Bar -->
-    <div id="scroll-progress" class="scroll-progress"></div>
+    <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
 
     <slot />
 
@@ -127,6 +130,7 @@ const personSchema = {
       rel="noopener noreferrer"
       id="floating-whatsapp"
       class="btn btn-whatsapp"
+      data-i18n-aria="contact.whatsapp_floating_label"
       aria-label="Contact via WhatsApp"
     >
       <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
