@@ -132,6 +132,9 @@ function getImpactText(item: ExperienceItem, locale: "en" | "es"): string {
     return item.description;
 }
 
+// ⚡ Bolt: Cache current year to avoid redundant new Date() calls in loops.
+const CURRENT_YEAR = new Date().getFullYear();
+
 function getPeriodBounds(period: string): { start: number; end: number } | null {
     const years = (period.match(/\d{4}/g) || []).map((year) => Number(year));
     if (years.length === 0) {
@@ -140,7 +143,7 @@ function getPeriodBounds(period: string): { start: number; end: number } | null 
 
     const start = years[0];
     const hasOpenEnd = /present|presente/i.test(period);
-    const end = years.length > 1 ? years[years.length - 1] : hasOpenEnd ? new Date().getFullYear() : start;
+    const end = years.length > 1 ? years[years.length - 1] : hasOpenEnd ? CURRENT_YEAR : start;
 
     return { start, end };
 }
