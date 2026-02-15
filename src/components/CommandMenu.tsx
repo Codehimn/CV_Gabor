@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 export default function CommandMenu() {
     const [open, setOpen] = useState(false);
 
-    // Toggle with Cmd+K or Ctrl+K
+    // Toggle with Cmd+K or Ctrl+K or custom event
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
             if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
@@ -27,8 +27,16 @@ export default function CommandMenu() {
                 setOpen((open) => !open);
             }
         };
+
+        const handleToggle = () => setOpen((open) => !open);
+
         document.addEventListener('keydown', down);
-        return () => document.removeEventListener('keydown', down);
+        window.addEventListener('toggle-command-menu', handleToggle);
+
+        return () => {
+            document.removeEventListener('keydown', down);
+            window.removeEventListener('toggle-command-menu', handleToggle);
+        };
     }, []);
 
     const runCommand = (command: () => void) => {
