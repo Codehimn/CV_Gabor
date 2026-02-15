@@ -14,7 +14,8 @@ export const translations = {
             skip_to_content: "Skip to content",
             toggle_menu: "Toggle menu",
             switch_en: "Switch to English",
-            switch_es: "Switch to Spanish"
+            switch_es: "Switch to Spanish",
+            search_aria: "Open search and commands"
         },
         hero: {
             greeting: "Hi, I'm",
@@ -412,7 +413,8 @@ export const translations = {
             skip_to_content: "Saltar al contenido",
             toggle_menu: "Alternar menú",
             switch_en: "Cambiar a Inglés",
-            switch_es: "Cambiar a Español"
+            switch_es: "Cambiar a Español",
+            search_aria: "Abrir búsqueda y comandos"
         },
         hero: {
             greeting: "Hola, soy",
